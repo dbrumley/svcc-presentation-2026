@@ -886,12 +886,24 @@
         animation: fillStaged 2.4s var(--ease) 0.2s forwards;
       }
       @keyframes fillStaged {
-        0% { width: 0; }
-        30% { width: 28%; }
-        42% { width: 28%; }
-        66% { width: 50%; }
-        78% { width: 50%; }
-        100% { width: 70%; }
+        0% {
+          width: 0;
+        }
+        30% {
+          width: 28%;
+        }
+        42% {
+          width: 28%;
+        }
+        66% {
+          width: 50%;
+        }
+        78% {
+          width: 50%;
+        }
+        100% {
+          width: 70%;
+        }
       }
       /* eras, nodes and labels fade in one part at a time */
       .tl-era,
@@ -947,7 +959,7 @@
       }
       .slide.visible .tl-future,
       .slide.visible .tl-future-lab {
-        animation: tlFuture 0.6s ease 1.3s forwards;
+        animation: tlFuture 0.6s ease 2.5s forwards;
       }
       @keyframes tlFuture {
         to {
@@ -1533,47 +1545,48 @@
         <section class="slide">
           <div class="pad">
             <h2 class="reveal d2" style="font-size: 62px">Agenda</h2>
-            <div class="timeline reveal d3">
+            <div class="timeline">
               <div class="tl-axis"></div>
               <div class="tl-fill"></div>
-              <!-- era bands -->
-              <div class="tl-era" style="left: 0">
+              <!-- Part 1 · Era I -->
+              <div class="tl-era p1" style="left: 2%">
                 <div class="ee">Era I</div>
                 <div class="et">The Craft</div>
                 <div class="ey">1988 – 2016</div>
               </div>
-              <div class="tl-era" style="left: 30%">
+              <div class="tl-node p1" style="left: 2%"></div>
+              <div class="tl-lab p1" style="left: 2%">
+                <div class="ly">1988</div>
+                <div class="ln">Morris Worm</div>
+              </div>
+              <!-- Part 2 · Era II -->
+              <div class="tl-era p2" style="left: 28%">
                 <div class="ee">Era II</div>
                 <div class="et">Autonomy</div>
                 <div class="ey">2016 – 2025</div>
               </div>
-              <div class="tl-era" style="left: 54%">
+              <div class="tl-node p2" style="left: 28%"></div>
+              <div class="tl-lab p2" style="left: 28%">
+                <div class="ly">2016</div>
+                <div class="ln">DARPA CGC</div>
+              </div>
+              <!-- Part 3 · Era III + the future -->
+              <div class="tl-era p3" style="left: 50%">
                 <div class="ee">Era III</div>
                 <div class="et">Post-Autonomy</div>
                 <div class="ey">2025 →</div>
               </div>
-              <!-- nodes -->
-              <div class="tl-node" style="left: 2%"></div>
-              <div class="tl-lab" style="left: 2%">
-                <div class="ly">1988</div>
-                <div class="ln">Morris Worm</div>
-              </div>
-              <div class="tl-node" style="left: 28%"></div>
-              <div class="tl-lab" style="left: 28%">
-                <div class="ly">2016</div>
-                <div class="ln">DARPA CGC</div>
-              </div>
-              <div class="tl-node" style="left: 50%"></div>
-              <div class="tl-lab" style="left: 50%">
+              <div class="tl-node p3" style="left: 50%"></div>
+              <div class="tl-lab p3" style="left: 50%">
                 <div class="ly">2025</div>
                 <div class="ln">DARPA AIxCC</div>
               </div>
-              <div class="tl-node glow" style="left: 70%"></div>
-              <div class="tl-lab" style="left: 70%">
+              <div class="tl-node glow p3" style="left: 70%"></div>
+              <div class="tl-lab p3" style="left: 70%">
                 <div class="ly">Now</div>
                 <div class="ln">Mythos</div>
               </div>
-              <!-- the future: dashed runway + arrow -->
+              <!-- the future: dashed continuation of the same line -->
               <div class="tl-future"></div>
               <div class="tl-future-lab">What's next</div>
             </div>
@@ -1587,13 +1600,12 @@
           <div class="pad center">
             <div class="numeral reveal d1">I</div>
             <div class="part reveal d2" style="margin-top: 30px">Part One</div>
-            <h2 class="reveal d3">Exploitation<br />was a craft.</h2>
+            <h2 class="reveal d3">The craft.</h2>
             <p
               class="body dim reveal d4"
               style="margin-top: 30px; font-size: 28px; max-width: 1040px"
             >
-              The question is no longer whether AI can find bugs — but
-              <span class="glowtext">how far it goes after.</span>
+              Popping shell skills.
             </p>
           </div>
           <div class="deck-tag">Popping the Shell</div>
