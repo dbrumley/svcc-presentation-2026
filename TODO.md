@@ -1,0 +1,2 @@
+- Consider finding other scientific examples where you can point out everyones work changed.
+- Consider not showing einstein, but someone other who was "out of a job" when einstein's special relatively was released.
