@@ -1612,36 +1612,74 @@
           <div class="pageno">06 / 22</div>
         </section>
 
-        <!-- ===================== 09 · THE AUTONOMY LOOP ===================== -->
+        <!-- ===================== 07 · CLASSIC EXPLOITATION = MEMORY SAFETY ===================== -->
         <section class="slide">
-          <div class="pad">
-            <h2
-              class="reveal d1"
-              style="margin-top: 6px; font-size: 56px; max-width: 860px"
-            >
-              Finding a bug is just<br />the first rung.
+          <div class="pad" style="display: flex; flex-direction: column">
+            <h2 class="reveal d1" style="font-size: 54px; max-width: 1500px">
+              Traditionally, exploitation was
+              <span class="glowtext">memory safety.</span>
             </h2>
-            <p
-              class="body reveal d2"
-              style="margin-top: 26px; font-size: 26px; max-width: 840px"
-            >
-              Finding isn't enough. Triggering isn't enough. You climb the
-              <b style="color: var(--head)">offense</b> ladder to
-              <b style="color: var(--head)">prove</b> a bug is exploitable —
-              then <b style="color: var(--head)">defense</b> closes the loop:
-              patch, prove it's secure and still functional, then hunt again.
-            </p>
             <div
-              class="aloop aloop-mount reveal d3"
-              aria-hidden="true"
               style="
-                position: absolute;
-                right: 96px;
-                top: 53%;
-                transform: translateY(-50%);
-                width: 700px;
+                flex: 1;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 70px;
+                padding: 0 30px;
               "
-            ></div>
+            >
+              <!-- left: Robert Morris -->
+              <div class="reveal d2" style="flex: none; width: 610px">
+                <figure class="portrait" style="width: 610px; margin: 0">
+                  <img src="assets/morris-mit.jpg" alt="Robert Tappan Morris" />
+                  <figcaption>Robert Tappan Morris</figcaption>
+                </figure>
+                <p style="margin-top: 26px; font-size: 25px; line-height: 1.45; color: var(--steel); max-width: 560px">
+                  The Morris Worm spread in
+                  <b style="color: var(--head)">1988</b> on a buffer overflow.
+                  For decades, popping a shell meant breaking memory safety.
+                </p>
+                <p style="margin-top: 14px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #3a4751">
+                  Photo: nil.lcs.mit.edu/rtm
+                </p>
+              </div>
+              <!-- right: buffer-overflow stack diagram -->
+              <div class="reveal d3" style="flex: none; width: 760px">
+                <svg
+                  viewBox="0 0 600 350"
+                  width="100%"
+                  xmlns="http://www.w3.org/2000/svg"
+                  aria-hidden="true"
+                >
+                  <g font-family="JetBrains Mono, monospace" font-size="19">
+                    <rect x="170" y="30" width="270" height="54" fill="#0E141D" stroke="#2A3744" stroke-width="1.5" />
+                    <text x="305" y="63" fill="#D7E0E6" text-anchor="middle">return address</text>
+                    <rect x="170" y="84" width="270" height="54" fill="#0E141D" stroke="#2A3744" stroke-width="1.5" />
+                    <text x="305" y="117" fill="#D7E0E6" text-anchor="middle">saved EBP</text>
+                    <rect x="170" y="138" width="270" height="180" fill="#E5641F" fill-opacity="0.1" stroke="#E5641F" stroke-width="1.5" />
+                    <text x="305" y="236" fill="#F08A55" text-anchor="middle">char buf[64]</text>
+                  </g>
+                  <!-- registers -->
+                  <g font-family="JetBrains Mono, monospace" font-size="18" fill="#9DB8C6">
+                    <text x="150" y="116" text-anchor="end">EBP</text>
+                    <line x1="156" y1="111" x2="166" y2="111" stroke="#9DB8C6" stroke-width="1.5" />
+                    <path d="M166,107 L175,111 L166,115 Z" fill="#9DB8C6" />
+                    <text x="150" y="322" text-anchor="end">ESP</text>
+                    <line x1="156" y1="316" x2="166" y2="316" stroke="#9DB8C6" stroke-width="1.5" />
+                    <path d="M166,312 L175,316 L166,320 Z" fill="#9DB8C6" />
+                  </g>
+                  <!-- overflow: buf overruns upward into saved EBP + return address -->
+                  <line x1="470" y1="300" x2="470" y2="48" stroke="#E5641F" stroke-width="4" />
+                  <path d="M462,54 L470,36 L478,54 Z" fill="#E5641F" />
+                  <text x="498" y="175" fill="#E5641F" font-family="JetBrains Mono, monospace" font-size="17" letter-spacing="3" text-anchor="middle" transform="rotate(-90 498 175)">OVERFLOW</text>
+                </svg>
+                <p style="font-family: 'JetBrains Mono', monospace; font-size: 22px; color: var(--steel); margin-top: 24px; text-align: center">
+                  <span style="color: var(--accent)">strcpy</span>(buf, input);
+                  <span style="color: var(--mut)">  // no bounds check &rarr; overruns the return address</span>
+                </p>
+              </div>
+            </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
           <div class="pageno">07 / 22</div>
@@ -2437,7 +2475,7 @@
         "Slide 3 — the disruption lesson (J-curve). Security has matured ad-hoc -> automated -> autonomous; at each step the work didn't disappear, it moved up the stack. Read the curve aloud: disruption is a dip up close — people retool, it stings — and a climb from a step back, toward new frontiers. We're in the dip right now. Callback to Einstein: the breakthrough felt like an ending to some; it became a century of new work. Bridge to the agenda: to see the climb ahead, trace where we came from. [~3:30]",
         "The map for the rest of the talk: three eras. Morris worm -> CGC -> AIxCC -> now. Keep this quick. [~5:30]",
         "Beat — Part One. Pose the framing question the history will answer: it's no longer whether AI can find bugs, but how far it goes after the bug is found. [~7:00]",
-        "THE core concept — slow down. Exploitation was never find-bug-get-shell. Humans always knew it's a ladder, not a switch. Walk each rung with your hand. Everything points back to this. [~11:00]",
+        "Slide 7 — what classic exploitation was: breaking memory safety. Walk the stack: a fixed char buf[64] sits below the saved EBP and the return address; strcpy copies attacker input with no bounds check, so a long input overruns the buffer and overwrites the saved frame pointer and return address — hijacking control flow. The Morris Worm (1988) spread on exactly this bug class. This anchors Era I: the craft was memory-safety wizardry. [~11:00]",
         "Verbatim, slowly, then pause: 'A crash is not an exploit. A crash is the beginning of a negotiation with the machine.' [~13:00]",
         "Era I, Morris worm to 2016. Artisanal: manual RE, debugging, fuzzing, hand-built primitives and chains. Skill was rare because the feedback loop was slow and the reasoning implicit — the black book of tricks. Capability lived in people. [~13:45]",
         "Part Two — connect to my own history here. [~15:30]",
