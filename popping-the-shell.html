@@ -873,6 +873,76 @@
         position: relative;
         overflow: hidden;
       }
+      /* Cyber Reasoning System anatomy — nested depth: bg < system < layer < leaf */
+      .crs-system {
+        background: #10171f; /* level 1: the whole system enclosure */
+        border: 1px solid #1b232e;
+        border-radius: 18px;
+        padding: 26px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        max-width: 1580px;
+      }
+      .crs-row {
+        display: flex;
+        gap: 16px;
+      }
+      .crs-row > .crs-layer {
+        flex: 1;
+      }
+      .crs-layer {
+        background: #151d28; /* level 2: component subcard */
+        border: 1px solid #242e3b;
+        border-radius: 13px;
+        padding: 18px 22px;
+      }
+      .crs-layer.brain {
+        background: #201912; /* warm level-2 for the autonomy brain */
+        border: 1.5px solid var(--accent);
+      }
+      .crs-head {
+        display: flex;
+        align-items: baseline;
+        gap: 14px;
+        margin-bottom: 14px;
+      }
+      .crs-head .nm {
+        font-family: "Sora", sans-serif;
+        font-weight: 800;
+        font-size: 27px;
+        color: var(--head);
+      }
+      .crs-head .sub {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 14px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--mut);
+      }
+      .crs-layer.brain .crs-head .sub {
+        color: var(--soft);
+      }
+      .crs-leaves {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+      }
+      .crs-leaf {
+        background: #232d3a; /* level 3: lightest leaf card */
+        border: 1px solid #323e4d;
+        border-radius: 9px;
+        padding: 11px 18px;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 20px;
+        color: #cdd9e1;
+        white-space: nowrap;
+      }
+      .crs-leaf.warm {
+        background: #2f2418;
+        border-color: #58432f;
+        color: var(--soft);
+      }
       .card::before {
         content: "";
         position: absolute;
@@ -1481,7 +1551,7 @@
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">02 / 27</div>
+          <div class="pageno">02 / 28</div>
         </section>
 
         <!-- ===================== 02 · HOOK (historical question) ===================== -->
@@ -1515,7 +1585,7 @@
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">03 / 27</div>
+          <div class="pageno">03 / 28</div>
         </section>
 
         <!-- ===================== 03 · READ THE TRAJECTORY (J-curve) ===================== -->
@@ -1616,7 +1686,7 @@
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">04 / 27</div>
+          <div class="pageno">04 / 28</div>
         </section>
 
         <!-- ===================== 07 · THREE ERAS TIMELINE ===================== -->
@@ -1671,7 +1741,7 @@
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">05 / 27</div>
+          <div class="pageno">05 / 28</div>
         </section>
 
         <!-- ===================== 08 · DIVIDER PART I ===================== -->
@@ -1688,7 +1758,7 @@
             </p>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">06 / 27</div>
+          <div class="pageno">06 / 28</div>
         </section>
 
         <!-- ===================== 08 · ARMS RACE ===================== -->
@@ -1940,7 +2010,7 @@
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">07 / 27</div>
+          <div class="pageno">07 / 28</div>
         </section>
 
         <!-- ===================== 09 · EXPLOITATION LADDER (ExploitBench tiers) ===================== -->
@@ -1996,7 +2066,7 @@
                 <div style="display: flex; align-items: center; gap: 38px">
                   <div style="width: 460px; border: 2px solid #cf6230; background: rgba(229, 100, 31, 0.12); border-radius: 12px; padding: 22px 28px">
                     <div style="font-family: 'JetBrains Mono', monospace; font-size: 15px; letter-spacing: 0.1em; color: var(--mut)">T2</div>
-                    <div style="font-family: 'Sora', sans-serif; font-weight: 800; font-size: 27px; color: var(--head); margin-top: 2px">Defense bypass primitives</div>
+                    <div style="font-family: 'Sora', sans-serif; font-weight: 800; font-size: 27px; color: var(--head); margin-top: 2px">Defense bypass</div>
                   </div>
                   <div>
                     <div style="font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: 0.2em; color: var(--mut)">CAPABILITIES</div>
@@ -2017,52 +2087,209 @@
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">08 / 27</div>
+          <div class="pageno">08 / 28</div>
         </section>
 
-        <!-- ===================== 11 · ERA I DETAIL ===================== -->
+        <!-- ===================== 11 · CAPABILITY LIVED IN PEOPLE ===================== -->
         <section class="slide">
-          <div class="pad">
-            <h2 class="reveal d2" style="font-size: 60px">
-              Artisanal exploitation
-            </h2>
-            <div class="cards c4 reveal d3" style="margin-top: 48px">
-              <div class="card">
-                <div class="ci">METHOD</div>
-                <h3>Hand tools</h3>
-                <p>
-                  Manual reverse engineering, debugging, and fuzzing — one
-                  target at a time.
-                </p>
-              </div>
-              <div class="card">
-                <div class="ci">OUTPUT</div>
-                <h3>Primitives &amp; chains</h3>
-                <p>
-                  Hand-built exploit primitives, composed by hand into working
-                  exploit chains.
-                </p>
-              </div>
-              <div class="card">
-                <div class="ci">WHY RARE</div>
-                <h3>Slow feedback</h3>
-                <p>
-                  The loop was slow and the reasoning implicit — so skill took
-                  years to build.
-                </p>
-              </div>
-              <div class="card">
-                <div class="ci">CULTURE</div>
-                <h3>The "black book"</h3>
-                <p>
-                  Tricks passed person to person. Capability lived in people,
-                  not systems.
-                </p>
+          <div class="pad" style="display: flex; flex-direction: column">
+            <div class="reveal d1">
+              <h2 style="font-size: 58px; line-height: 1.05">
+                Capability lived in <span class="glowtext">people.</span>
+              </h2>
+            </div>
+
+            <div
+              class="reveal d3"
+              style="
+                flex: 1;
+                display: flex;
+                gap: 52px;
+                align-items: center;
+                margin-top: 28px;
+              "
+            >
+              <!-- LEFT: the team (crescendo) -->
+              <figure style="flex: 0 0 58%; margin: 0">
+                <div
+                  style="
+                    border: 1px solid var(--line);
+                    border-radius: 14px;
+                    overflow: hidden;
+                  "
+                >
+                  <img
+                    src="assets/mmm-defcon.png"
+                    alt="Maple Mallard Magistrates — DEF CON CTF champions"
+                    style="
+                      display: block;
+                      width: 100%;
+                      height: 556px;
+                      object-fit: cover;
+                      object-position: center 40%;
+                      filter: contrast(1.04) brightness(1.02);
+                    "
+                  />
+                </div>
+                <figcaption
+                  style="margin-top: 14px; font-family: 'JetBrains Mono', monospace"
+                >
+                  <span style="color: var(--head); font-size: 21px; font-weight: 700"
+                    >Maple Mallard Magistrates</span
+                  >
+                  <span
+                    style="color: var(--soft); font-size: 15px; letter-spacing: 0.1em"
+                  >
+                    · DEF CON CTF CHAMPIONS</span
+                  >
+                </figcaption>
+              </figure>
+
+              <!-- RIGHT: roll call of individuals -->
+              <div
+                style="
+                  flex: 1;
+                  display: flex;
+                  flex-direction: column;
+                  justify-content: center;
+                  gap: 26px;
+                "
+              >
+                <div style="display: flex; align-items: center; gap: 22px">
+                  <img
+                    src="assets/george-hotz.jpg"
+                    alt="George Hotz"
+                    style="
+                      flex: 0 0 150px;
+                      width: 150px;
+                      height: 186px;
+                      object-fit: cover;
+                      object-position: center 18%;
+                      border-radius: 10px;
+                      border: 1px solid var(--line);
+                      filter: grayscale(1) contrast(1.05) brightness(1.04);
+                    "
+                  />
+                  <div>
+                    <div
+                      style="
+                        font-family: 'Sora', sans-serif;
+                        font-weight: 800;
+                        font-size: 26px;
+                        color: var(--head);
+                      "
+                    >
+                      George Hotz
+                    </div>
+                    <div
+                      style="
+                        font-family: 'JetBrains Mono', monospace;
+                        font-size: 16px;
+                        color: var(--soft);
+                        margin-top: 5px;
+                      "
+                    >
+                      First to unlock the iPhone · hacked the PS3
+                    </div>
+                  </div>
+                </div>
+
+                <div style="display: flex; align-items: center; gap: 22px">
+                  <img
+                    src="assets/richard-zhu.jpg"
+                    alt="Richard Zhu — Pwn2Own Master of Pwn"
+                    style="
+                      flex: 0 0 150px;
+                      width: 150px;
+                      height: 186px;
+                      object-fit: cover;
+                      object-position: center 42%;
+                      border-radius: 10px;
+                      border: 1px solid var(--line);
+                      filter: grayscale(1) contrast(1.05) brightness(1.04);
+                    "
+                  />
+                  <div>
+                    <div
+                      style="
+                        font-family: 'Sora', sans-serif;
+                        font-weight: 800;
+                        font-size: 26px;
+                        color: var(--head);
+                      "
+                    >
+                      Richard Zhu
+                    </div>
+                    <div
+                      style="
+                        font-family: 'JetBrains Mono', monospace;
+                        font-size: 16px;
+                        color: var(--soft);
+                        margin-top: 5px;
+                      "
+                    >
+                      Pwn2Own · Master of Pwn
+                    </div>
+                  </div>
+                </div>
+
+                <div style="display: flex; align-items: center; gap: 22px">
+                  <img
+                    src="assets/lee-seunghyun.png"
+                    alt="Seunghyun Lee"
+                    style="
+                      flex: 0 0 150px;
+                      width: 150px;
+                      height: 186px;
+                      object-fit: cover;
+                      object-position: center 22%;
+                      border-radius: 10px;
+                      border: 1px solid var(--line);
+                      filter: grayscale(1) contrast(1.05) brightness(1.04);
+                    "
+                  />
+                  <div>
+                    <div
+                      style="
+                        font-family: 'Sora', sans-serif;
+                        font-weight: 800;
+                        font-size: 26px;
+                        color: var(--head);
+                      "
+                    >
+                      Seunghyun Lee
+                    </div>
+                    <div
+                      style="
+                        font-family: 'JetBrains Mono', monospace;
+                        font-size: 16px;
+                        color: var(--soft);
+                        margin-top: 5px;
+                      "
+                    >
+                      Pwn2Own champion
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
+          <div
+            style="
+              position: absolute;
+              bottom: 18px;
+              left: 50%;
+              transform: translateX(-50%);
+              font-family: 'JetBrains Mono', monospace;
+              font-size: 11px;
+              color: var(--mut);
+              letter-spacing: 0.04em;
+            "
+          >
+            George Hotz photo: Steve Jennings / TechCrunch · CC BY 2.0
+          </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">09 / 27</div>
+          <div class="pageno">09 / 28</div>
         </section>
 
         <!-- ===================== 11 · MY GOAL ===================== -->
@@ -2090,7 +2317,7 @@
             </h2>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">10 / 27</div>
+          <div class="pageno">10 / 28</div>
         </section>
 
         <!-- ===================== 12 · MANUAL EFFORT DOESN'T SCALE ===================== -->
@@ -2304,7 +2531,7 @@
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">11 / 27</div>
+          <div class="pageno">11 / 28</div>
         </section>
 
         <!-- ===================== 13 · DIVIDER PART II ===================== -->
@@ -2315,7 +2542,7 @@
             <h2 class="reveal d3">We automated<br />the craft.</h2>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">12 / 27</div>
+          <div class="pageno">12 / 28</div>
         </section>
 
         <!-- ===================== 14 · CGC ANNOUNCEMENT (full-bleed stage) ===================== -->
@@ -2352,47 +2579,188 @@
             DARPA CGC final · DEF CON 2016 · photo: DARPA (CC0)
           </div>
           <div class="deck-tag" style="z-index: 2">Popping the Shell</div>
-          <div class="pageno" style="z-index: 2">14 / 28</div>
+          <div class="pageno" style="z-index: 2">13 / 28</div>
         </section>
 
-        <!-- ===================== 15 · FUZZING ===================== -->
+        <!-- ===================== 14b · ANATOMY OF A CYBER REASONING SYSTEM ===================== -->
         <section class="slide">
-          <div class="pad">
-            <h2 class="reveal d1" style="font-size: 56px">
-              How machines find bugs: <span class="glowtext">fuzzing.</span>
-            </h2>
-            <p class="body reveal d2" style="margin-top: 14px; font-size: 24px; color: var(--steel); max-width: 1150px">
-              Mutate the input, run, watch for a crash — millions of times a
-              second.
-            </p>
-            <div
-              class="reveal d3"
-              style="margin-top: 30px; border: 1px solid var(--line); border-radius: 12px; background: #0a0e14; padding: 24px 32px; max-width: 1560px; font-family: 'JetBrains Mono', monospace"
-            >
+          <div
+            class="pad"
+            style="display: flex; flex-direction: column; justify-content: center"
+          >
+            <div class="reveal d1">
+              <h2 style="font-size: 54px; line-height: 1.04">
+                Anatomy of a
+                <span class="glowtext">Cyber Reasoning System.</span>
+              </h2>
               <div
-                style="display: flex; align-items: baseline; gap: 50px; border-bottom: 1px solid var(--line); padding-bottom: 16px; margin-bottom: 16px; font-size: 16px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mut)"
+                style="
+                  margin-top: 10px;
+                  font-family: 'JetBrains Mono', monospace;
+                  font-size: 16px;
+                  letter-spacing: 0.12em;
+                  text-transform: uppercase;
+                  color: var(--mut);
+                "
               >
-                <div>
-                  TARGET
-                  <span style="color: var(--soft); text-transform: none">parse_input()</span>
+                Autonomous · find → prove → patch → defend
+              </div>
+            </div>
+
+            <!-- nested depth: background < system < layer < leaf -->
+            <div class="crs-system" style="margin-top: 30px">
+              <!-- TOP layer: the autonomy brain (animates last) -->
+              <div class="crs-layer brain reveal d5">
+                <div class="crs-head">
+                  <span class="nm">The Brain</span>
+                  <span class="sub">AI autonomy strategy</span>
                 </div>
-                <div style="margin-left: auto">
-                  EXECUTIONS
-                  <span id="fuzzExec" style="color: var(--soft); font-size: 28px; letter-spacing: 0">0</span>
-                </div>
-                <div>
-                  CRASHES
-                  <span id="fuzzCrash" style="color: var(--accent); font-size: 28px; letter-spacing: 0">0</span>
+                <div class="crs-leaves">
+                  <span class="crs-leaf warm">Resource Allocation</span>
+                  <span class="crs-leaf warm">Patch Chooser</span>
                 </div>
               </div>
-              <div
-                id="fuzzlog"
-                style="height: 300px; overflow: hidden; font-size: 18px; line-height: 1.75; color: var(--steel)"
-              ></div>
+
+              <!-- MIDDLE layer: offense + defense -->
+              <div class="crs-row">
+                <div class="crs-layer reveal d2">
+                  <div class="crs-head">
+                    <span class="nm">Offense</span>
+                    <span class="sub">find &amp; prove bugs</span>
+                  </div>
+                  <div class="crs-leaves">
+                    <span class="crs-leaf">Fuzzing</span>
+                    <span class="crs-leaf">Symbolic Execution</span>
+                    <span class="crs-leaf">Crash Triage</span>
+                    <span class="crs-leaf">AEG</span>
+                  </div>
+                </div>
+                <div class="crs-layer reveal d3">
+                  <div class="crs-head">
+                    <span class="nm">Defense</span>
+                    <span class="sub">patch &amp; harden</span>
+                  </div>
+                  <div class="crs-leaves">
+                    <span class="crs-leaf">Hardening</span>
+                    <span class="crs-leaf">Crash-specific Patch</span>
+                    <span class="crs-leaf">Static Binary Rewriting</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- BOTTOM layer: the foundation (animates first) -->
+              <div class="crs-layer reveal d1">
+                <div class="crs-head">
+                  <span class="nm">Binary Analysis Platform</span>
+                  <span class="sub">no source code required</span>
+                </div>
+                <div class="crs-leaves">
+                  <span class="crs-leaf">Disassembler</span>
+                  <span class="crs-leaf">Binary Container Parser</span>
+                  <span class="crs-leaf">Instruction Lifter → Formal Model</span>
+                </div>
+              </div>
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">14 / 27</div>
+          <div class="pageno">14 / 28</div>
+        </section>
+
+
+        <!-- ===================== 15 · OFFENSE BASIS: FUZZING ===================== -->
+        <section class="slide">
+          <div class="pad">
+            <h2 class="reveal d1" style="font-size: 56px">
+              Offense basis: <span class="glowtext">fuzzing.</span>
+            </h2>
+            <div
+              style="margin-top: 26px; display: flex; gap: 48px; align-items: center"
+            >
+              <!-- LEFT: the live fuzzing loop -->
+              <div class="reveal d2" style="flex: 0 0 54%">
+                <div
+                  style="font-family: 'JetBrains Mono', monospace; font-size: 15px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mut); margin-bottom: 12px"
+                >
+                  The loop · mutate → run → watch for a crash
+                </div>
+                <div
+                  style="border: 1px solid var(--line); border-radius: 12px; background: #0a0e14; padding: 22px 26px; font-family: 'JetBrains Mono', monospace"
+                >
+                  <div
+                    style="display: flex; align-items: baseline; gap: 28px; border-bottom: 1px solid var(--line); padding-bottom: 14px; margin-bottom: 14px; font-size: 14px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mut)"
+                  >
+                    <div>
+                      TARGET
+                      <span style="color: var(--soft); text-transform: none">parse_input()</span>
+                    </div>
+                    <div style="margin-left: auto">
+                      EXECUTIONS
+                      <span id="fuzzExec" style="color: var(--soft); font-size: 26px; letter-spacing: 0">0</span>
+                    </div>
+                    <div>
+                      CRASHES
+                      <span id="fuzzCrash" style="color: var(--accent); font-size: 26px; letter-spacing: 0">0</span>
+                    </div>
+                  </div>
+                  <div
+                    id="fuzzlog"
+                    style="height: 286px; overflow: hidden; font-size: 17px; line-height: 1.7; color: var(--steel)"
+                  ></div>
+                </div>
+              </div>
+
+              <!-- RIGHT: why fuzzing — the ladder -->
+              <div
+                class="reveal d3"
+                style="flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 16px"
+              >
+                <div
+                  style="font-family: 'JetBrains Mono', monospace; font-size: 15px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mut)"
+                >
+                  Why fuzzing?
+                </div>
+                <p class="body" style="margin: 0; font-size: 23px; color: var(--steel)">
+                  A crash is the <b style="color: var(--head)">first rung</b> on the
+                  ladder — so everyone fuzzed to get there.
+                </p>
+                <!-- mini ladder: crash → (defense bypass) → exploit -->
+                <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 4px">
+                  <div
+                    style="border: 1.5px solid var(--accent); background: rgba(229, 100, 31, 0.08); border-radius: 10px; padding: 13px 18px"
+                  >
+                    <div style="font-family: 'Sora', sans-serif; font-weight: 800; font-size: 21px; color: var(--head)">
+                      Exploit
+                    </div>
+                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 15px; color: var(--soft); margin-top: 2px">
+                      AEG — automatic exploit generation
+                    </div>
+                  </div>
+                  <div
+                    style="border: 1px solid var(--line); border-radius: 10px; padding: 13px 18px; opacity: 0.5"
+                  >
+                    <div style="font-family: 'Sora', sans-serif; font-weight: 800; font-size: 21px; color: var(--mut); text-decoration: line-through">
+                      Defense bypass
+                    </div>
+                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 15px; color: var(--mut); margin-top: 2px">
+                      no mitigations in CGC
+                    </div>
+                  </div>
+                  <div
+                    style="border: 1px solid #323e4d; background: #1a222d; border-radius: 10px; padding: 13px 18px"
+                  >
+                    <div style="font-family: 'Sora', sans-serif; font-weight: 800; font-size: 21px; color: var(--head)">
+                      Crash
+                    </div>
+                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 15px; color: var(--steel); margin-top: 2px">
+                      fuzzing finds it
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="deck-tag">Popping the Shell</div>
+          <div class="pageno">15 / 28</div>
         </section>
 
         <!-- ===================== 16 · BINARY PATCHING ===================== -->
@@ -2434,7 +2802,7 @@
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">15 / 27</div>
+          <div class="pageno">16 / 28</div>
         </section>
 
         <!-- ===================== 17 · CGC / MAYHEM ===================== -->
@@ -2459,7 +2827,7 @@
             </p>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">16 / 27</div>
+          <div class="pageno">17 / 28</div>
         </section>
 
         <!-- ===================== 14 · AIxCC (full-bleed) ===================== -->
@@ -2561,7 +2929,7 @@
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">18 / 27</div>
+          <div class="pageno">19 / 28</div>
         </section>
 
         <!-- ===================== 16 · QUOTE ===================== -->
@@ -2575,7 +2943,7 @@
             </p>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">19 / 27</div>
+          <div class="pageno">20 / 28</div>
         </section>
 
         <!-- ===================== 17 · DIVIDER PART III ===================== -->
@@ -2590,7 +2958,7 @@
             </h2>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">20 / 27</div>
+          <div class="pageno">21 / 28</div>
         </section>
 
         <!-- ===================== 18 · EXPLOITBENCH (the ruler) ===================== -->
@@ -2654,7 +3022,7 @@
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">21 / 27</div>
+          <div class="pageno">22 / 28</div>
         </section>
 
         <!-- ===================== 19 · MYTHOS (the climb) ===================== -->
@@ -2719,7 +3087,7 @@
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">22 / 27</div>
+          <div class="pageno">23 / 28</div>
         </section>
 
         <!-- ===================== 20 · ENGINE OF INEVITABILITY ===================== -->
@@ -2741,7 +3109,7 @@
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">23 / 27</div>
+          <div class="pageno">24 / 28</div>
         </section>
 
         <!-- ===================== 21 · QUOTE ===================== -->
@@ -2756,7 +3124,7 @@
             </p>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">24 / 27</div>
+          <div class="pageno">25 / 28</div>
         </section>
 
         <!-- ===================== 22 · WHAT IT MEANS FOR DEFENDERS ===================== -->
@@ -2801,7 +3169,7 @@
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">25 / 27</div>
+          <div class="pageno">26 / 28</div>
         </section>
 
         <!-- ===================== 23 · REMEMBER ONE PHRASE ===================== -->
@@ -2841,7 +3209,7 @@
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">26 / 27</div>
+          <div class="pageno">27 / 28</div>
         </section>
 
         <!-- ===================== 24 · CLOSING ===================== -->
@@ -3189,12 +3557,13 @@
         "Beat — Part One. Pose the framing question the history will answer: it's no longer whether AI can find bugs, but how far it goes after the bug is found. [~7:00]",
         "Slide 8 — the arms race. Each defense that went up (stack canaries, DEP/NX, ASLR, RELRO, CFI/CET, PAC/MTE) met a more creative bypass (leak/brute-force, ret2libc→ROP, info-leak/JIT-ROP, FSOP, DOP/COOP, PACMAN/Rowhammer). The point: defenses don't end exploitation — they escalate its creativity. And there are dozens more. [~13:00]",
         "Slide 9 — exploitation is a ladder. Don't grade it pass/fail — it's tiers, bottom up: T3 trigger the bug (a crash) → T2 defense-bypass primitives (infoleaks, arbitrary read/write to beat ASLR/DEP) → T1 weaponized (reliable, full control / ACE). Crash-class benchmarks stop at the floor; the real climb is everything above it, and every rung is graded independently so partial progress still counts. (Inspired by ExploitBench's tier framing — returns in Part III.) [~13:45]",
-        "Era I, Morris worm to 2016. Artisanal: manual RE, debugging, fuzzing, hand-built primitives and chains. Skill was rare because the feedback loop was slow and the reasoning implicit — the black book of tricks. Capability lived in people. [~13:45]",
+        "Capability lived in people. The point of Era I: before systems could do this, the best exploit developers on earth could be counted on your hands — and many are my students. George Hotz (first to unlock the iPhone, hacked the PS3). Richard Zhu and Seunghyun Lee (Pwn2Own Masters of Pwn). And a whole generation of them on Maple Mallard Magistrates, who win DEF CON CTF. Tone: celebrate the craft at its peak — these people are extraordinary. Then pivot: the rest of the talk is about moving that capability OUT of a handful of heads and into systems (Era II) and trained models (Era III). Not replacing them — freeing them. [~13:45]",
         "Slide 11 — my goal (the personal turn). State it plainly: automatically check the WORLD'S software for exploitable bugs. This is the mission behind CGC / Mayhem / AIxCC — and it forces the question: humans can't do that by hand. [~14:45]",
         "Slide 12 — manual effort doesn't scale. Bars = share of world population (US 4.2%, India 17.8%, China 17.4%, all others 60.6%; ~8.1B people). Point: the world's software is global and enormous, while expert exploit-developers number in the thousands. A handful of humans can't manually check the planet's code — which is exactly why we turn to automation. Hands the baton to Part II. [~15:30]",
         "Part Two — connect to my own history here. [~16:00]",
         "Slide 14 — announce the Cyber Grand Challenge. 2016, DARPA, at DEF CON in Las Vegas. The goal: a fully autonomous Cyber Reasoning System that finds the bug, proves the exploit, and ships the patch in real time — head-to-head against other machines, no humans in the loop. ($2M first prize.) [~16:30]",
-        "Slide 15 — fuzzing, the engine of discovery. The dominant way bugs got found: mutate inputs, run, watch for crashes — millions of executions a second. The animation shows execs climbing and the occasional crash. CGC bug-finding rode on fuzzing plus symbolic execution. [~17:15]",
+        "Architecture of autonomy — how you actually build a Cyber Reasoning System (this is Mayhem, the system we built that won). Build it bottom-up on screen: (1) FOUNDATION — a Binary Analysis Platform that works on binaries, no source: disassembler, container parser, an instruction lifter to a formal model. (2) On top, OFFENSE (sword): fuzzing, symbolic execution, crash triage, automatic exploit generation (AEG), crash explorer — find and PROVE bugs. (3) DEFENSE (shield): data-flow analysis, hardening, crash-specific patches, static binary rewriting — patch without source. (4) On top of it all, the AUTONOMY AI — strategy: resource allocation and the patch chooser. THAT top layer — deciding what to do next — is the brain, and it's exactly where Era III intelligence goes. Then fuzzing and patching (next slides) are zoom-ins on two of these components. [~17:00]",
+        "Offense basis: fuzzing. LEFT = the live loop — mutate the input, run, watch for a crash, millions of times a second (execs climb, crashes tick). RIGHT = WHY everyone fuzzed: a crash is the FIRST rung on the ladder, the cheapest way onto it. Then AEG (automatic exploit generation) raised a crash UP a level into a working exploit. Key CGC point: there were no mitigations in play, so the middle 'defense bypass' rung didn't exist — you went crash → exploit directly. [~17:15]",
         "Slide 16 — patching (the defensive half). The patch is trivial: before the copy, check the length and exit if the input is too long — same bug, same exploit input, now it hits the guard and the shell never pops. (Shown in C for clarity; in CGC the equivalent guard was applied straight to the binary, no source.) The point: a patch prevented exploitation. [~17:45]",
         "2016 DARPA Cyber Grand Challenge — the result. Machines reasoned about binaries — found bugs, generated exploits, patched — live, no human in the loop. Mayhem won. Line: CGC proved machines could play the game. [~18:30]",
         "2025 DARPA AIxCC. From contrived binaries to real, modern software: AI agents doing discovery and repair across open-source workflows. Line: AIxCC asked whether they could play it on real software. [~18:00]",
