@@ -438,6 +438,52 @@
       .lad.lit-7 .rung:nth-child(7) .rbar {
         box-shadow: 0 0 30px var(--glow-strong);
       }
+      /* diverging capability ladder — two climbs on one ladder (CGC vs AIxCC) */
+      .dlad {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        width: 100%;
+      }
+      .dlad .drow {
+        display: grid;
+        grid-template-columns: 1fr 340px 1fr;
+        align-items: center;
+        gap: 24px;
+      }
+      .dlad .dname {
+        text-align: center;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 17px;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--steel);
+      }
+      .dlad .dside {
+        display: flex;
+        align-items: center;
+      }
+      .dlad .dside.l {
+        justify-content: flex-end;
+      }
+      .dlad .dside.r {
+        justify-content: flex-start;
+      }
+      .dlad .dbar {
+        height: 9px;
+        width: 250px;
+        border-radius: 5px;
+        background: #18202c;
+      }
+      .dlad .dbar.lit {
+        background: var(--accent);
+        box-shadow: 0 0 16px var(--glow-strong);
+      }
+      .dlad .dbar.na {
+        background: transparent;
+        border: 1px dashed #46525f;
+        box-shadow: none;
+      }
 
       /* ===========================================================
    THE AUTONOMY LOOP — offense climb + defense return, closed
@@ -905,7 +951,7 @@
         display: flex;
         align-items: baseline;
         gap: 14px;
-        margin-bottom: 14px;
+        margin-bottom: 20px;
       }
       .crs-head .nm {
         font-family: "Sora", sans-serif;
@@ -1551,7 +1597,7 @@
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">02 / 28</div>
+          <div class="pageno">02 / 29</div>
         </section>
 
         <!-- ===================== 02 · HOOK (historical question) ===================== -->
@@ -1585,7 +1631,7 @@
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">03 / 28</div>
+          <div class="pageno">03 / 29</div>
         </section>
 
         <!-- ===================== 03 · READ THE TRAJECTORY (J-curve) ===================== -->
@@ -1686,7 +1732,7 @@
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">04 / 28</div>
+          <div class="pageno">04 / 29</div>
         </section>
 
         <!-- ===================== 07 · THREE ERAS TIMELINE ===================== -->
@@ -1741,7 +1787,7 @@
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">05 / 28</div>
+          <div class="pageno">05 / 29</div>
         </section>
 
         <!-- ===================== 08 · DIVIDER PART I ===================== -->
@@ -1758,7 +1804,7 @@
             </p>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">06 / 28</div>
+          <div class="pageno">06 / 29</div>
         </section>
 
         <!-- ===================== 08 · ARMS RACE ===================== -->
@@ -2010,7 +2056,7 @@
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">07 / 28</div>
+          <div class="pageno">07 / 29</div>
         </section>
 
         <!-- ===================== 09 · EXPLOITATION LADDER (ExploitBench tiers) ===================== -->
@@ -2087,7 +2133,7 @@
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">08 / 28</div>
+          <div class="pageno">08 / 29</div>
         </section>
 
         <!-- ===================== 11 · CAPABILITY LIVED IN PEOPLE ===================== -->
@@ -2289,7 +2335,7 @@
             George Hotz photo: Steve Jennings / TechCrunch · CC BY 2.0
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">09 / 28</div>
+          <div class="pageno">09 / 29</div>
         </section>
 
         <!-- ===================== 11 · MY GOAL ===================== -->
@@ -2317,7 +2363,7 @@
             </h2>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">10 / 28</div>
+          <div class="pageno">10 / 29</div>
         </section>
 
         <!-- ===================== 12 · MANUAL EFFORT DOESN'T SCALE ===================== -->
@@ -2531,7 +2577,7 @@
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">11 / 28</div>
+          <div class="pageno">11 / 29</div>
         </section>
 
         <!-- ===================== 13 · DIVIDER PART II ===================== -->
@@ -2542,7 +2588,7 @@
             <h2 class="reveal d3">We automated<br />the craft.</h2>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">12 / 28</div>
+          <div class="pageno">12 / 29</div>
         </section>
 
         <!-- ===================== 14 · CGC ANNOUNCEMENT (full-bleed stage) ===================== -->
@@ -2579,7 +2625,7 @@
             DARPA CGC final · DEF CON 2016 · photo: DARPA (CC0)
           </div>
           <div class="deck-tag" style="z-index: 2">Popping the Shell</div>
-          <div class="pageno" style="z-index: 2">13 / 28</div>
+          <div class="pageno" style="z-index: 2">13 / 29</div>
         </section>
 
         <!-- ===================== 14b · ANATOMY OF A CYBER REASONING SYSTEM ===================== -->
@@ -2643,7 +2689,7 @@
                   <div class="crs-leaves">
                     <span class="crs-leaf">Hardening</span>
                     <span class="crs-leaf">Crash-specific Patch</span>
-                    <span class="crs-leaf">Static Binary Rewriting</span>
+                    <span class="crs-leaf">Binary Rewriting</span>
                   </div>
                 </div>
               </div>
@@ -2663,7 +2709,7 @@
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">14 / 28</div>
+          <div class="pageno">14 / 29</div>
         </section>
 
 
@@ -2674,44 +2720,11 @@
               Offense basis: <span class="glowtext">fuzzing.</span>
             </h2>
             <div
-              style="margin-top: 26px; display: flex; gap: 48px; align-items: center"
+              style="margin-top: 100px; display: flex; gap: 48px; align-items: center"
             >
-              <!-- LEFT: the live fuzzing loop -->
-              <div class="reveal d2" style="flex: 0 0 54%">
-                <div
-                  style="font-family: 'JetBrains Mono', monospace; font-size: 15px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mut); margin-bottom: 12px"
-                >
-                  The loop · mutate → run → watch for a crash
-                </div>
-                <div
-                  style="border: 1px solid var(--line); border-radius: 12px; background: #0a0e14; padding: 22px 26px; font-family: 'JetBrains Mono', monospace"
-                >
-                  <div
-                    style="display: flex; align-items: baseline; gap: 28px; border-bottom: 1px solid var(--line); padding-bottom: 14px; margin-bottom: 14px; font-size: 14px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mut)"
-                  >
-                    <div>
-                      TARGET
-                      <span style="color: var(--soft); text-transform: none">parse_input()</span>
-                    </div>
-                    <div style="margin-left: auto">
-                      EXECUTIONS
-                      <span id="fuzzExec" style="color: var(--soft); font-size: 26px; letter-spacing: 0">0</span>
-                    </div>
-                    <div>
-                      CRASHES
-                      <span id="fuzzCrash" style="color: var(--accent); font-size: 26px; letter-spacing: 0">0</span>
-                    </div>
-                  </div>
-                  <div
-                    id="fuzzlog"
-                    style="height: 286px; overflow: hidden; font-size: 17px; line-height: 1.7; color: var(--steel)"
-                  ></div>
-                </div>
-              </div>
-
-              <!-- RIGHT: why fuzzing — the ladder -->
+              <!-- LEFT: why fuzzing — the ladder -->
               <div
-                class="reveal d3"
+                class="reveal d2"
                 style="flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 16px"
               >
                 <div
@@ -2757,10 +2770,43 @@
                   </div>
                 </div>
               </div>
+
+              <!-- RIGHT: the live fuzzing loop -->
+              <div class="reveal d3" style="flex: 0 0 54%">
+                <div
+                  style="font-family: 'JetBrains Mono', monospace; font-size: 15px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mut); margin-bottom: 12px"
+                >
+                  The loop · mutate → run → watch for a crash
+                </div>
+                <div
+                  style="border: 1px solid var(--line); border-radius: 12px; background: #0a0e14; padding: 22px 26px; font-family: 'JetBrains Mono', monospace"
+                >
+                  <div
+                    style="display: flex; align-items: baseline; gap: 28px; border-bottom: 1px solid var(--line); padding-bottom: 14px; margin-bottom: 14px; font-size: 14px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mut)"
+                  >
+                    <div>
+                      TARGET
+                      <span style="color: var(--soft); text-transform: none">parse_input()</span>
+                    </div>
+                    <div style="margin-left: auto">
+                      EXECUTIONS
+                      <span id="fuzzExec" style="color: var(--soft); font-size: 26px; letter-spacing: 0">0</span>
+                    </div>
+                    <div>
+                      CRASHES
+                      <span id="fuzzCrash" style="color: var(--accent); font-size: 26px; letter-spacing: 0">0</span>
+                    </div>
+                  </div>
+                  <div
+                    id="fuzzlog"
+                    style="height: 286px; overflow: hidden; font-size: 17px; line-height: 1.7; color: var(--steel)"
+                  ></div>
+                </div>
+              </div>
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">15 / 28</div>
+          <div class="pageno">15 / 29</div>
         </section>
 
         <!-- ===================== 16 · BINARY PATCHING ===================== -->
@@ -2791,43 +2837,62 @@
               <!-- right: takeaway -->
               <div class="reveal d3" style="flex: none; width: 460px">
                 <h3 style="font-family: 'Sora', sans-serif; font-weight: 800; font-size: 36px; color: var(--head); line-height: 1.15">
-                  The patch is trivial.
+                  The patch is localized.
                 </h3>
                 <p class="body" style="margin-top: 22px; font-size: 26px; line-height: 1.5; color: var(--steel)">
-                  If the copy would overflow,
-                  <b style="color: var(--head)">exit</b>. Same bug, same exploit
-                  input — it hits the guard and the shell never pops.
+                  The fix sits right where it crashes — on the backtrace. If the
+                  copy would overflow, <b style="color: var(--head)">exit</b>; the
+                  same exploit input hits the guard and the shell never pops.
+                </p>
+                <p class="body" style="margin-top: 18px; font-size: 21px; line-height: 1.45; color: var(--mut)">
+                  The hard ones aren't — the real fix can live upstream, off the
+                  backtrace.
                 </p>
               </div>
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">16 / 28</div>
+          <div class="pageno">16 / 29</div>
         </section>
 
         <!-- ===================== 17 · CGC / MAYHEM ===================== -->
         <section class="slide">
-          <div class="pad center">
-            <h2
-              class="reveal d2"
-              style="margin-top: 38px; font-size: 74px; max-width: 1500px"
+          <div class="pad" style="display: flex; align-items: center; gap: 72px">
+            <!-- left: the result -->
+            <div style="flex: 1">
+              <h2 class="reveal d2" style="font-size: 64px; line-height: 1.05">
+                Machines could <span class="glowtext">play the game.</span>
+              </h2>
+              <p class="body reveal d3" style="margin-top: 30px; font-size: 27px; max-width: 760px">
+                CGC showed a machine could reason about binaries —
+                <b style="color: var(--head)">find bugs, generate exploits, and patch them</b>
+                — under live competition, with no human in the loop.
+              </p>
+              <p class="cmd reveal d4" style="margin-top: 34px">
+                <span class="p">mayhem@cgc:~#</span> autonomous reasoning over raw
+                binaries — and it won.
+              </p>
+            </div>
+            <!-- right: the Mayhem CRS on the CGC stage -->
+            <figure
+              class="reveal d3"
+              style="flex: 0 0 auto; margin: 0; text-align: center"
             >
-              Machines could <span class="glowtext">play the game.</span>
-            </h2>
-            <p class="body reveal d3" style="margin-top: 38px">
-              CGC showed a machine could reason about binaries —
-              <b style="color: var(--head)"
-                >find bugs, generate exploits, and patch them</b
+              <img
+                src="assets/mayhem-crs.jpg"
+                alt="The Mayhem Cyber Reasoning System on stage at the DARPA Cyber Grand Challenge, 2016"
+                style="height: 760px; width: auto; display: block; border-radius: 14px; border: 1px solid var(--line)"
+              />
+              <figcaption
+                style="margin-top: 12px; font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: 0.04em; color: var(--mut)"
               >
-              — under live competition, with no human in the loop.
-            </p>
-            <p class="cmd reveal d4" style="margin-top: 40px">
-              <span class="p">mayhem@cgc:~#</span> autonomous reasoning over raw
-              binaries — and it won.
-            </p>
+                The Mayhem CRS · DARPA CGC 2016 · photo: Chelsea Mastilak / IEEE
+                Spectrum
+              </figcaption>
+            </figure>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">17 / 28</div>
+          <div class="pageno">17 / 29</div>
         </section>
 
         <!-- ===================== 14 · AIxCC (full-bleed) ===================== -->
@@ -2862,7 +2927,7 @@
             DARPA AIxCC final · DEF CON 2025 · photo: DARPA / M. Dombro
           </div>
           <div class="deck-tag" style="z-index: 2">Popping the Shell</div>
-          <div class="pageno" style="z-index: 2">18 / 28</div>
+          <div class="pageno" style="z-index: 2">18 / 29</div>
         </section>
 
         <!-- ===================== 15 · THE GAP ===================== -->
@@ -2929,7 +2994,7 @@
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">19 / 28</div>
+          <div class="pageno">19 / 29</div>
         </section>
 
         <!-- ===================== 16 · QUOTE ===================== -->
@@ -2943,7 +3008,7 @@
             </p>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">20 / 28</div>
+          <div class="pageno">20 / 29</div>
         </section>
 
         <!-- ===================== 17 · DIVIDER PART III ===================== -->
@@ -2958,7 +3023,7 @@
             </h2>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">21 / 28</div>
+          <div class="pageno">21 / 29</div>
         </section>
 
         <!-- ===================== 18 · EXPLOITBENCH (the ruler) ===================== -->
@@ -3022,7 +3087,103 @@
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">22 / 28</div>
+          <div class="pageno">22 / 29</div>
+        </section>
+
+        <!-- ===================== 18b · ROOT CAUSE (Era III frontier) ===================== -->
+        <section class="slide">
+          <div class="pad" style="display: flex; flex-direction: column">
+            <h2 class="reveal d1" style="font-size: 54px">
+              The fix isn't on the <span class="glowtext">backtrace.</span>
+            </h2>
+            <div
+              style="margin-top: 44px; display: flex; gap: 56px; align-items: center"
+            >
+              <!-- LEFT: the backtrace + where the real bug actually lives -->
+              <div class="reveal d2" style="flex: 0 0 52%">
+                <div
+                  style="font-family: 'JetBrains Mono', monospace; font-size: 14px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mut); margin-bottom: 10px"
+                >
+                  Backtrace at crash
+                </div>
+                <div
+                  style="font-family: 'JetBrains Mono', monospace; font-size: 19px; background: #0a0e14; border: 1px solid var(--line); border-radius: 12px; overflow: hidden"
+                >
+                  <div
+                    style="display: flex; align-items: center; gap: 14px; padding: 14px 20px; background: rgba(229, 100, 31, 0.12); border-left: 3px solid var(--accent); color: var(--head)"
+                  >
+                    <span style="color: var(--mut)">#0</span> free(obj)
+                    <span style="margin-left: auto; font-size: 14px; color: var(--soft)">crash · the AI patches here</span>
+                  </div>
+                  <div style="padding: 14px 20px; color: var(--steel); border-left: 3px solid transparent">
+                    <span style="color: var(--mut)">#1</span> on_render(view)
+                  </div>
+                  <div style="padding: 14px 20px; color: var(--steel); border-left: 3px solid transparent">
+                    <span style="color: var(--mut)">#2</span> event_loop()
+                  </div>
+                  <div style="padding: 14px 20px; color: var(--steel); border-left: 3px solid transparent">
+                    <span style="color: var(--mut)">#3</span> main()
+                  </div>
+                </div>
+                <div
+                  style="font-family: 'JetBrains Mono', monospace; font-size: 16px; color: var(--accent); margin: 14px 0 12px 4px"
+                >
+                  ↳ but the real bug is somewhere else
+                </div>
+                <div
+                  style="border: 1px dashed #3a4656; border-radius: 12px; padding: 16px 20px; background: rgba(255, 255, 255, 0.015)"
+                >
+                  <div
+                    style="font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mut); margin-bottom: 10px"
+                  >
+                    The real fix — off this stack
+                  </div>
+                  <div
+                    style="font-family: 'JetBrains Mono', monospace; font-size: 17px; color: var(--steel); line-height: 1.75"
+                  >
+                    <span style="color: var(--soft)">double&nbsp;free</span> — obj
+                    was already freed in on_close(), a different event<br />
+                    <span style="color: var(--soft)">missing&nbsp;filter</span> —
+                    the check belongs upstream in parse(), not at the use
+                  </div>
+                </div>
+              </div>
+
+              <!-- RIGHT: the argument -->
+              <div
+                class="reveal d3"
+                style="flex: 1; display: flex; flex-direction: column; gap: 18px"
+              >
+                <div
+                  style="font-family: 'JetBrains Mono', monospace; font-size: 15px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--mut)"
+                >
+                  Root cause
+                </div>
+                <p class="body" style="margin: 0; font-size: 22px; color: var(--mut)">
+                  Localized fixes — right at the crash — are solved.
+                </p>
+                <h3
+                  style="font-family: 'Sora', sans-serif; font-weight: 800; font-size: 33px; color: var(--head); line-height: 1.2; margin: 0"
+                >
+                  The cause is often somewhere the backtrace never points.
+                </h3>
+                <p class="body" style="margin: 0; font-size: 22px; color: var(--steel)">
+                  Today's models fall off the moment the fix leaves the stack —
+                  upstream, or in another event entirely.
+                </p>
+                <div
+                  style="margin-top: 6px; border-left: 3px solid var(--accent); padding: 6px 0 6px 18px"
+                >
+                  <p class="body" style="margin: 0; font-size: 23px; color: var(--head)">
+                    But <b>"is the fix at the root cause?"</b> is measurable — so
+                    it's <span class="glowtext">trainable.</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="deck-tag">Popping the Shell</div>
+          <div class="pageno">23 / 29</div>
         </section>
 
         <!-- ===================== 19 · MYTHOS (the climb) ===================== -->
@@ -3087,7 +3248,7 @@
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">23 / 28</div>
+          <div class="pageno">24 / 29</div>
         </section>
 
         <!-- ===================== 20 · ENGINE OF INEVITABILITY ===================== -->
@@ -3109,7 +3270,7 @@
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">24 / 28</div>
+          <div class="pageno">25 / 29</div>
         </section>
 
         <!-- ===================== 21 · QUOTE ===================== -->
@@ -3124,7 +3285,7 @@
             </p>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">25 / 28</div>
+          <div class="pageno">26 / 29</div>
         </section>
 
         <!-- ===================== 22 · WHAT IT MEANS FOR DEFENDERS ===================== -->
@@ -3169,7 +3330,7 @@
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">26 / 28</div>
+          <div class="pageno">27 / 29</div>
         </section>
 
         <!-- ===================== 23 · REMEMBER ONE PHRASE ===================== -->
@@ -3209,7 +3370,7 @@
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">27 / 28</div>
+          <div class="pageno">28 / 29</div>
         </section>
 
         <!-- ===================== 24 · CLOSING ===================== -->
@@ -3564,13 +3725,14 @@
         "Slide 14 — announce the Cyber Grand Challenge. 2016, DARPA, at DEF CON in Las Vegas. The goal: a fully autonomous Cyber Reasoning System that finds the bug, proves the exploit, and ships the patch in real time — head-to-head against other machines, no humans in the loop. ($2M first prize.) [~16:30]",
         "Architecture of autonomy — how you actually build a Cyber Reasoning System (this is Mayhem, the system we built that won). Build it bottom-up on screen: (1) FOUNDATION — a Binary Analysis Platform that works on binaries, no source: disassembler, container parser, an instruction lifter to a formal model. (2) On top, OFFENSE (sword): fuzzing, symbolic execution, crash triage, automatic exploit generation (AEG), crash explorer — find and PROVE bugs. (3) DEFENSE (shield): data-flow analysis, hardening, crash-specific patches, static binary rewriting — patch without source. (4) On top of it all, the AUTONOMY AI — strategy: resource allocation and the patch chooser. THAT top layer — deciding what to do next — is the brain, and it's exactly where Era III intelligence goes. Then fuzzing and patching (next slides) are zoom-ins on two of these components. [~17:00]",
         "Offense basis: fuzzing. LEFT = the live loop — mutate the input, run, watch for a crash, millions of times a second (execs climb, crashes tick). RIGHT = WHY everyone fuzzed: a crash is the FIRST rung on the ladder, the cheapest way onto it. Then AEG (automatic exploit generation) raised a crash UP a level into a working exploit. Key CGC point: there were no mitigations in play, so the middle 'defense bypass' rung didn't exist — you went crash → exploit directly. [~17:15]",
-        "Slide 16 — patching (the defensive half). The patch is trivial: before the copy, check the length and exit if the input is too long — same bug, same exploit input, now it hits the guard and the shell never pops. (Shown in C for clarity; in CGC the equivalent guard was applied straight to the binary, no source.) The point: a patch prevented exploitation. [~17:45]",
+        "Patching (the defensive half). The patch is LOCALIZED — the fix sits right where it crashes, on the backtrace: before the copy, check the length and exit if too long; same bug, same exploit input, now it hits the guard and the shell never pops. (Shown in C for clarity; in CGC the equivalent guard was applied straight to the binary, no source.) Seed for Era III (the muted line): localized patches are the EASY case — automated patchers and LLMs do well here. The OPEN problem is non-localized / root-cause fixes, where the fix isn't on the backtrace: (A) upstream — an integer-overflow size calc that feeds a later OOB write; (B) off-stack — a use-after-free freed in a different event; (C) a shared helper that must be fixed for all callers. LLMs do poorly the moment the fix leaves the backtrace. [~17:45]",
         "2016 DARPA Cyber Grand Challenge — the result. Machines reasoned about binaries — found bugs, generated exploits, patched — live, no human in the loop. Mayhem won. Line: CGC proved machines could play the game. [~18:30]",
         "2025 DARPA AIxCC. From contrived binaries to real, modern software: AI agents doing discovery and repair across open-source workflows. Line: AIxCC asked whether they could play it on real software. [~18:00]",
         "The catch: industry AND most AI benchmarks still treat 'found a crash' as 'exploited the system.' That's one rung of seven. Sets up why we need a better ruler. [~20:00]",
         "Verbatim: 'CGC proved machines could play the game. AIxCC asked whether they could play it on real software.' [~21:30]",
         "Part Three — the turn. Mythos. [~22:00]",
         "ExploitBench = the ruler. Decompose exploitation into measurable capabilities: crash, control flow, primitives, sandbox-escape progress, arbitrary code execution. Stop scoring pass/fail — measure the climb. [~22:30]",
+        "Root cause — the Era III frontier (defense side). Localized patches (fix at the crash, on the backtrace) are SOLVED. The open problem: the real fix is often NOT on the backtrace. Two examples on screen — (1) double free: the abort is at the second free(obj), but obj was already freed in on_close(), a different event that isn't on this stack at all; the real fix is ownership/lifetime, elsewhere. (2) missing filter: the crash is at the use, but the validation belongs upstream in parse(), shared by every caller. Today's LLMs patch the crash frame and miss the cause. The Era III payoff: 'is the fix at the root cause?' is MEASURABLE — so it's TRAINABLE, exactly the ExploitBench move applied to defense. (Draft — reposition within Part III as you build it.) [~23:30]",
         "Mythos = the climb. Private frontier systems reach end-to-end exploitation on hardened targets in a meaningful fraction of cases; public models are already well past simple crashes. [~24:30]",
         "Why this is durable, not hype: decompose -> measure -> compare models -> build environments -> reward signals -> capability improves every iteration. It's a training loop, and it doesn't stop. [~26:30]",
         "Verbatim, then pause: 'The moment a capability becomes measurable, it becomes trainable. And the moment it becomes trainable, it becomes predictable.' [~24:30]",
