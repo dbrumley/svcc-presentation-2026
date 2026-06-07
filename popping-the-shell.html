@@ -1481,7 +1481,7 @@
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">02 / 28</div>
+          <div class="pageno">02 / 27</div>
         </section>
 
         <!-- ===================== 02 · HOOK (historical question) ===================== -->
@@ -1515,7 +1515,7 @@
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">03 / 28</div>
+          <div class="pageno">03 / 27</div>
         </section>
 
         <!-- ===================== 03 · READ THE TRAJECTORY (J-curve) ===================== -->
@@ -1616,13 +1616,14 @@
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">04 / 28</div>
+          <div class="pageno">04 / 27</div>
         </section>
 
         <!-- ===================== 07 · THREE ERAS TIMELINE ===================== -->
         <section class="slide">
           <div class="pad">
             <h2 class="reveal d2" style="font-size: 62px">Agenda</h2>
+            <p class="body reveal d2" style="margin-top: 10px; font-size: 23px; color: var(--mut); max-width: 900px">Each era's methods become the next era's training data.</p>
             <div class="timeline">
               <div class="tl-axis"></div>
               <div class="tl-fill"></div>
@@ -1640,7 +1641,7 @@
               <!-- Part 2 · Era II -->
               <div class="tl-era p2" style="left: 28%">
                 <div class="ee">Era II</div>
-                <div class="et">Autonomy</div>
+                <div class="et">Automated</div>
                 <div class="ey">2016 – 2025</div>
               </div>
               <div class="tl-node p2" style="left: 28%"></div>
@@ -1651,7 +1652,7 @@
               <!-- Part 3 · Era III + the future -->
               <div class="tl-era p3" style="left: 50%">
                 <div class="ee">Era III</div>
-                <div class="et">Post-Autonomy</div>
+                <div class="et">Intelligent</div>
                 <div class="ey">2025 →</div>
               </div>
               <div class="tl-node p3" style="left: 50%"></div>
@@ -1670,7 +1671,7 @@
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">05 / 28</div>
+          <div class="pageno">05 / 27</div>
         </section>
 
         <!-- ===================== 08 · DIVIDER PART I ===================== -->
@@ -1687,172 +1688,7 @@
             </p>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">06 / 28</div>
-        </section>
-
-        <!-- ===================== 07 · CLASSIC EXPLOITATION = MEMORY SAFETY ===================== -->
-        <section class="slide">
-          <div class="pad" style="display: flex; flex-direction: column">
-            <h2 class="reveal d1" style="font-size: 54px; max-width: 1500px">
-              Traditionally, exploitation was
-              <span class="glowtext">memory safety.</span>
-            </h2>
-            <div
-              style="
-                flex: 1;
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                gap: 70px;
-                padding: 0 30px;
-              "
-            >
-              <!-- left: Robert Morris -->
-              <div class="reveal d2" style="flex: none; width: 610px">
-                <figure class="portrait" style="width: 610px; margin: 0">
-                  <img src="assets/morris-mit.jpg" alt="Robert Tappan Morris" />
-                  <figcaption>Robert Tappan Morris</figcaption>
-                </figure>
-                <p
-                  style="
-                    margin-top: 26px;
-                    font-size: 25px;
-                    line-height: 1.45;
-                    color: var(--steel);
-                    max-width: 560px;
-                  "
-                >
-                  The Morris Worm spread in
-                  <b style="color: var(--head)">1988</b> on a buffer overflow.
-                  For decades, popping a shell meant breaking memory safety.
-                </p>
-                <p
-                  style="
-                    margin-top: 14px;
-                    font-family: &quot;JetBrains Mono&quot;, monospace;
-                    font-size: 12px;
-                    color: #3a4751;
-                  "
-                >
-                  Photo: nil.lcs.mit.edu/rtm
-                </p>
-              </div>
-              <!-- right: buffer-overflow stack diagram -->
-              <div class="reveal d3" style="flex: none; width: 760px">
-                <svg
-                  viewBox="0 0 600 350"
-                  width="100%"
-                  xmlns="http://www.w3.org/2000/svg"
-                  aria-hidden="true"
-                >
-                  <g font-family="JetBrains Mono, monospace" font-size="19">
-                    <rect
-                      x="170"
-                      y="30"
-                      width="270"
-                      height="54"
-                      fill="#0E141D"
-                      stroke="#2A3744"
-                      stroke-width="1.5"
-                    />
-                    <text x="305" y="63" fill="#D7E0E6" text-anchor="middle">
-                      return address
-                    </text>
-                    <rect
-                      x="170"
-                      y="84"
-                      width="270"
-                      height="54"
-                      fill="#0E141D"
-                      stroke="#2A3744"
-                      stroke-width="1.5"
-                    />
-                    <text x="305" y="117" fill="#D7E0E6" text-anchor="middle">
-                      saved EBP
-                    </text>
-                    <rect
-                      x="170"
-                      y="138"
-                      width="270"
-                      height="180"
-                      fill="#E5641F"
-                      fill-opacity="0.1"
-                      stroke="#E5641F"
-                      stroke-width="1.5"
-                    />
-                    <text x="305" y="236" fill="#F08A55" text-anchor="middle">
-                      char buf[64]
-                    </text>
-                  </g>
-                  <!-- registers -->
-                  <g
-                    font-family="JetBrains Mono, monospace"
-                    font-size="18"
-                    fill="#9DB8C6"
-                  >
-                    <text x="150" y="116" text-anchor="end">EBP</text>
-                    <line
-                      x1="156"
-                      y1="111"
-                      x2="166"
-                      y2="111"
-                      stroke="#9DB8C6"
-                      stroke-width="1.5"
-                    />
-                    <path d="M166,107 L175,111 L166,115 Z" fill="#9DB8C6" />
-                    <text x="150" y="322" text-anchor="end">ESP</text>
-                    <line
-                      x1="156"
-                      y1="316"
-                      x2="166"
-                      y2="316"
-                      stroke="#9DB8C6"
-                      stroke-width="1.5"
-                    />
-                    <path d="M166,312 L175,316 L166,320 Z" fill="#9DB8C6" />
-                  </g>
-                  <!-- overflow: buf overruns upward into saved EBP + return address -->
-                  <line
-                    x1="470"
-                    y1="300"
-                    x2="470"
-                    y2="48"
-                    stroke="#E5641F"
-                    stroke-width="4"
-                  />
-                  <path d="M462,54 L470,36 L478,54 Z" fill="#E5641F" />
-                  <text
-                    x="498"
-                    y="175"
-                    fill="#E5641F"
-                    font-family="JetBrains Mono, monospace"
-                    font-size="17"
-                    letter-spacing="3"
-                    text-anchor="middle"
-                    transform="rotate(-90 498 175)"
-                  >
-                    OVERFLOW
-                  </text>
-                </svg>
-                <p
-                  style="
-                    font-family: &quot;JetBrains Mono&quot;, monospace;
-                    font-size: 22px;
-                    color: var(--steel);
-                    margin-top: 24px;
-                    text-align: center;
-                  "
-                >
-                  <span style="color: var(--accent)">strcpy</span>(buf, input);
-                  <span style="color: var(--mut)">
-                    // no bounds check &rarr; overruns the return address</span
-                  >
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">07 / 28</div>
+          <div class="pageno">06 / 27</div>
         </section>
 
         <!-- ===================== 08 · ARMS RACE ===================== -->
@@ -2104,7 +1940,7 @@
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">08 / 28</div>
+          <div class="pageno">07 / 27</div>
         </section>
 
         <!-- ===================== 09 · EXPLOITATION LADDER (ExploitBench tiers) ===================== -->
@@ -2145,7 +1981,7 @@
                   >higher tier</span
                 >
               </div>
-              <!-- tiers, T1 (top) → T4 (floor) -->
+              <!-- tiers, T1 (top) → T3 (floor) -->
               <div style="flex: none; display: flex; flex-direction: column; gap: 26px; width: 100%">
                 <div style="display: flex; align-items: center; gap: 38px">
                   <div style="width: 460px; border: 2px solid #e5641f; background: rgba(229, 100, 31, 0.16); border-radius: 12px; padding: 22px 28px">
@@ -2168,18 +2004,8 @@
                   </div>
                 </div>
                 <div style="display: flex; align-items: center; gap: 38px">
-                  <div style="width: 460px; border: 2px solid #9d6440; background: rgba(229, 100, 31, 0.07); border-radius: 12px; padding: 22px 28px">
-                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 15px; letter-spacing: 0.1em; color: var(--mut)">T3</div>
-                    <div style="font-family: 'Sora', sans-serif; font-weight: 800; font-size: 27px; color: var(--head); margin-top: 2px">Unmitigated exploit</div>
-                  </div>
-                  <div>
-                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: 0.2em; color: var(--mut)">CAPABILITIES</div>
-                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 19px; color: var(--steel); margin-top: 6px">control flow · shellcode</div>
-                  </div>
-                </div>
-                <div style="display: flex; align-items: center; gap: 38px">
                   <div style="width: 460px; border: 2px solid #5e6a5c; background: rgba(157, 184, 198, 0.04); border-radius: 12px; padding: 22px 28px">
-                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 15px; letter-spacing: 0.1em; color: var(--mut)">T4</div>
+                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 15px; letter-spacing: 0.1em; color: var(--mut)">T3</div>
                     <div style="font-family: 'Sora', sans-serif; font-weight: 800; font-size: 27px; color: var(--steel); margin-top: 2px">Trigger bug</div>
                   </div>
                   <div>
@@ -2191,7 +2017,7 @@
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">09 / 28</div>
+          <div class="pageno">08 / 27</div>
         </section>
 
         <!-- ===================== 11 · ERA I DETAIL ===================== -->
@@ -2236,7 +2062,7 @@
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">10 / 28</div>
+          <div class="pageno">09 / 27</div>
         </section>
 
         <!-- ===================== 11 · MY GOAL ===================== -->
@@ -2264,7 +2090,7 @@
             </h2>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">11 / 28</div>
+          <div class="pageno">10 / 27</div>
         </section>
 
         <!-- ===================== 12 · MANUAL EFFORT DOESN'T SCALE ===================== -->
@@ -2478,7 +2304,7 @@
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">12 / 28</div>
+          <div class="pageno">11 / 27</div>
         </section>
 
         <!-- ===================== 13 · DIVIDER PART II ===================== -->
@@ -2486,10 +2312,10 @@
           <div class="pad center">
             <div class="numeral reveal d1">II</div>
             <div class="part reveal d2" style="margin-top: 30px">Part Two</div>
-            <h2 class="reveal d3">We made the<br />craft autonomous.</h2>
+            <h2 class="reveal d3">We automated<br />the craft.</h2>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">13 / 28</div>
+          <div class="pageno">12 / 27</div>
         </section>
 
         <!-- ===================== 14 · CGC ANNOUNCEMENT (full-bleed stage) ===================== -->
@@ -2566,7 +2392,7 @@
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">15 / 28</div>
+          <div class="pageno">14 / 27</div>
         </section>
 
         <!-- ===================== 16 · BINARY PATCHING ===================== -->
@@ -2608,7 +2434,7 @@
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">16 / 28</div>
+          <div class="pageno">15 / 27</div>
         </section>
 
         <!-- ===================== 17 · CGC / MAYHEM ===================== -->
@@ -2633,7 +2459,7 @@
             </p>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">17 / 28</div>
+          <div class="pageno">16 / 27</div>
         </section>
 
         <!-- ===================== 14 · AIxCC (full-bleed) ===================== -->
@@ -2693,6 +2519,7 @@
                 >
                 That's one rung of seven.
               </p>
+              <p class="body reveal d4" style="margin-top: 26px; font-size: 24px; max-width: 780px; color: var(--steel)">The craft gave us the rungs. The machines gave us the data. <b style="color: var(--soft)">Next: train models to climb.</b></p>
             </div>
             <div
               style="
@@ -2734,7 +2561,7 @@
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">19 / 28</div>
+          <div class="pageno">18 / 27</div>
         </section>
 
         <!-- ===================== 16 · QUOTE ===================== -->
@@ -2748,7 +2575,7 @@
             </p>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">20 / 28</div>
+          <div class="pageno">19 / 27</div>
         </section>
 
         <!-- ===================== 17 · DIVIDER PART III ===================== -->
@@ -2763,7 +2590,7 @@
             </h2>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">21 / 28</div>
+          <div class="pageno">20 / 27</div>
         </section>
 
         <!-- ===================== 18 · EXPLOITBENCH (the ruler) ===================== -->
@@ -2827,7 +2654,7 @@
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">22 / 28</div>
+          <div class="pageno">21 / 27</div>
         </section>
 
         <!-- ===================== 19 · MYTHOS (the climb) ===================== -->
@@ -2892,7 +2719,7 @@
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">23 / 28</div>
+          <div class="pageno">22 / 27</div>
         </section>
 
         <!-- ===================== 20 · ENGINE OF INEVITABILITY ===================== -->
@@ -2914,7 +2741,7 @@
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">24 / 28</div>
+          <div class="pageno">23 / 27</div>
         </section>
 
         <!-- ===================== 21 · QUOTE ===================== -->
@@ -2929,7 +2756,7 @@
             </p>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">25 / 28</div>
+          <div class="pageno">24 / 27</div>
         </section>
 
         <!-- ===================== 22 · WHAT IT MEANS FOR DEFENDERS ===================== -->
@@ -2974,7 +2801,7 @@
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">26 / 28</div>
+          <div class="pageno">25 / 27</div>
         </section>
 
         <!-- ===================== 23 · REMEMBER ONE PHRASE ===================== -->
@@ -3014,7 +2841,7 @@
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">27 / 28</div>
+          <div class="pageno">26 / 27</div>
         </section>
 
         <!-- ===================== 24 · CLOSING ===================== -->
@@ -3062,7 +2889,7 @@
         </section>
 
         <!-- ===================== SPARE · QUOTE (not in the deck flow) ===================== -->
-        <section class="slide spare">
+        
           <div class="pad center">
             <div class="quote-mark reveal d1">// negotiation</div>
             <p class="quote reveal d2">
@@ -3357,15 +3184,14 @@
         "Open warm — thank SVCC. Set the scene: for most of cyber's history, offensive capability was scarce; popping a shell took elite, years-earned skill. That era is ending — this talk is its eulogy. [~0:00]",
         "Slide 2 — the predecessor at the wall. Urbain Le Verrier: in 1846 he predicted Neptune from gravity's math alone (triumph — found exactly where he pointed), then aimed the same method at Mercury's wobble and predicted a planet, 'Vulcan,' that never existed — astronomers hunted it for decades. The field's greatest practitioner hit the limit of his paradigm. Set up the human stakes; don't resolve yet. (He died in 1877, before Einstein — so the 'reset' belongs to the field, not to him personally.) [~1:30]",
         "Slide 3 — Einstein solves it, then the gut-punch question. 1915: Einstein's GENERAL RELATIVITY explains Mercury's orbit as spacetime curvature — no hidden planet needed, so Vulcan is gone. (Fact you can drop in: the 43 arcsec/century perihelion shift was general relativity's first proof, reproduced exactly.) Then the empathy question — how did the Vulcan researchers feel reading Einstein? Their life's work just dissolved. DON'T answer it here; let it hang. The next slide (the J-curve) answers: up close disruption feels like loss, but it's a launchpad — the work moved up the stack. [~2:45]",
-        "Slide 3 — the disruption lesson (J-curve). Security has matured ad-hoc -> automated -> autonomous; at each step the work didn't disappear, it moved up the stack. Read the curve aloud: disruption is a dip up close — people retool, it stings — and a climb from a step back, toward new frontiers. We're in the dip right now. Callback to Einstein: the breakthrough felt like an ending to some; it became a century of new work. Bridge to the agenda: to see the climb ahead, trace where we came from. [~3:30]",
+        "Slide 3 — the disruption lesson (J-curve). Security has matured craft -> automated -> intelligent; at each step the work didn't disappear, it moved up the stack. Read the curve aloud: disruption is a dip up close — people retool, it stings — and a climb from a step back, toward new frontiers. We're in the dip right now. Callback to Einstein: the breakthrough felt like an ending to some; it became a century of new work. Bridge to the agenda: to see the climb ahead, trace where we came from. [~3:30]",
         "The map for the rest of the talk: three eras. Morris worm -> CGC -> AIxCC -> now. Keep this quick. [~5:30]",
         "Beat — Part One. Pose the framing question the history will answer: it's no longer whether AI can find bugs, but how far it goes after the bug is found. [~7:00]",
-        "Slide 7 — what classic exploitation was: breaking memory safety. Walk the stack: a fixed char buf[64] sits below the saved EBP and the return address; strcpy copies attacker input with no bounds check, so a long input overruns the buffer and overwrites the saved frame pointer and return address — hijacking control flow. The Morris Worm (1988) spread on exactly this bug class. This anchors Era I: the craft was memory-safety wizardry. [~11:00]",
         "Slide 8 — the arms race. Each defense that went up (stack canaries, DEP/NX, ASLR, RELRO, CFI/CET, PAC/MTE) met a more creative bypass (leak/brute-force, ret2libc→ROP, info-leak/JIT-ROP, FSOP, DOP/COOP, PACMAN/Rowhammer). The point: defenses don't end exploitation — they escalate its creativity. And there are dozens more. [~13:00]",
-        "Slide 9 — exploitation is a ladder. Don't grade it pass/fail — it's tiers, bottom up: T4 trigger the bug (a crash) → T3 unmitigated exploit (works only with defenses off) → T2 defense-bypass primitives (infoleaks, arbitrary read/write to beat ASLR/DEP) → T1 weaponized (reliable, full control / ACE). Crash-class benchmarks stop at the floor; the real climb is everything above it, and every rung is graded independently so partial progress still counts. (Inspired by ExploitBench's tier framing — returns in Part III.) [~13:45]",
+        "Slide 9 — exploitation is a ladder. Don't grade it pass/fail — it's tiers, bottom up: T3 trigger the bug (a crash) → T2 defense-bypass primitives (infoleaks, arbitrary read/write to beat ASLR/DEP) → T1 weaponized (reliable, full control / ACE). Crash-class benchmarks stop at the floor; the real climb is everything above it, and every rung is graded independently so partial progress still counts. (Inspired by ExploitBench's tier framing — returns in Part III.) [~13:45]",
         "Era I, Morris worm to 2016. Artisanal: manual RE, debugging, fuzzing, hand-built primitives and chains. Skill was rare because the feedback loop was slow and the reasoning implicit — the black book of tricks. Capability lived in people. [~13:45]",
         "Slide 11 — my goal (the personal turn). State it plainly: automatically check the WORLD'S software for exploitable bugs. This is the mission behind CGC / Mayhem / AIxCC — and it forces the question: humans can't do that by hand. [~14:45]",
-        "Slide 12 — manual effort doesn't scale. Bars = share of world population (US 4.2%, India 17.8%, China 17.4%, all others 60.6%; ~8.1B people). Point: the world's software is global and enormous, while expert exploit-developers number in the thousands. A handful of humans can't manually check the planet's code — which is exactly why we turn to autonomy. Hands the baton to Part II. [~15:30]",
+        "Slide 12 — manual effort doesn't scale. Bars = share of world population (US 4.2%, India 17.8%, China 17.4%, all others 60.6%; ~8.1B people). Point: the world's software is global and enormous, while expert exploit-developers number in the thousands. A handful of humans can't manually check the planet's code — which is exactly why we turn to automation. Hands the baton to Part II. [~15:30]",
         "Part Two — connect to my own history here. [~16:00]",
         "Slide 14 — announce the Cyber Grand Challenge. 2016, DARPA, at DEF CON in Las Vegas. The goal: a fully autonomous Cyber Reasoning System that finds the bug, proves the exploit, and ships the patch in real time — head-to-head against other machines, no humans in the loop. ($2M first prize.) [~16:30]",
         "Slide 15 — fuzzing, the engine of discovery. The dominant way bugs got found: mutate inputs, run, watch for crashes — millions of executions a second. The animation shows execs climbing and the occasional crash. CGC bug-finding rode on fuzzing plus symbolic execution. [~17:15]",
