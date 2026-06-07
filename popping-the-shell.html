@@ -93,6 +93,10 @@
         pointer-events: auto;
         z-index: 1;
       }
+      /* spare slides: kept in the file but out of the deck (nav, count, print) */
+      .slide.spare {
+        display: none !important;
+      }
       img,
       video,
       canvas,
@@ -561,6 +565,12 @@
         transform: translateY(-50%);
         width: 600px;
         z-index: 1;
+        opacity: 0;
+      }
+      /* fade in without a transform so the translateY(-50%) centering survives */
+      .slide.visible .aloop-title {
+        opacity: 1;
+        transition: opacity 0.7s var(--ease) 0.45s;
       }
       .aloop-close {
         position: absolute;
@@ -1346,7 +1356,7 @@
         <!-- ===================== 01 · TITLE ===================== -->
         <section class="slide title-slide active">
           <div
-            class="aloop aloop-title aloop-mount aloop--mini reveal d3"
+            class="aloop aloop-title aloop-mount aloop--mini"
             aria-hidden="true"
           ></div>
           <div class="title-wrap">
@@ -1403,7 +1413,7 @@
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">02 / 22</div>
+          <div class="pageno">02 / 28</div>
         </section>
 
         <!-- ===================== 02 · HOOK (historical question) ===================== -->
@@ -1415,16 +1425,16 @@
                   class="reveal d1"
                   style="font-size: 70px; line-height: 1.06; max-width: 880px"
                 >
-                  Then Einstein's gravity showed
-                  <span class="glowtext">Vulcan didn't exist.</span>
+                  Then general relativity explained Mercury's orbit —
+                  <span class="glowtext">no Vulcan.</span>
                 </h2>
                 <p
                   class="body reveal d3"
                   style="margin-top: 36px; font-size: 29px; max-width: 760px"
                 >
-                  In 1915, Einstein's theory of gravity showed there was no
-                  Vulcan. Did that make the research — and researchers —
-                  searching for Vulcan meaningless?
+                  In 1915, Einstein's general relativity explained Mercury's
+                  orbit — no Vulcan needed.<br /><br />Did that make the
+                  research — and researchers — searching for Vulcan meaningless?
                 </p>
               </div>
               <figure class="portrait reveal d2" style="flex: none">
@@ -1437,7 +1447,7 @@
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">03 / 22</div>
+          <div class="pageno">03 / 28</div>
         </section>
 
         <!-- ===================== 03 · READ THE TRAJECTORY (J-curve) ===================== -->
@@ -1538,7 +1548,7 @@
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">04 / 22</div>
+          <div class="pageno">04 / 28</div>
         </section>
 
         <!-- ===================== 07 · THREE ERAS TIMELINE ===================== -->
@@ -1592,7 +1602,7 @@
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">05 / 22</div>
+          <div class="pageno">05 / 28</div>
         </section>
 
         <!-- ===================== 08 · DIVIDER PART I ===================== -->
@@ -1609,7 +1619,7 @@
             </p>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">06 / 22</div>
+          <div class="pageno">06 / 28</div>
         </section>
 
         <!-- ===================== 07 · CLASSIC EXPLOITATION = MEMORY SAFETY ===================== -->
@@ -1635,12 +1645,27 @@
                   <img src="assets/morris-mit.jpg" alt="Robert Tappan Morris" />
                   <figcaption>Robert Tappan Morris</figcaption>
                 </figure>
-                <p style="margin-top: 26px; font-size: 25px; line-height: 1.45; color: var(--steel); max-width: 560px">
+                <p
+                  style="
+                    margin-top: 26px;
+                    font-size: 25px;
+                    line-height: 1.45;
+                    color: var(--steel);
+                    max-width: 560px;
+                  "
+                >
                   The Morris Worm spread in
                   <b style="color: var(--head)">1988</b> on a buffer overflow.
                   For decades, popping a shell meant breaking memory safety.
                 </p>
-                <p style="margin-top: 14px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: #3a4751">
+                <p
+                  style="
+                    margin-top: 14px;
+                    font-family: &quot;JetBrains Mono&quot;, monospace;
+                    font-size: 12px;
+                    color: #3a4751;
+                  "
+                >
                   Photo: nil.lcs.mit.edu/rtm
                 </p>
               </div>
@@ -1653,50 +1678,586 @@
                   aria-hidden="true"
                 >
                   <g font-family="JetBrains Mono, monospace" font-size="19">
-                    <rect x="170" y="30" width="270" height="54" fill="#0E141D" stroke="#2A3744" stroke-width="1.5" />
-                    <text x="305" y="63" fill="#D7E0E6" text-anchor="middle">return address</text>
-                    <rect x="170" y="84" width="270" height="54" fill="#0E141D" stroke="#2A3744" stroke-width="1.5" />
-                    <text x="305" y="117" fill="#D7E0E6" text-anchor="middle">saved EBP</text>
-                    <rect x="170" y="138" width="270" height="180" fill="#E5641F" fill-opacity="0.1" stroke="#E5641F" stroke-width="1.5" />
-                    <text x="305" y="236" fill="#F08A55" text-anchor="middle">char buf[64]</text>
+                    <rect
+                      x="170"
+                      y="30"
+                      width="270"
+                      height="54"
+                      fill="#0E141D"
+                      stroke="#2A3744"
+                      stroke-width="1.5"
+                    />
+                    <text x="305" y="63" fill="#D7E0E6" text-anchor="middle">
+                      return address
+                    </text>
+                    <rect
+                      x="170"
+                      y="84"
+                      width="270"
+                      height="54"
+                      fill="#0E141D"
+                      stroke="#2A3744"
+                      stroke-width="1.5"
+                    />
+                    <text x="305" y="117" fill="#D7E0E6" text-anchor="middle">
+                      saved EBP
+                    </text>
+                    <rect
+                      x="170"
+                      y="138"
+                      width="270"
+                      height="180"
+                      fill="#E5641F"
+                      fill-opacity="0.1"
+                      stroke="#E5641F"
+                      stroke-width="1.5"
+                    />
+                    <text x="305" y="236" fill="#F08A55" text-anchor="middle">
+                      char buf[64]
+                    </text>
                   </g>
                   <!-- registers -->
-                  <g font-family="JetBrains Mono, monospace" font-size="18" fill="#9DB8C6">
+                  <g
+                    font-family="JetBrains Mono, monospace"
+                    font-size="18"
+                    fill="#9DB8C6"
+                  >
                     <text x="150" y="116" text-anchor="end">EBP</text>
-                    <line x1="156" y1="111" x2="166" y2="111" stroke="#9DB8C6" stroke-width="1.5" />
+                    <line
+                      x1="156"
+                      y1="111"
+                      x2="166"
+                      y2="111"
+                      stroke="#9DB8C6"
+                      stroke-width="1.5"
+                    />
                     <path d="M166,107 L175,111 L166,115 Z" fill="#9DB8C6" />
                     <text x="150" y="322" text-anchor="end">ESP</text>
-                    <line x1="156" y1="316" x2="166" y2="316" stroke="#9DB8C6" stroke-width="1.5" />
+                    <line
+                      x1="156"
+                      y1="316"
+                      x2="166"
+                      y2="316"
+                      stroke="#9DB8C6"
+                      stroke-width="1.5"
+                    />
                     <path d="M166,312 L175,316 L166,320 Z" fill="#9DB8C6" />
                   </g>
                   <!-- overflow: buf overruns upward into saved EBP + return address -->
-                  <line x1="470" y1="300" x2="470" y2="48" stroke="#E5641F" stroke-width="4" />
+                  <line
+                    x1="470"
+                    y1="300"
+                    x2="470"
+                    y2="48"
+                    stroke="#E5641F"
+                    stroke-width="4"
+                  />
                   <path d="M462,54 L470,36 L478,54 Z" fill="#E5641F" />
-                  <text x="498" y="175" fill="#E5641F" font-family="JetBrains Mono, monospace" font-size="17" letter-spacing="3" text-anchor="middle" transform="rotate(-90 498 175)">OVERFLOW</text>
+                  <text
+                    x="498"
+                    y="175"
+                    fill="#E5641F"
+                    font-family="JetBrains Mono, monospace"
+                    font-size="17"
+                    letter-spacing="3"
+                    text-anchor="middle"
+                    transform="rotate(-90 498 175)"
+                  >
+                    OVERFLOW
+                  </text>
                 </svg>
-                <p style="font-family: 'JetBrains Mono', monospace; font-size: 22px; color: var(--steel); margin-top: 24px; text-align: center">
+                <p
+                  style="
+                    font-family: &quot;JetBrains Mono&quot;, monospace;
+                    font-size: 22px;
+                    color: var(--steel);
+                    margin-top: 24px;
+                    text-align: center;
+                  "
+                >
                   <span style="color: var(--accent)">strcpy</span>(buf, input);
-                  <span style="color: var(--mut)">  // no bounds check &rarr; overruns the return address</span>
+                  <span style="color: var(--mut)">
+                    // no bounds check &rarr; overruns the return address</span
+                  >
                 </p>
               </div>
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">07 / 22</div>
+          <div class="pageno">07 / 28</div>
         </section>
 
-        <!-- ===================== 10 · QUOTE ===================== -->
+        <!-- ===================== 08 · ARMS RACE ===================== -->
         <section class="slide">
-          <div class="pad center">
-            <div class="quote-mark reveal d1">// negotiation</div>
-            <p class="quote reveal d2">
-              A crash is not an exploit.<br />
-              A crash is the beginning of a
-              <span class="accent">negotiation with the machine.</span>
-            </p>
+          <div class="pad">
+            <h2 class="reveal d1" style="font-size: 52px; max-width: 1500px">
+              As defenses were added, exploitation got
+              <span class="glowtext">creative.</span>
+            </h2>
+            <div class="reveal d2" style="margin-top: 40px">
+              <svg
+                viewBox="0 0 1400 420"
+                width="100%"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+              >
+                <!-- row labels -->
+                <text
+                  x="34"
+                  y="103"
+                  transform="rotate(-90 34 103)"
+                  text-anchor="middle"
+                  font-family="JetBrains Mono, monospace"
+                  font-size="15"
+                  letter-spacing="3"
+                  fill="#9DB8C6"
+                >
+                  DEFENSES
+                </text>
+                <text
+                  x="34"
+                  y="335"
+                  transform="rotate(-90 34 335)"
+                  text-anchor="middle"
+                  font-family="JetBrains Mono, monospace"
+                  font-size="15"
+                  letter-spacing="3"
+                  fill="#E5641F"
+                >
+                  BYPASSES
+                </text>
+                <!-- axis -->
+                <line
+                  x1="70"
+                  y1="235"
+                  x2="1342"
+                  y2="235"
+                  stroke="#2A3744"
+                  stroke-width="1.5"
+                />
+                <path d="M1342,228 L1360,235 L1342,242 Z" fill="#2A3744" />
+                <!-- connectors -->
+                <g stroke="#2A3744" stroke-width="1.5">
+                  <line x1="165" y1="146" x2="165" y2="300" />
+                  <line x1="390" y1="146" x2="390" y2="300" />
+                  <line x1="615" y1="146" x2="615" y2="300" />
+                  <line x1="840" y1="146" x2="840" y2="300" />
+                  <line x1="1065" y1="146" x2="1065" y2="300" />
+                  <line x1="1290" y1="146" x2="1290" y2="300" />
+                </g>
+                <!-- breaches on the axis -->
+                <g fill="#E5641F">
+                  <circle cx="165" cy="235" r="5" />
+                  <circle cx="390" cy="235" r="5" />
+                  <circle cx="615" cy="235" r="5" />
+                  <circle cx="840" cy="235" r="5" />
+                  <circle cx="1065" cy="235" r="5" />
+                  <circle cx="1290" cy="235" r="5" />
+                </g>
+                <!-- defenses (top) -->
+                <g
+                  font-family="Sora, sans-serif"
+                  font-weight="700"
+                  font-size="20"
+                  fill="#D7E0E6"
+                >
+                  <rect
+                    x="65"
+                    y="60"
+                    width="200"
+                    height="86"
+                    rx="6"
+                    fill="#0E141D"
+                    stroke="#2A3744"
+                    stroke-width="1.5"
+                  />
+                  <text x="165" y="110" text-anchor="middle">
+                    Stack canaries
+                  </text>
+                  <rect
+                    x="290"
+                    y="60"
+                    width="200"
+                    height="86"
+                    rx="6"
+                    fill="#0E141D"
+                    stroke="#2A3744"
+                    stroke-width="1.5"
+                  />
+                  <text x="390" y="110" text-anchor="middle">DEP / NX</text>
+                  <rect
+                    x="515"
+                    y="60"
+                    width="200"
+                    height="86"
+                    rx="6"
+                    fill="#0E141D"
+                    stroke="#2A3744"
+                    stroke-width="1.5"
+                  />
+                  <text x="615" y="110" text-anchor="middle">ASLR</text>
+                  <rect
+                    x="740"
+                    y="60"
+                    width="200"
+                    height="86"
+                    rx="6"
+                    fill="#0E141D"
+                    stroke="#2A3744"
+                    stroke-width="1.5"
+                  />
+                  <text x="840" y="110" text-anchor="middle">RELRO</text>
+                  <rect
+                    x="965"
+                    y="60"
+                    width="200"
+                    height="86"
+                    rx="6"
+                    fill="#0E141D"
+                    stroke="#2A3744"
+                    stroke-width="1.5"
+                  />
+                  <text x="1065" y="110" text-anchor="middle">CFI / CET</text>
+                  <rect
+                    x="1190"
+                    y="60"
+                    width="200"
+                    height="86"
+                    rx="6"
+                    fill="#0E141D"
+                    stroke="#2A3744"
+                    stroke-width="1.5"
+                  />
+                  <text x="1290" y="110" text-anchor="middle">PAC / MTE</text>
+                </g>
+                <!-- bypasses (bottom) -->
+                <g
+                  font-family="JetBrains Mono, monospace"
+                  font-size="17"
+                  fill="#F08A55"
+                >
+                  <rect
+                    x="60"
+                    y="300"
+                    width="210"
+                    height="70"
+                    rx="35"
+                    fill="#16202B"
+                    stroke="#E5641F"
+                    stroke-width="1.5"
+                  />
+                  <text x="165" text-anchor="middle">
+                    <tspan x="165" y="329">leak /</tspan>
+                    <tspan x="165" y="353">brute-force</tspan>
+                  </text>
+                  <rect
+                    x="285"
+                    y="300"
+                    width="210"
+                    height="70"
+                    rx="35"
+                    fill="#16202B"
+                    stroke="#E5641F"
+                    stroke-width="1.5"
+                  />
+                  <text x="390" text-anchor="middle">
+                    <tspan x="390" y="329">ret2libc /</tspan>
+                    <tspan x="390" y="353">ROP</tspan>
+                  </text>
+                  <rect
+                    x="510"
+                    y="300"
+                    width="210"
+                    height="70"
+                    rx="35"
+                    fill="#16202B"
+                    stroke="#E5641F"
+                    stroke-width="1.5"
+                  />
+                  <text x="615" text-anchor="middle">
+                    <tspan x="615" y="329">info leak /</tspan>
+                    <tspan x="615" y="353">JIT-ROP</tspan>
+                  </text>
+                  <rect
+                    x="735"
+                    y="300"
+                    width="210"
+                    height="70"
+                    rx="35"
+                    fill="#16202B"
+                    stroke="#E5641F"
+                    stroke-width="1.5"
+                  />
+                  <text x="840" text-anchor="middle">
+                    <tspan x="840" y="329">FSOP /</tspan>
+                    <tspan x="840" y="353">hooks</tspan>
+                  </text>
+                  <rect
+                    x="960"
+                    y="300"
+                    width="210"
+                    height="70"
+                    rx="35"
+                    fill="#16202B"
+                    stroke="#E5641F"
+                    stroke-width="1.5"
+                  />
+                  <text x="1065" text-anchor="middle">
+                    <tspan x="1065" y="329">DOP /</tspan>
+                    <tspan x="1065" y="353">COOP</tspan>
+                  </text>
+                  <rect
+                    x="1185"
+                    y="300"
+                    width="210"
+                    height="70"
+                    rx="35"
+                    fill="#16202B"
+                    stroke="#E5641F"
+                    stroke-width="1.5"
+                  />
+                  <text x="1290" text-anchor="middle">
+                    <tspan x="1290" y="329">PACMAN /</tspan>
+                    <tspan x="1290" y="353">Rowhammer</tspan>
+                  </text>
+                </g>
+                <!-- volume caption -->
+                <text
+                  x="1342"
+                  y="406"
+                  text-anchor="end"
+                  font-family="JetBrains Mono, monospace"
+                  font-size="15"
+                  fill="#62707C"
+                >
+                  …and dozens more
+                </text>
+              </svg>
+            </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">08 / 22</div>
+          <div class="pageno">08 / 28</div>
+        </section>
+
+        <!-- ===================== 09 · EXPLOITATION LADDER (ExploitBench tiers) ===================== -->
+        <section class="slide">
+          <div class="pad" style="display: flex; flex-direction: column">
+            <h2 class="reveal d1" style="font-size: 56px">
+              Exploitation is a <span class="glowtext">ladder.</span>
+            </h2>
+            <div
+              class="reveal d2"
+              style="flex: 1; display: flex; gap: 34px; align-items: center"
+            >
+              <!-- higher-tier axis -->
+              <div
+                style="
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                  justify-content: center;
+                  gap: 12px;
+                  padding-bottom: 6px;
+                "
+              >
+                <span
+                  style="color: var(--accent); font-size: 16px; line-height: 1"
+                  >▲</span
+                >
+                <span
+                  style="
+                    writing-mode: vertical-rl;
+                    transform: rotate(180deg);
+                    font-family: &quot;JetBrains Mono&quot;, monospace;
+                    font-size: 13px;
+                    letter-spacing: 0.22em;
+                    text-transform: uppercase;
+                    color: var(--mut);
+                  "
+                  >higher tier</span
+                >
+              </div>
+              <!-- tiers, T1 (top) → T5 (floor) -->
+              <div
+                style="
+                  flex: none;
+                  display: flex;
+                  flex-direction: column;
+                  gap: 30px;
+                  width: 100%;
+                "
+              >
+                <div style="display: flex; align-items: center; gap: 38px">
+                  <div
+                    style="
+                      width: 392px;
+                      border: 2px solid #e5641f;
+                      background: rgba(229, 100, 31, 0.16);
+                      border-radius: 12px;
+                      padding: 24px 28px;
+                    "
+                  >
+                    <div
+                      style="
+                        font-family: &quot;JetBrains Mono&quot;, monospace;
+                        font-size: 15px;
+                        letter-spacing: 0.1em;
+                        color: var(--mut);
+                      "
+                    >
+                      T1
+                    </div>
+                    <div
+                      style="
+                        font-family: &quot;Sora&quot;, sans-serif;
+                        font-weight: 800;
+                        font-size: 30px;
+                        color: var(--head);
+                        margin-top: 2px;
+                      "
+                    >
+                      Full control
+                    </div>
+                  </div>
+                  <div>
+                    <div
+                      style="
+                        font-family: &quot;JetBrains Mono&quot;, monospace;
+                        font-size: 13px;
+                        letter-spacing: 0.2em;
+                        color: var(--mut);
+                      "
+                    >
+                      CAPABILITIES
+                    </div>
+                    <div
+                      style="
+                        font-family: &quot;JetBrains Mono&quot;, monospace;
+                        font-size: 19px;
+                        color: var(--steel);
+                        margin-top: 6px;
+                      "
+                    >
+                      pc_control · arbitrary code execution
+                    </div>
+                  </div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 38px">
+                  <div
+                    style="
+                      width: 392px;
+                      border: 2px solid #c85f2c;
+                      background: rgba(229, 100, 31, 0.11);
+                      border-radius: 12px;
+                      padding: 24px 28px;
+                    "
+                  >
+                    <div
+                      style="
+                        font-family: &quot;JetBrains Mono&quot;, monospace;
+                        font-size: 15px;
+                        letter-spacing: 0.1em;
+                        color: var(--mut);
+                      "
+                    >
+                      T2
+                    </div>
+                    <div
+                      style="
+                        font-family: &quot;Sora&quot;, sans-serif;
+                        font-weight: 800;
+                        font-size: 30px;
+                        color: var(--head);
+                        margin-top: 2px;
+                      "
+                    >
+                      Generic primitives
+                    </div>
+                  </div>
+                  <div>
+                    <div
+                      style="
+                        font-family: &quot;JetBrains Mono&quot;, monospace;
+                        font-size: 13px;
+                        letter-spacing: 0.2em;
+                        color: var(--mut);
+                      "
+                    >
+                      CAPABILITIES
+                    </div>
+                    <div
+                      style="
+                        font-family: &quot;JetBrains Mono&quot;, monospace;
+                        font-size: 19px;
+                        color: var(--steel);
+                        margin-top: 6px;
+                      "
+                    >
+                      infoleak_binary · infoleak_libc · infoleak_stack ·
+                      arb_read · arb_write
+                    </div>
+                  </div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 38px">
+                  <div
+                    style="
+                      width: 392px;
+                      border: 2px solid #5e6a5c;
+                      background: rgba(157, 184, 198, 0.04);
+                      border-radius: 12px;
+                      padding: 24px 28px;
+                    "
+                  >
+                    <div
+                      style="
+                        font-family: &quot;JetBrains Mono&quot;, monospace;
+                        font-size: 15px;
+                        letter-spacing: 0.1em;
+                        color: var(--mut);
+                      "
+                    >
+                      T4
+                    </div>
+                    <div
+                      style="
+                        font-family: &quot;Sora&quot;, sans-serif;
+                        font-weight: 800;
+                        font-size: 30px;
+                        color: var(--head);
+                        margin-top: 2px;
+                      "
+                    >
+                      Reproduction
+                    </div>
+                  </div>
+                  <div>
+                    <div
+                      style="
+                        font-family: &quot;JetBrains Mono&quot;, monospace;
+                        font-size: 13px;
+                        letter-spacing: 0.2em;
+                        color: var(--mut);
+                      "
+                    >
+                      CAPABILITIES
+                    </div>
+                    <div
+                      style="
+                        font-family: &quot;JetBrains Mono&quot;, monospace;
+                        font-size: 19px;
+                        color: var(--steel);
+                        margin-top: 6px;
+                      "
+                    >
+                      asan · crash
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="deck-tag">Popping the Shell</div>
+          <div class="pageno">09 / 28</div>
         </section>
 
         <!-- ===================== 11 · ERA I DETAIL ===================== -->
@@ -1741,10 +2302,252 @@
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">09 / 22</div>
+          <div class="pageno">10 / 28</div>
         </section>
 
-        <!-- ===================== 12 · DIVIDER PART II ===================== -->
+        <!-- ===================== 11 · MY GOAL ===================== -->
+        <section class="slide">
+          <div class="pad center">
+            <div
+              class="reveal d1"
+              style="
+                font-family: &quot;JetBrains Mono&quot;, monospace;
+                font-size: 20px;
+                letter-spacing: 0.34em;
+                text-transform: uppercase;
+                color: var(--accent);
+                margin-bottom: 32px;
+              "
+            >
+              My goal
+            </div>
+            <h2
+              class="reveal d2"
+              style="font-size: 80px; line-height: 1.06; max-width: 1500px"
+            >
+              <span class="glowtext">Automatically</span> check the world's
+              software for exploitable bugs.
+            </h2>
+          </div>
+          <div class="deck-tag">Popping the Shell</div>
+          <div class="pageno">11 / 28</div>
+        </section>
+
+        <!-- ===================== 12 · MANUAL EFFORT DOESN'T SCALE ===================== -->
+        <section class="slide">
+          <div class="pad" style="display: flex; flex-direction: column">
+            <h2 class="reveal d1" style="font-size: 60px">
+              Manual effort doesn't <span class="glowtext">scale.</span>
+            </h2>
+            <div
+              class="reveal d2"
+              style="
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                gap: 30px;
+                max-width: 1500px;
+              "
+            >
+              <div style="display: flex; align-items: center; gap: 30px">
+                <div
+                  style="
+                    width: 270px;
+                    text-align: right;
+                    font-family: &quot;Sora&quot;, sans-serif;
+                    font-weight: 700;
+                    font-size: 26px;
+                    color: var(--head);
+                  "
+                >
+                  United States
+                </div>
+                <div
+                  style="
+                    flex: 1;
+                    height: 40px;
+                    background: rgba(157, 184, 198, 0.06);
+                    border-radius: 6px;
+                    position: relative;
+                  "
+                >
+                  <div
+                    style="
+                      position: absolute;
+                      left: 0;
+                      top: 0;
+                      bottom: 0;
+                      width: 4.2%;
+                      background: var(--accent);
+                      border-radius: 6px;
+                    "
+                  ></div>
+                </div>
+                <div
+                  style="
+                    width: 96px;
+                    font-family: &quot;JetBrains Mono&quot;, monospace;
+                    font-size: 24px;
+                    color: var(--soft);
+                  "
+                >
+                  4.2%
+                </div>
+              </div>
+              <div style="display: flex; align-items: center; gap: 30px">
+                <div
+                  style="
+                    width: 270px;
+                    text-align: right;
+                    font-family: &quot;Sora&quot;, sans-serif;
+                    font-weight: 700;
+                    font-size: 26px;
+                    color: var(--head);
+                  "
+                >
+                  India
+                </div>
+                <div
+                  style="
+                    flex: 1;
+                    height: 40px;
+                    background: rgba(157, 184, 198, 0.06);
+                    border-radius: 6px;
+                    position: relative;
+                  "
+                >
+                  <div
+                    style="
+                      position: absolute;
+                      left: 0;
+                      top: 0;
+                      bottom: 0;
+                      width: 17.8%;
+                      background: var(--accent);
+                      border-radius: 6px;
+                    "
+                  ></div>
+                </div>
+                <div
+                  style="
+                    width: 96px;
+                    font-family: &quot;JetBrains Mono&quot;, monospace;
+                    font-size: 24px;
+                    color: var(--soft);
+                  "
+                >
+                  17.8%
+                </div>
+              </div>
+              <div style="display: flex; align-items: center; gap: 30px">
+                <div
+                  style="
+                    width: 270px;
+                    text-align: right;
+                    font-family: &quot;Sora&quot;, sans-serif;
+                    font-weight: 700;
+                    font-size: 26px;
+                    color: var(--head);
+                  "
+                >
+                  China
+                </div>
+                <div
+                  style="
+                    flex: 1;
+                    height: 40px;
+                    background: rgba(157, 184, 198, 0.06);
+                    border-radius: 6px;
+                    position: relative;
+                  "
+                >
+                  <div
+                    style="
+                      position: absolute;
+                      left: 0;
+                      top: 0;
+                      bottom: 0;
+                      width: 17.4%;
+                      background: var(--accent);
+                      border-radius: 6px;
+                    "
+                  ></div>
+                </div>
+                <div
+                  style="
+                    width: 96px;
+                    font-family: &quot;JetBrains Mono&quot;, monospace;
+                    font-size: 24px;
+                    color: var(--soft);
+                  "
+                >
+                  17.4%
+                </div>
+              </div>
+              <div style="display: flex; align-items: center; gap: 30px">
+                <div
+                  style="
+                    width: 270px;
+                    text-align: right;
+                    font-family: &quot;Sora&quot;, sans-serif;
+                    font-weight: 700;
+                    font-size: 26px;
+                    color: var(--head);
+                  "
+                >
+                  All others
+                </div>
+                <div
+                  style="
+                    flex: 1;
+                    height: 40px;
+                    background: rgba(157, 184, 198, 0.06);
+                    border-radius: 6px;
+                    position: relative;
+                  "
+                >
+                  <div
+                    style="
+                      position: absolute;
+                      left: 0;
+                      top: 0;
+                      bottom: 0;
+                      width: 60.6%;
+                      background: var(--accent);
+                      border-radius: 6px;
+                    "
+                  ></div>
+                </div>
+                <div
+                  style="
+                    width: 96px;
+                    font-family: &quot;JetBrains Mono&quot;, monospace;
+                    font-size: 24px;
+                    color: var(--soft);
+                  "
+                >
+                  60.6%
+                </div>
+              </div>
+            </div>
+            <div
+              class="reveal d3"
+              style="
+                font-family: &quot;JetBrains Mono&quot;, monospace;
+                font-size: 15px;
+                letter-spacing: 0.08em;
+                color: var(--mut);
+              "
+            >
+              Share of world population · ~8.1B people
+            </div>
+          </div>
+          <div class="deck-tag">Popping the Shell</div>
+          <div class="pageno">12 / 28</div>
+        </section>
+
+        <!-- ===================== 13 · DIVIDER PART II ===================== -->
         <section class="slide divider">
           <div class="pad center">
             <div class="numeral reveal d1">II</div>
@@ -1752,10 +2555,118 @@
             <h2 class="reveal d3">We made the<br />craft autonomous.</h2>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">10 / 22</div>
+          <div class="pageno">13 / 28</div>
         </section>
 
-        <!-- ===================== 13 · CGC / MAYHEM ===================== -->
+        <!-- ===================== 14 · CGC ANNOUNCEMENT (full-bleed stage) ===================== -->
+        <section class="slide">
+          <!-- full-bleed CGC final-event photo -->
+          <img
+            src="assets/cgc-stage.jpg"
+            alt="DARPA Cyber Grand Challenge final, DEF CON 2016"
+            style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(0.78) contrast(1.03); z-index: 0"
+          />
+          <!-- legibility scrim: dark on the left + dark at the bottom -->
+          <div
+            style="position: absolute; inset: 0; z-index: 1; background: linear-gradient(90deg, rgba(6, 8, 12, 0.95) 0%, rgba(6, 8, 12, 0.78) 40%, rgba(6, 8, 12, 0.3) 72%, rgba(6, 8, 12, 0.12) 100%), linear-gradient(0deg, rgba(6, 8, 12, 0.75) 0%, rgba(6, 8, 12, 0) 26%)"
+          ></div>
+          <div class="pad center" style="position: relative; z-index: 2">
+            <div
+              class="reveal d1"
+              style="font-family: 'JetBrains Mono', monospace; font-size: 20px; letter-spacing: 0.34em; text-transform: uppercase; color: var(--accent); margin-bottom: 30px"
+            >
+              2016 · DARPA · DEF CON, Las Vegas
+            </div>
+            <h2 class="reveal d2" style="font-size: 92px; line-height: 1.0">
+              The <span class="glowtext">Cyber Grand Challenge.</span>
+            </h2>
+            <p class="body reveal d3" style="margin-top: 38px; font-size: 34px; max-width: 1180px">
+              A live tournament between machines:
+              <b style="color: var(--head)">find the bug, prove the exploit, ship the patch</b>
+              — fully autonomous, no humans in the loop.
+            </p>
+          </div>
+          <div
+            style="position: absolute; right: 64px; bottom: 90px; z-index: 2; font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: 0.08em; color: #6b7884"
+          >
+            DARPA CGC final · DEF CON 2016 · photo: DARPA (CC0)
+          </div>
+          <div class="deck-tag" style="z-index: 2">Popping the Shell</div>
+          <div class="pageno" style="z-index: 2">14 / 28</div>
+        </section>
+
+        <!-- ===================== 15 · FUZZING ===================== -->
+        <section class="slide">
+          <div class="pad">
+            <h2 class="reveal d1" style="font-size: 56px">
+              How machines find bugs: <span class="glowtext">fuzzing.</span>
+            </h2>
+            <p class="body reveal d2" style="margin-top: 14px; font-size: 24px; color: var(--steel); max-width: 1150px">
+              Mutate the input, run, watch for a crash — millions of times a
+              second.
+            </p>
+            <div
+              class="reveal d3"
+              style="margin-top: 30px; border: 1px solid var(--line); border-radius: 12px; background: #0a0e14; padding: 24px 32px; max-width: 1560px; font-family: 'JetBrains Mono', monospace"
+            >
+              <div
+                style="display: flex; align-items: baseline; gap: 50px; border-bottom: 1px solid var(--line); padding-bottom: 16px; margin-bottom: 16px; font-size: 16px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mut)"
+              >
+                <div>
+                  TARGET
+                  <span style="color: var(--soft); text-transform: none">parse_input()</span>
+                </div>
+                <div style="margin-left: auto">
+                  EXECUTIONS
+                  <span id="fuzzExec" style="color: var(--soft); font-size: 28px; letter-spacing: 0">0</span>
+                </div>
+                <div>
+                  CRASHES
+                  <span id="fuzzCrash" style="color: var(--accent); font-size: 28px; letter-spacing: 0">0</span>
+                </div>
+              </div>
+              <div
+                id="fuzzlog"
+                style="height: 300px; overflow: hidden; font-size: 18px; line-height: 1.75; color: var(--steel)"
+              ></div>
+            </div>
+          </div>
+          <div class="deck-tag">Popping the Shell</div>
+          <div class="pageno">15 / 28</div>
+        </section>
+
+        <!-- ===================== 16 · BINARY PATCHING ===================== -->
+        <section class="slide">
+          <div class="pad" style="display: flex; flex-direction: column">
+            <h2 class="reveal d1" style="font-size: 56px">
+              And patch the binary — <span class="glowtext">block the exploit.</span>
+            </h2>
+            <div class="reveal d2" style="flex: 1; display: flex; align-items: center">
+              <div
+                style="font-family: 'JetBrains Mono', monospace; font-size: 21px; line-height: 1.9; background: #0a0e14; border: 1px solid var(--line); border-radius: 12px; padding: 26px 40px; margin: 0 auto"
+              >
+                <div style="white-space: pre; color: var(--mut)">  <span style="color: var(--head)">parse_input:</span></div>
+                <div style="white-space: pre; color: var(--mut)">      lea    rsi, [input]</div>
+                <div style="white-space: pre; color: var(--mut)">      lea    rdi, [buf]            <span style="color: #3a4751">; 64-byte stack buffer</span></div>
+                <div style="white-space: pre; background: rgba(229, 100, 31, 0.1); color: var(--soft)">+     call   strlen                <span style="color: #9a6a4a">; measure the input</span></div>
+                <div style="white-space: pre; background: rgba(229, 100, 31, 0.1); color: var(--soft)">+     cmp    rax, 64               <span style="color: #9a6a4a">; longer than buf?</span></div>
+                <div style="white-space: pre; background: rgba(229, 100, 31, 0.1); color: var(--soft)">+     jg     bail                  <span style="color: #9a6a4a">; refuse — don't overflow</span></div>
+                <div style="white-space: pre; color: var(--mut)">      call   strcpy                <span style="color: #3a4751">; the vulnerable copy</span></div>
+                <div style="white-space: pre; color: var(--mut)">      ...</div>
+                <div style="white-space: pre; background: rgba(229, 100, 31, 0.1); color: var(--soft)">+   bail:</div>
+                <div style="white-space: pre; background: rgba(229, 100, 31, 0.1); color: var(--soft)">+     call   exit                  <span style="color: #9a6a4a">; exit cleanly — exploit prevented</span></div>
+              </div>
+            </div>
+            <p class="reveal d3" style="font-family: 'JetBrains Mono', monospace; font-size: 18px; color: var(--mut)">
+              Same bug, same input — it now hits the guard and exits. The shell
+              never pops.
+            </p>
+          </div>
+          <div class="deck-tag">Popping the Shell</div>
+          <div class="pageno">16 / 28</div>
+        </section>
+
+        <!-- ===================== 17 · CGC / MAYHEM ===================== -->
         <section class="slide">
           <div class="pad center">
             <h2
@@ -1777,7 +2688,7 @@
             </p>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">11 / 22</div>
+          <div class="pageno">17 / 28</div>
         </section>
 
         <!-- ===================== 14 · AIxCC ===================== -->
@@ -1800,7 +2711,7 @@
             </p>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">12 / 22</div>
+          <div class="pageno">18 / 28</div>
         </section>
 
         <!-- ===================== 15 · THE GAP ===================== -->
@@ -1866,7 +2777,7 @@
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">13 / 22</div>
+          <div class="pageno">19 / 28</div>
         </section>
 
         <!-- ===================== 16 · QUOTE ===================== -->
@@ -1880,7 +2791,7 @@
             </p>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">14 / 22</div>
+          <div class="pageno">20 / 28</div>
         </section>
 
         <!-- ===================== 17 · DIVIDER PART III ===================== -->
@@ -1895,7 +2806,7 @@
             </h2>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">15 / 22</div>
+          <div class="pageno">21 / 28</div>
         </section>
 
         <!-- ===================== 18 · EXPLOITBENCH (the ruler) ===================== -->
@@ -1959,7 +2870,7 @@
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">16 / 22</div>
+          <div class="pageno">22 / 28</div>
         </section>
 
         <!-- ===================== 19 · MYTHOS (the climb) ===================== -->
@@ -2024,7 +2935,7 @@
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">17 / 22</div>
+          <div class="pageno">23 / 28</div>
         </section>
 
         <!-- ===================== 20 · ENGINE OF INEVITABILITY ===================== -->
@@ -2046,7 +2957,7 @@
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">18 / 22</div>
+          <div class="pageno">24 / 28</div>
         </section>
 
         <!-- ===================== 21 · QUOTE ===================== -->
@@ -2061,7 +2972,7 @@
             </p>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">19 / 22</div>
+          <div class="pageno">25 / 28</div>
         </section>
 
         <!-- ===================== 22 · WHAT IT MEANS FOR DEFENDERS ===================== -->
@@ -2106,7 +3017,7 @@
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">20 / 22</div>
+          <div class="pageno">26 / 28</div>
         </section>
 
         <!-- ===================== 23 · REMEMBER ONE PHRASE ===================== -->
@@ -2146,7 +3057,7 @@
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">21 / 22</div>
+          <div class="pageno">27 / 28</div>
         </section>
 
         <!-- ===================== 24 · CLOSING ===================== -->
@@ -2188,6 +3099,19 @@
             </div>
           </div>
         </section>
+
+        <!-- ===================== SPARE · QUOTE (not in the deck flow) ===================== -->
+        <section class="slide spare">
+          <div class="pad center">
+            <div class="quote-mark reveal d1">// negotiation</div>
+            <p class="quote reveal d2">
+              A crash is not an exploit.<br />
+              A crash is the beginning of a
+              <span class="accent">negotiation with the machine.</span>
+            </p>
+          </div>
+          <div class="deck-tag">Popping the Shell — spare</div>
+        </section>
       </main>
     </div>
 
@@ -2218,7 +3142,7 @@
    =========================================================== */
       class SlidePresentation {
         constructor() {
-          this.slides = [...document.querySelectorAll(".slide")];
+          this.slides = [...document.querySelectorAll(".slide:not(.spare)")];
           this.stage = document.getElementById("deckStage");
           this.progress = document.getElementById("progress");
           this.counter = document.getElementById("counter");
@@ -2369,7 +3293,7 @@
               return;
             }
             // CRITICAL: rebind the controller to the freshly-restored nodes and reset to the title
-            deck.slides = [...stage.querySelectorAll(".slide")];
+            deck.slides = [...stage.querySelectorAll(".slide:not(.spare)")];
             deck.i = 0;
           } catch (e) {}
         },
@@ -2471,15 +3395,21 @@
       const NOTES = [
         "Open warm — thank SVCC. Set the scene: for most of cyber's history, offensive capability was scarce; popping a shell took elite, years-earned skill. That era is ending — this talk is its eulogy. [~0:00]",
         "Slide 2 — the predecessor at the wall. Urbain Le Verrier: in 1846 he predicted Neptune from gravity's math alone (triumph — found exactly where he pointed), then aimed the same method at Mercury's wobble and predicted a planet, 'Vulcan,' that never existed — astronomers hunted it for decades. The field's greatest practitioner hit the limit of his paradigm. Set up the human stakes; don't resolve yet. (He died in 1877, before Einstein — so the 'reset' belongs to the field, not to him personally.) [~1:30]",
-        "Slide 3 — Einstein solves it, then the gut-punch question. 1915: no hidden planet — gravity is the curvature of spacetime; the problem is solved. (Fact you can drop in: the 43 arcsec/century wobble they'd measured for decades was his first proof, reproduced exactly.) Then the empathy question — how did the Vulcan researchers feel reading Einstein? Their life's work just dissolved. DON'T answer it here; let it hang. The next slide (the J-curve) answers: up close disruption feels like loss, but it's a launchpad — the work moved up the stack. [~2:45]",
+        "Slide 3 — Einstein solves it, then the gut-punch question. 1915: Einstein's GENERAL RELATIVITY explains Mercury's orbit as spacetime curvature — no hidden planet needed, so Vulcan is gone. (Fact you can drop in: the 43 arcsec/century perihelion shift was general relativity's first proof, reproduced exactly.) Then the empathy question — how did the Vulcan researchers feel reading Einstein? Their life's work just dissolved. DON'T answer it here; let it hang. The next slide (the J-curve) answers: up close disruption feels like loss, but it's a launchpad — the work moved up the stack. [~2:45]",
         "Slide 3 — the disruption lesson (J-curve). Security has matured ad-hoc -> automated -> autonomous; at each step the work didn't disappear, it moved up the stack. Read the curve aloud: disruption is a dip up close — people retool, it stings — and a climb from a step back, toward new frontiers. We're in the dip right now. Callback to Einstein: the breakthrough felt like an ending to some; it became a century of new work. Bridge to the agenda: to see the climb ahead, trace where we came from. [~3:30]",
         "The map for the rest of the talk: three eras. Morris worm -> CGC -> AIxCC -> now. Keep this quick. [~5:30]",
         "Beat — Part One. Pose the framing question the history will answer: it's no longer whether AI can find bugs, but how far it goes after the bug is found. [~7:00]",
         "Slide 7 — what classic exploitation was: breaking memory safety. Walk the stack: a fixed char buf[64] sits below the saved EBP and the return address; strcpy copies attacker input with no bounds check, so a long input overruns the buffer and overwrites the saved frame pointer and return address — hijacking control flow. The Morris Worm (1988) spread on exactly this bug class. This anchors Era I: the craft was memory-safety wizardry. [~11:00]",
-        "Verbatim, slowly, then pause: 'A crash is not an exploit. A crash is the beginning of a negotiation with the machine.' [~13:00]",
+        "Slide 8 — the arms race. Each defense that went up (stack canaries, DEP/NX, ASLR, RELRO, CFI/CET, PAC/MTE) met a more creative bypass (leak/brute-force, ret2libc→ROP, info-leak/JIT-ROP, FSOP, DOP/COOP, PACMAN/Rowhammer). The point: defenses don't end exploitation — they escalate its creativity. And there are dozens more. [~13:00]",
+        "Slide 9 — exploitation is a ladder. Don't grade it pass/fail — it's tiers: T4 reproduction (the crash floor: asan, crash) → T2 generic primitives (infoleaks, arbitrary read/write) → T1 full control (PC control, arbitrary code execution). Crash-class benchmarks stop at the floor; the real climb is everything above it, and every rung is graded independently so partial progress still counts. (This is ExploitBench's tier framing — it returns in Part III.) [~13:45]",
         "Era I, Morris worm to 2016. Artisanal: manual RE, debugging, fuzzing, hand-built primitives and chains. Skill was rare because the feedback loop was slow and the reasoning implicit — the black book of tricks. Capability lived in people. [~13:45]",
-        "Part Two — connect to my own history here. [~15:30]",
-        "2016 DARPA Cyber Grand Challenge. Machines reasoned about binaries — found bugs, generated exploits, patched — live, no human in the loop. Mayhem won. Line: CGC proved machines could play the game. [~16:00]",
+        "Slide 11 — my goal (the personal turn). State it plainly: automatically check the WORLD'S software for exploitable bugs. This is the mission behind CGC / Mayhem / AIxCC — and it forces the question: humans can't do that by hand. [~14:45]",
+        "Slide 12 — manual effort doesn't scale. Bars = share of world population (US 4.2%, India 17.8%, China 17.4%, all others 60.6%; ~8.1B people). Point: the world's software is global and enormous, while expert exploit-developers number in the thousands. A handful of humans can't manually check the planet's code — which is exactly why we turn to autonomy. Hands the baton to Part II. [~15:30]",
+        "Part Two — connect to my own history here. [~16:00]",
+        "Slide 14 — announce the Cyber Grand Challenge. 2016, DARPA, at DEF CON in Las Vegas. The goal: a fully autonomous Cyber Reasoning System that finds the bug, proves the exploit, and ships the patch in real time — head-to-head against other machines, no humans in the loop. ($2M first prize.) [~16:30]",
+        "Slide 15 — fuzzing, the engine of discovery. The dominant way bugs got found: mutate inputs, run, watch for crashes — millions of executions a second. The animation shows execs climbing and the occasional crash. CGC bug-finding rode on fuzzing plus symbolic execution. [~17:15]",
+        "Slide 16 — binary patching (the defensive half). CGC systems didn't just attack — they hardened their own binaries autonomously, with no source code. Show the inserted guard: measure the input, and if it's longer than the buffer, jump to a clean exit. Same bug, same exploit input — now it hits the guard and exits. The patch prevented exploitation. [~17:45]",
+        "2016 DARPA Cyber Grand Challenge — the result. Machines reasoned about binaries — found bugs, generated exploits, patched — live, no human in the loop. Mayhem won. Line: CGC proved machines could play the game. [~18:30]",
         "2025 DARPA AIxCC. From contrived binaries to real, modern software: AI agents doing discovery and repair across open-source workflows. Line: AIxCC asked whether they could play it on real software. [~18:00]",
         "The catch: industry AND most AI benchmarks still treat 'found a crash' as 'exploited the system.' That's one rung of seven. Sets up why we need a better ruler. [~20:00]",
         "Verbatim: 'CGC proved machines could play the game. AIxCC asked whether they could play it on real software.' [~21:30]",
@@ -2750,6 +3680,47 @@ button:hover{border-color:#E5641F;color:#E5641F}
       document.querySelectorAll(".aloop-mount").forEach((m) => {
         if (!m.querySelector("svg")) m.innerHTML = LOOP_SVG;
       });
+    </script>
+
+    <script>
+      /* Fuzzing slide — stream iterations and count execs/crashes while the
+         slide is on screen. Pure runtime JS (browser), pauses when not active. */
+      (function () {
+        const exec = document.getElementById("fuzzExec");
+        const crashEl = document.getElementById("fuzzCrash");
+        const log = document.getElementById("fuzzlog");
+        if (!exec || !log) return;
+        const slide = exec.closest(".slide");
+        let execs = 0;
+        let crashes = 0;
+        const hex = () =>
+          Array.from({ length: 10 }, () =>
+            Math.floor(Math.random() * 256)
+              .toString(16)
+              .padStart(2, "0")
+          ).join(" ");
+        setInterval(() => {
+          if (!slide.classList.contains("active")) return;
+          execs += 40000 + Math.floor(Math.random() * 130000);
+          exec.textContent = execs.toLocaleString();
+          const line = document.createElement("div");
+          if (Math.random() < 0.045) {
+            crashes++;
+            crashEl.textContent = crashes;
+            line.innerHTML =
+              '<span style="color:#E5641F">exec → ' +
+              hex() +
+              "   ✕ SIGSEGV — crash</span>";
+          } else {
+            line.innerHTML =
+              '<span style="color:#5C6B78">exec →</span> ' +
+              hex() +
+              '   <span style="color:#5C6B78">ok</span>';
+          }
+          log.appendChild(line);
+          while (log.children.length > 9) log.removeChild(log.firstChild);
+        }, 85);
+      })();
     </script>
   </body>
 </html>
