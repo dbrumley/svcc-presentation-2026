@@ -577,8 +577,8 @@
         right: 80px;
         top: 50%;
         transform: translateY(-50%);
-        width: 500px;
-        opacity: 0.45;
+        width: 520px;
+        opacity: 0.6;
         z-index: 0;
       }
 
@@ -715,12 +715,23 @@
    =========================================================== */
       .divider .numeral {
         font-weight: 800;
-        font-size: 300px;
+        font-size: 340px;
         line-height: 0.8;
         color: transparent;
-        -webkit-text-stroke: 2px var(--dim);
-        text-stroke: 2px var(--dim);
+        -webkit-text-stroke: 2px var(--accent);
+        text-stroke: 2px var(--accent);
         letter-spacing: -0.02em;
+        filter: drop-shadow(0 0 30px rgba(229, 100, 31, 0.28));
+        animation: numeralGlow 5s ease-in-out infinite;
+      }
+      @keyframes numeralGlow {
+        0%,
+        100% {
+          filter: drop-shadow(0 0 22px rgba(229, 100, 31, 0.16));
+        }
+        50% {
+          filter: drop-shadow(0 0 46px rgba(229, 100, 31, 0.42));
+        }
       }
       .divider .part {
         font-family: "JetBrains Mono", monospace;
@@ -734,6 +745,63 @@
         font-size: 108px;
         max-width: 1400px;
         margin-top: 24px;
+      }
+      /* divider atmosphere — a slow-drifting glow behind the numeral */
+      .slide.divider::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        background: radial-gradient(
+          1000px 720px at 32% 50%,
+          rgba(229, 100, 31, 0.16),
+          transparent 62%
+        );
+        animation: glowDrift 9s ease-in-out infinite;
+      }
+      .slide.divider .pad {
+        z-index: 1;
+      }
+      @keyframes glowDrift {
+        0%,
+        100% {
+          opacity: 0.6;
+          transform: translateX(0);
+        }
+        50% {
+          opacity: 1;
+          transform: translateX(46px);
+        }
+      }
+      /* spotlight — soft glow behind centered hero text */
+      .slide.spotlight::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        background: radial-gradient(
+          1100px 760px at 50% 46%,
+          rgba(229, 100, 31, 0.12),
+          transparent 60%
+        );
+      }
+      .slide.spotlight .pad {
+        z-index: 1;
+      }
+      /* hero-in — blur + scale entrance for big statements */
+      .hero-in {
+        opacity: 0;
+        transform: scale(0.96);
+        filter: blur(10px);
+        transition: opacity 0.9s var(--ease), transform 0.9s var(--ease),
+          filter 0.9s var(--ease);
+      }
+      .slide.visible .hero-in {
+        opacity: 1;
+        transform: none;
+        filter: none;
       }
 
       /* ===========================================================
@@ -2306,7 +2374,7 @@
         </section>
 
         <!-- ===================== 11 · MY GOAL ===================== -->
-        <section class="slide">
+        <section class="slide spotlight">
           <div class="pad center">
             <div
               class="reveal d1"
@@ -2322,7 +2390,7 @@
               My goal
             </div>
             <h2
-              class="reveal d2"
+              class="hero-in d2"
               style="font-size: 80px; line-height: 1.06; max-width: 1500px"
             >
               <span class="glowtext">Automatically</span> check the world's
@@ -2691,27 +2759,39 @@
           <div class="pageno">17 / 28</div>
         </section>
 
-        <!-- ===================== 14 · AIxCC ===================== -->
+        <!-- ===================== 14 · AIxCC (full-bleed) ===================== -->
         <section class="slide">
-          <div class="pad center">
-            <h2
-              class="reveal d2"
-              style="margin-top: 38px; font-size: 74px; max-width: 1500px"
+          <img
+            src="assets/aixcc-17-team-atlanta.jpg"
+            alt="DARPA AI Cyber Challenge final, DEF CON 2025 — winning team"
+            style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(0.72) contrast(1.04); z-index: 0"
+          />
+          <div
+            style="position: absolute; inset: 0; z-index: 1; background: linear-gradient(90deg, rgba(6, 8, 12, 0.95) 0%, rgba(6, 8, 12, 0.8) 40%, rgba(6, 8, 12, 0.32) 72%, rgba(6, 8, 12, 0.12) 100%), linear-gradient(0deg, rgba(6, 8, 12, 0.78) 0%, rgba(6, 8, 12, 0) 26%)"
+          ></div>
+          <div class="pad center" style="position: relative; z-index: 2">
+            <div
+              class="reveal d1"
+              style="font-family: 'JetBrains Mono', monospace; font-size: 20px; letter-spacing: 0.34em; text-transform: uppercase; color: var(--accent); margin-bottom: 28px"
             >
+              2025 · DARPA AI Cyber Challenge
+            </div>
+            <h2 class="reveal d2" style="font-size: 84px; line-height: 1.02; max-width: 1180px">
               Could they play it on <span class="glowtext">real software?</span>
             </h2>
-            <p class="body reveal d3" style="margin-top: 38px">
-              AIxCC pushed the vision into modern code:
-              <b style="color: var(--head)">AI agents</b> doing vulnerability
-              discovery and repair across real, open-source software workflows.
-            </p>
-            <p class="cmd reveal d4" style="margin-top: 40px">
-              <span class="p">aixcc@oss:~#</span> from contrived binaries → the
-              code the world actually runs.
+            <p class="body reveal d3" style="margin-top: 34px; font-size: 30px; max-width: 1080px">
+              <b style="color: var(--head)">AI agents</b> finding and repairing
+              vulnerabilities across real, open-source code — the software the
+              world actually runs.
             </p>
           </div>
-          <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">18 / 28</div>
+          <div
+            style="position: absolute; right: 64px; bottom: 90px; z-index: 2; font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: 0.08em; color: #6b7884"
+          >
+            DARPA AIxCC final · DEF CON 2025 · photo: DARPA / M. Dombro
+          </div>
+          <div class="deck-tag" style="z-index: 2">Popping the Shell</div>
+          <div class="pageno" style="z-index: 2">18 / 28</div>
         </section>
 
         <!-- ===================== 15 · THE GAP ===================== -->
@@ -2781,10 +2861,10 @@
         </section>
 
         <!-- ===================== 16 · QUOTE ===================== -->
-        <section class="slide">
+        <section class="slide spotlight">
           <div class="pad center">
             <div class="quote-mark reveal d1">// the bridge</div>
-            <p class="quote reveal d2">
+            <p class="quote hero-in d2">
               CGC proved machines could play the game.<br />
               AIxCC asked whether they could play it on
               <span class="accent">real software.</span>
@@ -2874,11 +2954,11 @@
         </section>
 
         <!-- ===================== 19 · MYTHOS (the climb) ===================== -->
-        <section class="slide">
+        <section class="slide spotlight">
           <div class="pad between">
             <div>
               <h2
-                class="reveal d2"
+                class="hero-in d2"
                 style="margin-top: 28px; font-size: 58px; max-width: 1000px"
               >
                 The ladder <span class="glowtext">can be climbed.</span>
@@ -2961,10 +3041,10 @@
         </section>
 
         <!-- ===================== 21 · QUOTE ===================== -->
-        <section class="slide">
+        <section class="slide spotlight">
           <div class="pad center">
             <div class="quote-mark reveal d1">// predictable</div>
-            <p class="quote reveal d2" style="font-size: 70px">
+            <p class="quote hero-in d2" style="font-size: 70px">
               The moment a capability becomes
               <span class="accent">measurable</span>, it becomes
               <span class="accent">trainable</span>. And the moment it becomes
@@ -3066,14 +3146,18 @@
             class="aloop aloop-close aloop-mount aloop--mini"
             aria-hidden="true"
           ></div>
+          <div
+            aria-hidden="true"
+            style="position: absolute; inset: 0; z-index: 0; pointer-events: none; background: radial-gradient(1000px 760px at 28% 48%, rgba(229, 100, 31, 0.13), transparent 60%)"
+          ></div>
           <div class="title-wrap" style="z-index: 1">
             <div class="title-top reveal d1">
               <span class="dot"></span><span>The Mythos moment</span>
             </div>
             <div>
               <p
-                class="quote reveal d2"
-                style="font-size: 58px; max-width: 1180px"
+                class="quote hero-in d2"
+                style="font-size: 66px; max-width: 1220px"
               >
                 The Mythos moment isn't that humans are obsolete. It's that
                 security is becoming measurable — and measurable becomes
