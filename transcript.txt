@@ -1,0 +1,232 @@
+THE EVOLUTION OF POPPING THE SHELL — From Craft to Computation
+Speaker transcript / notes  ·  Dr. David Brumley  ·  SVCC keynote, Thu 11 Jun 2026
+38 slides  ·  generated from popping-the-shell.html
+==============================================================================
+
+SLIDE 1  [title/closing]
+The Evolution of Popping the Shell: From Craft to Computation
+------------------------------------------------------------------------------
+Open warm — thank SVCC. Set the scene: for most of cyber's history, offensive capability was scarce; popping a shell took elite, years-earned skill. That era is ending — this talk is its eulogy. [~0:00]
+
+
+SLIDE 2  [02 / 38]
+Scientists searched for decades for planet Vulcan.
+------------------------------------------------------------------------------
+Slide 2 — the predecessor at the wall. Urbain Le Verrier: in 1846 he predicted Neptune from gravity's math alone (triumph — found exactly where he pointed), then aimed the same method at Mercury's wobble and predicted a planet, 'Vulcan,' that never existed — astronomers hunted it for decades. The field's greatest practitioner hit the limit of his paradigm. Set up the human stakes; don't resolve yet. (He died in 1877, before Einstein — so the 'reset' belongs to the field, not to him personally.) [~1:30]
+
+
+SLIDE 3  [03 / 38]
+Then general relativity explained Mercury's orbit — no Vulcan.
+------------------------------------------------------------------------------
+Slide 3 — Einstein solves it, then the gut-punch question. 1915: Einstein's GENERAL RELATIVITY explains Mercury's orbit as spacetime curvature — no hidden planet needed, so Vulcan is gone. (Fact you can drop in: the 43 arcsec/century perihelion shift was general relativity's first proof, reproduced exactly.) Then the empathy question — how did the Vulcan researchers feel reading Einstein? Their life's work just dissolved. DON'T answer it here; let it hang. The next slide (the J-curve) answers: up close disruption feels like loss, but it's a launchpad — the work moved up the stack. [~2:45]
+
+
+SLIDE 4  [04 / 38]
+Up close, disruption looks like loss — step back, it's inevitable
+------------------------------------------------------------------------------
+Slide 3 — the disruption lesson (J-curve). Security has matured craft -> automated -> intelligent; at each step the work didn't disappear, it moved up the stack. Read the curve aloud: disruption is a dip up close — people retool, it stings — and a climb from a step back, toward new frontiers. We're in the dip right now. Callback to Einstein: the breakthrough felt like an ending to some; it became a century of new work. Bridge to the agenda: to see the climb ahead, trace where we came from. [~3:30]
+
+
+SLIDE 5  [05 / 38]
+Agenda
+------------------------------------------------------------------------------
+The map for the rest of the talk: three eras. Morris worm -> CGC -> AIxCC -> now. Keep this quick. [~5:30]
+
+
+SLIDE 6  [06 / 38]
+Part One — The craft.
+------------------------------------------------------------------------------
+Beat — Part One. Pose the framing question the history will answer: it's no longer whether AI can find bugs, but how far it goes after the bug is found. [~7:00]
+
+
+SLIDE 7  [07 / 38]
+As defenses were added, exploitation got creative.
+------------------------------------------------------------------------------
+Slide 8 — the arms race. Each defense that went up (stack canaries, DEP/NX, ASLR, RELRO, CFI/CET, PAC/MTE) met a more creative bypass (leak/brute-force, ret2libc→ROP, info-leak/JIT-ROP, FSOP, DOP/COOP, PACMAN/Rowhammer). The point: defenses don't end exploitation — they escalate its creativity. And there are dozens more. [~13:00]
+
+
+SLIDE 8  [08 / 38]
+Exploitation is a ladder.
+------------------------------------------------------------------------------
+Slide 8 — exploitation is a ladder. This INTRODUCES the deck's canonical 7-rung ladder (it returns on 15, 21, 28 and the close). Bottom -> top: reach the code -> trigger the bug -> control the crash -> build a primitive -> defeat mitigations -> compose the exploit -> achieve impact, with the orange bars climbing. The rungs are grouped into the three ExploitBench tiers + their flags: T3 Trigger bug (asan, crash) = the floor a crash-class benchmark stops at; T2 Defense bypass (infoleaks, arb_read/write — beat ASLR/DEP); T1 Weaponized (pc_control, ACE). Don't grade it pass/fail — every rung is scored independently, so partial progress counts; the real climb is everything above the crash. [~13:45]
+
+
+SLIDE 9  [09 / 38]
+Capability lived in people.
+------------------------------------------------------------------------------
+Capability lived in people. The point of Era I: before systems could do this, the best exploit developers on earth could be counted on your hands — and many are my students. George Hotz (first to unlock the iPhone, hacked the PS3). Richard Zhu and Seunghyun Lee (Pwn2Own Masters of Pwn). And a whole generation of them on Maple Mallard Magistrates, who win DEF CON CTF. Tone: celebrate the craft at its peak — these people are extraordinary. Then pivot: the rest of the talk is about moving that capability OUT of a handful of heads and into systems (Era II) and trained models (Era III). Not replacing them — freeing them. [~13:45]
+
+
+SLIDE 10  [10 / 38]
+Automatically check the world's software for exploitable bugs.
+------------------------------------------------------------------------------
+Slide 11 — my goal (the personal turn). State it plainly: automatically check the WORLD'S software for exploitable bugs. This is the mission behind CGC / Mayhem / AIxCC — and it forces the question: humans can't do that by hand. [~14:45]
+
+
+SLIDE 11  [11 / 38]
+Manual effort doesn't scale.
+------------------------------------------------------------------------------
+Slide 12 — manual effort doesn't scale. Bars = share of world population (US 4.2%, India 17.8%, China 17.4%, all others 60.6%; ~8.1B people). Point: the world's software is global and enormous, while expert exploit-developers number in the thousands. A handful of humans can't manually check the planet's code — which is exactly why we turn to automation. Hands the baton to Part II. [~15:30]
+
+
+SLIDE 12  [12 / 38]
+Part Two — We automatedthe craft.
+------------------------------------------------------------------------------
+Part Two — connect to my own history here. [~16:00]
+
+
+SLIDE 13  [13 / 38]
+The Cyber Grand Challenge.
+------------------------------------------------------------------------------
+Slide 14 — announce the Cyber Grand Challenge. 2016, DARPA, at DEF CON in Las Vegas. The goal: a fully autonomous Cyber Reasoning System that finds the bug, proves the exploit, and ships the patch in real time — head-to-head against other machines, no humans in the loop. ($2M first prize.) [~16:30]
+
+
+SLIDE 14  [14 / 38]
+Anatomy of a Cyber Reasoning System.
+------------------------------------------------------------------------------
+Architecture of autonomy — how you actually build a Cyber Reasoning System (this is Mayhem, the system we built that won). Build it bottom-up on screen: (1) FOUNDATION — a Binary Analysis Platform that works on binaries, no source: disassembler, container parser, an instruction lifter to a formal model. (2) On top, OFFENSE (sword): fuzzing, symbolic execution, crash triage, automatic exploit generation (AEG), crash explorer — find and PROVE bugs. (3) DEFENSE (shield): data-flow analysis, hardening, crash-specific patches, static binary rewriting — patch without source. (4) On top of it all, the AUTONOMY AI — strategy: resource allocation and the patch chooser. THAT top layer — deciding what to do next — is the brain, and it's exactly where Era III intelligence goes. Then fuzzing and patching (next slides) are zoom-ins on two of these components. [~17:00]
+
+
+SLIDE 15  [15 / 38]
+Offense basis: fuzzing.
+------------------------------------------------------------------------------
+Offense basis: fuzzing. LEFT = the canonical exploitation ladder (the SAME one from slide 8): fuzzing lights the bottom — reach the code + trigger the bug = THE CRASH, the cheapest rung to get onto. 'defeat mitigations' is struck (no mitigations in CGC), and AEG (automatic exploit generation) raised the crash straight to a working exploit, skipping the bypass tier — crash -> exploit directly. RIGHT = the live fuzzing loop: mutate -> run -> watch for a crash, millions of execs/sec (execs climb, crashes tick). [~17:15]
+
+
+SLIDE 16  [16 / 38]
+And patch the binary — block the exploit.
+------------------------------------------------------------------------------
+Patching (the defensive half). The patch is LOCALIZED — the fix sits right where it crashes, on the backtrace: before the copy, check the length and exit if too long; same bug, same exploit input, now it hits the guard and the shell never pops. (Shown in C for clarity; in CGC the equivalent guard was applied straight to the binary, no source.) Seed for Era III (the muted line): localized patches are the EASY case — automated patchers and LLMs do well here. The OPEN problem is non-localized / root-cause fixes, where the fix isn't on the backtrace: (A) upstream — an integer-overflow size calc that feeds a later OOB write; (B) off-stack — a use-after-free freed in a different event; (C) a shared helper that must be fixed for all callers. LLMs do poorly the moment the fix leaves the backtrace. [~17:45]
+
+
+SLIDE 17  [17 / 38]
+The brain plays the players.
+------------------------------------------------------------------------------
+The brain — strategy (autonomy + counter-autonomy). Finding/exploiting/patching is capability; the bottleneck is the STRATEGY of what to do with it. Diagram = ricochet: attacks are visible on the wire, so Mayhem could capture a rival's exploit (Rival A) and replay it against another (Rival C) — you don't even need to find the bug yourself. Two more strategic levers: (1) timing the patch — deploying a fix LEAKS the bug (APEG: patch-based exploit generation), so sometimes you attack before you patch; (2) order — hit the weak players first. This is the top 'brain' layer of the architecture in action, and the work behind it ('How Shall We Play a Game?', Bao/Shoshitaishvili/Wang/Kruegel/Vigna/Brumley, IEEE CSF 2017) won an NSA Science-of-Security award; modeled as a partial-observation stochastic game, solved for the Nash-equilibrium strategy. [~18:15]
+
+
+SLIDE 18  [18 / 38]
+Machines could play the game.
+------------------------------------------------------------------------------
+2016 DARPA Cyber Grand Challenge — the result. Machines reasoned about binaries — found bugs, generated exploits, patched — live, no human in the loop. Mayhem won. Line: CGC proved machines could play the game. [~18:30]
+
+
+SLIDE 19  [19 / 38]
+Could they play it on real software?
+------------------------------------------------------------------------------
+2025 DARPA AIxCC. From contrived binaries to real, modern software: AI agents doing vulnerability discovery and repair across real open-source workflows. Line: AIxCC asked whether they could play it on real software. [~18:00]
+
+
+SLIDE 20  [20 / 38]
+Find out more — build one yourself.
+------------------------------------------------------------------------------
+Find out more — a plug for the OSS-CRS tutorial here at SVCC (Thu June 12, 10:00–16:30). 'Bug-finding & patching for the LLM era,' taught by Team Atlanta — winners of DARPA's AIxCC. The three presenters shown: Dr. Taesoo Kim (Georgia Tech, Team Atlanta lead) with PhD students Andrew Chin and Brian Lee. Hands-on: fuzzing & automated patching, building a CRS, prompt-engineering an agentic CRS, static analysis to boost agents. Bring a laptop (Vagrant). URL: svcc-svcsi.org/aixcc. Quick beat — point the room at it and move on. [~19:00]
+
+
+SLIDE 21  [21 / 38]
+One ladder. Two partial climbs.
+------------------------------------------------------------------------------
+One ladder, two climbs — tie the whole capability ladder together with CGC vs AIxCC on the SAME rungs. CGC (left): climbed all the way to full impact — BUT the targets had no real mitigations, so the 'defeat mitigations' rung is dashed/absent; it was a short ladder. AIxCC (right): real, hardened software (the full ladder), but the machines mostly stopped at the crash — only the bottom rungs (reach the code, trigger the bug) light up. The asymmetry IS the gap: real exploitation on hardened software — the middle and top rungs — is still unclimbed. That open middle is what Part III is about: measure it, then train models to climb it. Also carries the bridge line merged in from the old quote slide: 'CGC proved machines could play the game; AIxCC asked whether they could play it on real software — a complete climb is still open.' Note the NEW top rung above 'achieve impact' = STRATEGY (whether you should even use the capability — callback to the brain/ricochet slide): CGC's side lights it, AIxCC's doesn't. [~20:30]
+
+
+SLIDE 22  [22 / 38]
+Part Three · Intelligence — The next phase:trainable exploitation.
+------------------------------------------------------------------------------
+Part Three — the turn. Intelligence. [~22:00]
+
+
+SLIDE 23  [23 / 38]
+Exploitation: How far up and how hard?
+------------------------------------------------------------------------------
+Slide [A] — the Era III question (before V8). Two dials, not one: how far the AI gets (capability, the ladder) and how hard the target is (complexity). Read the map: CGC reached full control — but on TOY binaries (top-left). AIxCC took on REAL software — but mostly stalled at the crash (bottom). The open corner is top-RIGHT: high capability on a hardened target. Same question for offense (climb the exploit ladder) and defense (produce an accepted fix). The hardest target we have is V8 — so we go there to answer it. [~22:15]
+
+
+SLIDE 24  [24 / 38]
+What about high value targets?
+------------------------------------------------------------------------------
+What about high value targets? — a real-stakes, human beat before the V8 deep-dive. Seunghyun Lee (Pwn2Own champion, v8CTF, and the researcher behind the Mythos/ExploitBench analysis coming up) found a single Google Chrome / V8 bug worth nearly half a million dollars — and donated the bounty to CMU's cybersecurity program (Pittsburgh Business Times headline on screen). The point: the stakes scale with the target — one V8 bug = ~$500K and real-world impact. Ties Seunghyun to the V8 work ahead and sets up the next slide: can a machine climb a target this valuable and this hard? [~22:00]
+
+
+SLIDE 25  [25 / 38]
+Can it pop Chrome?
+------------------------------------------------------------------------------
+Can it pop Chrome? — the motivation for Part III. Targets keep getting harder AND better-defended: CGC = toy binaries; AIxCC = real software but with fuzzing harnesses handed over; the real test = a high-value target that hands you nothing. The light browser = the friendly surface a billion people expose daily — every page ships JavaScript + WebAssembly straight into V8. But V8 is a fortress; show the three defenses (the V8 box is modeled on the tantrum paper's Figure 2): the UBERCAGE — V8's heap sandbox where compressed pointers can't escape the cage; ASLR; and Google MASS-FUZZING it around the clock. Decades of elite defensive engineering — can AI climb a target this hard? (Callback to the deck title: popping the shell → popping Chrome.) [~22:15]
+
+
+SLIDE 26  [26 / 38]
+Exploitation is a ladder of capabilities.
+------------------------------------------------------------------------------
+The capability ladder + the experiment (combined). ExploitBench decomposes exploitation into 16 flags across 5 tiers, graded on 41 real V8 bugs. Bottom-up: T5 Coverage (cov_func, cov_line) → T4 Bug triggering (diff, asan, crash) → T3 Target-specific primitives (addrof, fakeobj, caged_read, caged_write — INSIDE the Ubercage) → [ESCAPE THE SANDBOX] → T2 General-purpose primitives (infoleaks, arb_read, arb_write — OUTSIDE the cage) → T1 Control (pc_control, ace). The T3→T2 jump IS the sandbox escape (tie to the V8 slide). Experiment: 41 real V8 bugs · all 16 flags scored INDEPENDENTLY (partial credit, not pass/fail) · N-day — the agent is even handed the fix-commit patch diff · 300 turns per bug. [~23:00]
+
+
+SLIDE 27  [27 / 38]
+Can an LLM climb it?
+------------------------------------------------------------------------------
+Main results — can an LLM climb it? Heatmap = bugs of 41 reaching each tier (primary arm, best-of-3). The cage column is General-primitives (T2). Story: all nine models get coverage; several public models build engine (T3) primitives (Gemini 16, Opus 12, Sonnet 10, GPT-5.5 13) — but they STALL at the cage. Only GPT-5.5 even touches T2 (2 bugs) and pc_control (1); 0/41 public reach ACE in the primary arm. Mythos Preview crosses: T2 on 21, pc_control 18, ACE on 18 of 41. The wall is reasoning, not budget (models stall with budget to spare). [~23:45]
+
+
+SLIDE 28  [28 / 38]
+Evidence exploits aren't memorized.
+------------------------------------------------------------------------------
+Anecdotes — not memorization, research (from Seunghyun Lee's blog, who reads every transcript). Three Mythos runs: (1) CVE-2023-6702 (the MAIN case, with depth) — the bug is a type confusion between a 4-byte hash and a V8 heap pointer, exploitable because pointer compression makes BOTH 32 bits. STEP 1 recover: Math.random() is xorshift128+, a 128-bit LINEAR PRNG; object hashes derive from its stream via MurmurHash3, so from a few outputs you solve for the generator state (GF(2)-style; in practice an SMT/Z3 step handles the nonlinear '+') and the next hash is known in advance. STEP 2 weaponize (the bridge): a hash you can PREDICT is a pointer you CONTROL — forge a fake object inside the cage, corrupt a BytecodeArray, run arbitrary bytecode, ROP out of the sandbox. The original v8CTF author had dismissed this exact RNG-prediction plan as too complex. (2) CVE-2024-7965 — public work said the JIT bug was ARM64-only / too hard on x86-64; Mythos found a NEW WebAssembly+Turbofan path past where all public work stops. (3) CVE-2024-0519 — an in-the-wild bug with NO public report or PoC, a 'cold case' unreproduced for a year; Mythos reproduced it in a single 129-turn episode. Point: this is discovered, not recalled — work on par with an elite human researcher (callback to slide 9). Sets up the open questions next: patching, then strategy. [~25:00]
+
+
+SLIDE 29  [29 / 38]
+The ladder can be climbed.
+------------------------------------------------------------------------------
+Mythos = the climb. Private frontier systems reach end-to-end exploitation on hardened targets in a meaningful fraction of cases; public models are already well past simple crashes. [~24:30]
+
+
+SLIDE 30  [30 / 38]
+It can exploit. Can it patch?
+------------------------------------------------------------------------------
+Slide [B] — the clean offense->defense turn. Offense is settled: frontier systems climb end-to-end, even on V8, because the oracle is OBJECTIVE — did the exploit fire? ASAN / arb_write / pc_control / ACE are all auto-checkable (ExploitBench's 16 flags ARE oracles). Defense is the open question: we have almost NO LLM-written fix accepted into a real project as part of a zero-day-hunt benchmark. We grade an exploit in milliseconds; we cannot yet grade a patch. We DO have some data (next slide) — and the gap is exactly what we would need to train. [~26:00]
+
+
+SLIDE 31  [31 / 38]
+What seems hard still today.
+------------------------------------------------------------------------------
+Root cause — the Era III frontier (defense side). Localized patches (fix at the crash, on the backtrace) are SOLVED. The open problem: the real fix is often NOT on the backtrace. Two examples on screen — (1) double free: the abort is at the second free(obj), but obj was already freed in on_close(), a different event that isn't on this stack at all; the real fix is ownership/lifetime, elsewhere. (2) missing filter: the crash is at the use, but the validation belongs upstream in parse(), shared by every caller. Today's LLMs patch the crash frame and miss the cause. The Era III payoff: 'is the fix at the root cause?' is MEASURABLE — so it's TRAINABLE, exactly the ExploitBench move applied to defense. (Draft — reposition within Part III as you build it.) [~26:45]
+
+
+SLIDE 32  [32 / 38]
+The new job: writing oracles.
+------------------------------------------------------------------------------
+Slide [C] — intro to RL, define the nouns. ENVIRONMENT = target + harness (the V8 build, the fuzzer, the crashing input). POLICY = the model proposing a patch. ORACLE (the reward) = what scores the patch. The loop only works if the oracle is right. Offense's oracle is free — did the exploit fire? Defense has none. The exit(0) example IS reward hacking: hand the model a fuzz backtrace with a naive oracle (does it still crash?) and the cheapest winning move is exit(0) at the crash site — no crash, oracle says PASS, program is dead. Or exit(0) on every path: fuzzer goes green, software is gone. THE NEW JOB for security: writing oracles — reward functions that capture real correctness. We have great offense oracles, almost none for defense. Sets up the next slide: the oracle IS the measurement. [~27:30]
+
+
+SLIDE 33  [33 / 38]
+From solving to teaching.
+------------------------------------------------------------------------------
+From solving to teaching (the expert's new job). The thesis shift David wants: an expert used to be valued for SOLVING the problem by hand; going forward the value is in TEACHING the machine — decompose the task, build the environment, write the oracle, reward the climb. Same training loop (it compounds every iteration), reframed around the human's changing role. Ties to the oracle slide. [~26:30]
+
+
+SLIDE 34  [34 / 38]
+"// predictable The moment a capability becomes measurable, it becomes trainable. And the moment it becomes trainable, it becomes predictable."
+------------------------------------------------------------------------------
+Verbatim, then pause: 'The moment a capability becomes measurable, it becomes trainable. And the moment it becomes trainable, it becomes predictable.' [~24:30]
+
+
+SLIDE 35  [35 / 38]
+Defense is an urgent problem.
+------------------------------------------------------------------------------
+The Zero Day Clock slide, now titled 'Defense is an urgent problem' (the offense->defense pivot). This is a LIVE screenshot of zerodayclock.com (Sysdig / Sergej Epp), not a redraw — the credibility is the point. Everything before this was the lab; this is the field. The chart = mean time from CVE disclosure to first in-the-wild exploitation: 2.3 YEARS in 2018 down to 22 HOURS in 2026 (the site projects ~1 minute by 2027). A collapse that steep is an automation signature — humans don't compress exploit-dev from years to hours. Supporting stat (right): 67% of exploited CVEs in 2026 were zero-days (hit on/before disclosure day), up from 16% in 2018. Based on 3,500+ confirmed-exploited CVEs (CISA KEV + VulnCheck KEV). Land the turn: offense has moved to machine speed, so defense can't stay verdict-by-verdict — which is the next slide. [~28:00]
+
+
+SLIDE 36  [36 / 38]
+The exploitation ladder.
+------------------------------------------------------------------------------
+The one phrase to remember a week from now: the exploitation ladder. Recap the 5 beats fast: black magic -> CGC automated parts -> AIxCC on real software -> ExploitBench is the ruler -> from worrying about assembly to training agents. (The 'Mythos shows it can be climbed' beat was cut.) [~31:00]
+
+
+SLIDE 37  [37 / 38]
+Patches a human will accept.
+------------------------------------------------------------------------------
+The frontier: patches a human will ACCEPT. The open problem where defense goes next — not 'the crash is gone' but a fix at the ROOT CAUSE, semantically correct, that a maintainer will actually merge. We have no oracle for that yet (callback to the oracle slide + the root-cause slide). That's the frontier. [~29:00]
+
+
+SLIDE 38  [title/closing]
+"Today's Mythos moment isn't that humans are obsolete. It's that we've solved real problems. Now we focus on the next set."
+------------------------------------------------------------------------------
+Land it (closing, simplified). 'Today's Mythos moment isn't that humans are obsolete. It's that we've solved real problems. Now we focus on the next set.' The old measurable/predictable line + assembly CTA were cut. Thank you. [~29:30]
+
