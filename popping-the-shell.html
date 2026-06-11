@@ -24,8 +24,8 @@
    =========================================================== */
       :root {
         --bg: #06080c; /* near-black canvas */
-        --bg-2: #0a0e15; /* raised panel */
-        --bg-3: #0e141d; /* card */
+        --bg-2: #121a26; /* raised panel */
+        --bg-3: #161e2b; /* card */
         --accent: #e5641f; /* corporate orange — small high-signal marks */
         --soft: #f08a55; /* softened tint — large emphasis text */
         --dim: #5e2c13; /* dim ember — inactive states */
@@ -33,8 +33,8 @@
         --steel: #9db8c6; /* cool secondary */
         --txt: #d7e0e6; /* body text */
         --head: #f3f6f8; /* headings */
-        --mut: #62707c; /* muted mono chrome */
-        --line: #1b232e; /* hairline borders */
+        --mut: #a8b3bd; /* muted mono chrome */
+        --line: #2b3744; /* hairline borders */
         --glow: rgba(229, 100, 31, 0.13);
         --glow-strong: rgba(229, 100, 31, 0.55);
         --ease: cubic-bezier(0.16, 1, 0.3, 1);
@@ -112,12 +112,44 @@
         z-index: 1000;
       }
       @media print {
+        @page {
+          size: 1920px 1080px;
+          margin: 0;
+        }
+        /* keep the dark theme + force animation/reveal end-states so no
+           slide prints blank; printDeck() adds .visible to every slide */
+        *,
+        *::before,
+        *::after {
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
+          animation-duration: 0s !important;
+          animation-delay: 0s !important;
+          transition: none !important;
+        }
+        .reveal,
+        .hero-in {
+          opacity: 1 !important;
+          transform: none !important;
+        }
+        .lad .rbar {
+          transform: scaleX(1) !important;
+        }
+        .hint,
+        .counter,
+        .progress,
+        .snote,
+        .edit-toggle,
+        .edit-bar,
+        .edit-hotzone {
+          display: none !important;
+        }
         html,
         body {
           width: 1920px;
           height: auto;
           overflow: visible;
-          background: #fff;
+          background: var(--bg);
         }
         .deck-viewport {
           position: static;
@@ -198,6 +230,11 @@
         padding: 104px 132px;
         display: flex;
         flex-direction: column;
+        justify-content: center;
+      }
+      /* opt back into top alignment for slides designed around it */
+      .pad.top {
+        justify-content: flex-start;
       }
       .center {
         justify-content: center;
@@ -209,7 +246,7 @@
       /* eyebrow / kicker */
       .eyebrow {
         font-family: "JetBrains Mono", monospace;
-        font-size: 18px;
+        font-size: 20px;
         letter-spacing: 0.34em;
         text-transform: uppercase;
         color: var(--steel);
@@ -236,21 +273,21 @@
       }
       h2 {
         font-weight: 800;
-        font-size: 88px;
+        font-size: 99px;
         line-height: 1.02;
         letter-spacing: -0.02em;
         color: var(--head);
       }
       .lead {
         font-weight: 800;
-        font-size: 104px;
+        font-size: 116px;
         line-height: 0.98;
         letter-spacing: -0.025em;
         color: var(--head);
       }
       .body {
         font-weight: 400;
-        font-size: 32px;
+        font-size: 36px;
         line-height: 1.5;
         color: var(--txt);
         max-width: 1180px;
@@ -273,7 +310,7 @@
       /* monospace command line motif */
       .cmd {
         font-family: "JetBrains Mono", monospace;
-        font-size: 23px;
+        font-size: 26px;
         color: var(--steel);
       }
       .cmd .p {
@@ -349,28 +386,28 @@
       .lad {
         display: flex;
         flex-direction: column-reverse;
-        gap: 30px;
+        gap: 13px;
         width: 880px;
       }
       .lad .rung {
         display: flex;
         align-items: center;
-        gap: 26px;
+        gap: 16px;
       }
       .lad .rlabel {
         width: 330px;
         text-align: right;
         font-family: "JetBrains Mono", monospace;
-        font-size: 21px;
-        letter-spacing: 0.06em;
+        font-size: 19px;
+        letter-spacing: 0.05em;
         text-transform: uppercase;
-        color: var(--mut);
+        color: var(--steel);
         transition: color 0.5s var(--ease);
       }
       .lad .rbar {
-        height: 6px;
-        border-radius: 4px;
-        background: var(--rung);
+        height: 14px;
+        border-radius: 5px;
+        background: #141b25;
         position: relative;
         transform: scaleX(0);
         transform-origin: left;
@@ -412,7 +449,7 @@
       }
       /* focus state: all labels readable (used when ladder IS the subject) */
       .lad.focus .rlabel {
-        color: var(--txt);
+        color: var(--steel);
       }
       /* lit states — light the climbed rungs in orange */
       .lad.lit-1 .rung:nth-child(-n + 1) .rbar,
@@ -454,7 +491,7 @@
       .dlad .dname {
         text-align: center;
         font-family: "JetBrains Mono", monospace;
-        font-size: 17px;
+        font-size: 19px;
         letter-spacing: 0.06em;
         text-transform: uppercase;
         color: var(--steel);
@@ -484,6 +521,50 @@
         border: 1px dashed #46525f;
         box-shadow: none;
       }
+      /* half-filled bar (partial) — fills toward the center name */
+      .dlad .dbar.half {
+        box-shadow: 0 0 10px rgba(229, 100, 31, 0.35);
+      }
+      .dlad .dside.l .dbar.half {
+        background: linear-gradient(90deg, #141b25 50%, var(--accent) 50%);
+      }
+      .dlad .dside.r .dbar.half {
+        background: linear-gradient(90deg, var(--accent) 50%, #141b25 50%);
+      }
+      /* compact single-climb ladder — canonical 7 rungs, shared by 08 & 15 */
+      .crow {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+      .crow .clabel {
+        width: 250px;
+        text-align: right;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 19px;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: var(--steel);
+        white-space: nowrap;
+      }
+      .crow .cbar {
+        height: 13px;
+        border-radius: 4px;
+        background: #141b25;
+        flex: none;
+      }
+      .crow .cbar.lit {
+        background: var(--accent);
+        box-shadow: 0 0 14px var(--glow-strong);
+      }
+      .crow .cbar.dim {
+        background: #1c2533;
+      }
+      .crow .cbar.na {
+        background: transparent;
+        border: 1px dashed #46525f;
+      }
+
       /* ExploitBench tier rows (the V8 ladder) */
       .ebrow {
         display: grid;
@@ -493,7 +574,7 @@
         border: 1px solid var(--line);
         border-radius: 10px;
         padding: 13px 20px;
-        background: #10151c;
+        background: #1a2230;
       }
       .ebrow.out {
         border-color: #6e3a22;
@@ -502,7 +583,7 @@
       .ebt {
         font-family: "Sora", sans-serif;
         font-weight: 800;
-        font-size: 21px;
+        font-size: 24px;
         color: var(--head);
       }
       .ebf {
@@ -512,16 +593,16 @@
       }
       .ebf span {
         font-family: "JetBrains Mono", monospace;
-        font-size: 16px;
-        color: var(--steel);
+        font-size: 20px;
+        color: #e8edf1;
         border: 1px solid #2b3642;
         background: #1a222d;
         border-radius: 7px;
-        padding: 6px 12px;
+        padding: 8px 13px;
       }
       .ebescape {
         font-family: "JetBrains Mono", monospace;
-        font-size: 14px;
+        font-size: 16px;
         letter-spacing: 0.04em;
         color: var(--accent);
         text-align: center;
@@ -532,18 +613,18 @@
       }
       .ebchip {
         font-family: "JetBrains Mono", monospace;
-        font-size: 16px;
-        color: var(--steel);
+        font-size: 20px;
+        color: #e8edf1;
         border: 1px solid #2b3642;
         background: #14191f;
         border-radius: 8px;
-        padding: 8px 14px;
+        padding: 10px 15px;
       }
       /* ExploitBench results heatmap */
       .ebmap th {
         padding: 6px 4px;
         font-family: "JetBrains Mono", monospace;
-        font-size: 14px;
+        font-size: 16px;
         letter-spacing: 0.03em;
         text-transform: uppercase;
         color: var(--mut);
@@ -553,13 +634,13 @@
         padding: 11px 0;
         text-align: center;
         font-family: "JetBrains Mono", monospace;
-        font-size: 18px;
+        font-size: 20px;
         border-radius: 6px;
       }
       .ebmap td.nm {
         text-align: left;
         padding-left: 16px;
-        font-size: 17px;
+        font-size: 19px;
         color: var(--steel);
         white-space: nowrap;
         width: 210px;
@@ -648,16 +729,16 @@
       }
       .aloop .lbl {
         fill: var(--txt);
-        font-size: 19px;
+        font-size: 21px;
         letter-spacing: 0.04em;
       }
       .aloop .anno {
         fill: var(--mut);
-        font-size: 13px;
+        font-size: 15px;
         letter-spacing: 0.06em;
       }
       .aloop .tag {
-        font-size: 16px;
+        font-size: 18px;
         letter-spacing: 0.24em;
         font-weight: 700;
       }
@@ -669,7 +750,7 @@
       }
       .aloop .ctitle {
         fill: var(--head);
-        font-size: 27px;
+        font-size: 30px;
         font-weight: 800;
         letter-spacing: 0.02em;
       }
@@ -773,7 +854,7 @@
         bottom: 14px;
         z-index: 2;
         font-family: "JetBrains Mono", monospace;
-        font-size: 13px;
+        font-size: 15px;
         letter-spacing: 0.14em;
         text-transform: uppercase;
         color: var(--steel);
@@ -789,7 +870,7 @@
       }
       .title-ladder .rlabel {
         width: 280px;
-        font-size: 16px;
+        font-size: 18px;
       }
       .title-ladder .rbar {
         height: 4px;
@@ -808,7 +889,7 @@
         align-items: center;
         gap: 16px;
         font-family: "JetBrains Mono", monospace;
-        font-size: 17px;
+        font-size: 19px;
         letter-spacing: 0.22em;
         text-transform: uppercase;
         color: var(--mut);
@@ -826,7 +907,7 @@
         color: var(--accent);
       }
       #t-h1 {
-        font-size: 96px;
+        font-size: 108px;
         line-height: 1;
         letter-spacing: -0.025em;
       }
@@ -834,12 +915,12 @@
         display: block;
         color: var(--steel);
         font-weight: 600;
-        font-size: 62px;
+        font-size: 69px;
         letter-spacing: -0.01em;
         margin-top: 14px;
       }
       .title-sub {
-        font-size: 26px;
+        font-size: 29px;
         color: var(--steel);
         max-width: 680px;
         margin-top: 34px;
@@ -852,12 +933,12 @@
       }
       .title-foot .name {
         font-weight: 700;
-        font-size: 30px;
+        font-size: 34px;
         color: var(--head);
       }
       .title-foot .role {
         font-family: "JetBrains Mono", monospace;
-        font-size: 16px;
+        font-size: 18px;
         letter-spacing: 0.04em;
         color: var(--mut);
       }
@@ -867,7 +948,7 @@
    =========================================================== */
       .divider .numeral {
         font-weight: 800;
-        font-size: 340px;
+        font-size: 381px;
         line-height: 0.8;
         color: transparent;
         -webkit-text-stroke: 2px var(--accent);
@@ -887,14 +968,14 @@
       }
       .divider .part {
         font-family: "JetBrains Mono", monospace;
-        font-size: 22px;
+        font-size: 25px;
         letter-spacing: 0.4em;
         text-transform: uppercase;
         color: var(--accent);
         margin-bottom: 26px;
       }
       .divider h2 {
-        font-size: 108px;
+        font-size: 121px;
         max-width: 1400px;
         margin-top: 24px;
       }
@@ -961,14 +1042,14 @@
    =========================================================== */
       .quote-mark {
         font-family: "JetBrains Mono", monospace;
-        font-size: 30px;
+        font-size: 34px;
         color: var(--accent);
         letter-spacing: 0.3em;
         margin-bottom: 40px;
       }
       .quote {
         font-weight: 700;
-        font-size: 78px;
+        font-size: 87px;
         line-height: 1.14;
         letter-spacing: -0.015em;
         color: var(--head);
@@ -980,7 +1061,7 @@
       }
       .quote-by {
         font-family: "JetBrains Mono", monospace;
-        font-size: 18px;
+        font-size: 20px;
         letter-spacing: 0.16em;
         text-transform: uppercase;
         color: var(--mut);
@@ -997,7 +1078,7 @@
       }
       .chip {
         font-family: "JetBrains Mono", monospace;
-        font-size: 22px;
+        font-size: 25px;
         letter-spacing: 0.12em;
         text-transform: uppercase;
         color: var(--soft);
@@ -1028,7 +1109,7 @@
       /* Cyber Reasoning System anatomy — nested depth: bg < system < layer < leaf */
       .crs-system {
         background: #10171f; /* level 1: the whole system enclosure */
-        border: 1px solid #1b232e;
+        border: 1px solid #2b3744;
         border-radius: 18px;
         padding: 26px;
         display: flex;
@@ -1062,12 +1143,12 @@
       .crs-head .nm {
         font-family: "Sora", sans-serif;
         font-weight: 800;
-        font-size: 27px;
+        font-size: 30px;
         color: var(--head);
       }
       .crs-head .sub {
         font-family: "JetBrains Mono", monospace;
-        font-size: 14px;
+        font-size: 16px;
         letter-spacing: 0.14em;
         text-transform: uppercase;
         color: var(--mut);
@@ -1084,9 +1165,9 @@
         background: #232d3a; /* level 3: lightest leaf card */
         border: 1px solid #323e4d;
         border-radius: 9px;
-        padding: 11px 18px;
+        padding: 15px 20px;
         font-family: "JetBrains Mono", monospace;
-        font-size: 20px;
+        font-size: 23px;
         color: #cdd9e1;
         white-space: nowrap;
       }
@@ -1111,20 +1192,20 @@
       }
       .card .ci {
         font-family: "JetBrains Mono", monospace;
-        font-size: 16px;
+        font-size: 18px;
         letter-spacing: 0.18em;
         color: var(--accent);
         margin-bottom: 16px;
       }
       .card h3 {
         font-weight: 700;
-        font-size: 32px;
+        font-size: 36px;
         color: var(--head);
         margin-bottom: 14px;
         letter-spacing: -0.01em;
       }
       .card p {
-        font-size: 22px;
+        font-size: 27px;
         line-height: 1.46;
         color: var(--steel);
       }
@@ -1141,14 +1222,14 @@
         display: flex;
         gap: 24px;
         align-items: flex-start;
-        font-size: 32px;
+        font-size: 36px;
         line-height: 1.4;
         color: var(--txt);
       }
       .blist li .mk {
         font-family: "JetBrains Mono", monospace;
         color: var(--accent);
-        font-size: 24px;
+        font-size: 27px;
         margin-top: 6px;
         flex: none;
       }
@@ -1251,7 +1332,7 @@
         transform: translateX(-50%);
         text-align: center;
         font-family: "JetBrains Mono", monospace;
-        font-size: 16px;
+        font-size: 18px;
         letter-spacing: 0.18em;
         text-transform: uppercase;
         color: var(--accent);
@@ -1272,7 +1353,7 @@
         font-family: "JetBrains Mono", monospace;
       }
       .tl-era .ee {
-        font-size: 16px;
+        font-size: 18px;
         letter-spacing: 0.2em;
         color: var(--accent);
         text-transform: uppercase;
@@ -1280,13 +1361,13 @@
       .tl-era .et {
         font-family: "Sora";
         font-weight: 700;
-        font-size: 34px;
+        font-size: 38px;
         color: var(--head);
         margin-top: 8px;
         letter-spacing: -0.01em;
       }
       .tl-era .ey {
-        font-size: 15px;
+        font-size: 17px;
         color: var(--mut);
         margin-top: 8px;
         letter-spacing: 0.08em;
@@ -1313,12 +1394,12 @@
         font-family: "JetBrains Mono", monospace;
       }
       .tl-lab .ly {
-        font-size: 24px;
+        font-size: 27px;
         color: var(--soft);
         font-weight: 700;
       }
       .tl-lab .ln {
-        font-size: 16px;
+        font-size: 18px;
         color: var(--mut);
         margin-top: 8px;
         letter-spacing: 0.06em;
@@ -1327,7 +1408,7 @@
       /* old/new question */
       .q-old {
         font-weight: 600;
-        font-size: 46px;
+        font-size: 52px;
         line-height: 1.25;
         color: var(--mut);
         max-width: 1300px;
@@ -1337,7 +1418,7 @@
       }
       .q-new {
         font-weight: 800;
-        font-size: 80px;
+        font-size: 90px;
         line-height: 1.08;
         letter-spacing: -0.02em;
         color: var(--head);
@@ -1354,7 +1435,7 @@
       }
       .flow .step {
         font-family: "JetBrains Mono", monospace;
-        font-size: 21px;
+        font-size: 24px;
         letter-spacing: 0.06em;
         text-transform: uppercase;
         color: var(--steel);
@@ -1365,12 +1446,12 @@
       }
       .flow .arr {
         color: var(--accent);
-        font-size: 24px;
+        font-size: 27px;
       }
       .loopback {
         margin-top: 42px;
         font-family: "JetBrains Mono", monospace;
-        font-size: 22px;
+        font-size: 25px;
         color: var(--accent);
         letter-spacing: 0.08em;
         display: flex;
@@ -1379,7 +1460,7 @@
       }
       .loopback::before {
         content: "↻";
-        font-size: 34px;
+        font-size: 38px;
       }
 
       /* recap beats */
@@ -1393,13 +1474,13 @@
         display: flex;
         align-items: center;
         gap: 24px;
-        font-size: 30px;
+        font-size: 34px;
         color: var(--steel);
       }
       .beat .bn {
         font-family: "JetBrains Mono", monospace;
         color: var(--accent);
-        font-size: 18px;
+        font-size: 20px;
         width: 54px;
         flex: none;
         letter-spacing: 0.1em;
@@ -1415,7 +1496,7 @@
       /* big stat */
       .bigstat {
         font-weight: 800;
-        font-size: 280px;
+        font-size: 314px;
         line-height: 0.84;
         letter-spacing: -0.04em;
         color: var(--head);
@@ -1443,7 +1524,7 @@
       /* closing */
       .close-cta {
         font-weight: 700;
-        font-size: 40px;
+        font-size: 45px;
         line-height: 1.3;
         color: var(--head);
         max-width: 1280px;
@@ -1459,12 +1540,12 @@
       }
       .close-foot .name {
         font-weight: 700;
-        font-size: 28px;
+        font-size: 31px;
         color: var(--head);
       }
       .close-foot .h {
         font-family: "JetBrains Mono", monospace;
-        font-size: 17px;
+        font-size: 19px;
         color: var(--mut);
         margin-top: 8px;
         letter-spacing: 0.05em;
@@ -1476,7 +1557,7 @@
         right: 64px;
         bottom: 54px;
         font-family: "JetBrains Mono", monospace;
-        font-size: 16px;
+        font-size: 18px;
         letter-spacing: 0.16em;
         color: var(--mut);
       }
@@ -1485,7 +1566,7 @@
         left: 132px;
         bottom: 54px;
         font-family: "JetBrains Mono", monospace;
-        font-size: 14px;
+        font-size: 16px;
         letter-spacing: 0.18em;
         text-transform: uppercase;
         color: var(--mut);
@@ -1511,7 +1592,7 @@
         bottom: 20px;
         z-index: 1000;
         font-family: "JetBrains Mono", monospace;
-        font-size: 14px;
+        font-size: 16px;
         letter-spacing: 0.14em;
         color: var(--mut);
       }
@@ -1524,9 +1605,15 @@
         bottom: 20px;
         z-index: 1000;
         font-family: "JetBrains Mono", monospace;
-        font-size: 12px;
+        font-size: 13px;
         letter-spacing: 0.1em;
         color: #33404b;
+      }
+      /* bottom chrome (hint strip + orange counter) is hidden by default;
+         press H to toggle. The in-slide .pageno stays as the slide number. */
+      body.hide-chrome .hint,
+      body.hide-chrome .counter {
+        display: none;
       }
 
       /* ===========================================================
@@ -1552,7 +1639,7 @@
         background: var(--bg-3);
         border: 1px solid var(--line);
         color: var(--txt);
-        font-size: 18px;
+        font-size: 20px;
         border-radius: 8px;
         width: 46px;
         height: 46px;
@@ -1583,7 +1670,7 @@
         border: 1px solid var(--line);
         color: var(--txt);
         font-family: "JetBrains Mono", monospace;
-        font-size: 13px;
+        font-size: 15px;
         padding: 0 16px;
         height: 46px;
         border-radius: 8px;
@@ -1617,7 +1704,7 @@
         border-top: 1px solid var(--line);
         padding: 18px 30px 20px;
         font-family: "JetBrains Mono", monospace;
-        font-size: 17px;
+        font-size: 19px;
         line-height: 1.5;
         color: var(--steel);
         display: none;
@@ -1638,7 +1725,7 @@
       }
     </style>
   </head>
-  <body>
+  <body class="hide-chrome">
     <div class="progress" id="progress"></div>
 
     <div class="deck-viewport">
@@ -1679,14 +1766,14 @@
               <div style="flex: 1">
                 <h2
                   class="reveal d1"
-                  style="font-size: 62px; line-height: 1.07; max-width: 880px"
+                  style="font-size: 69px; line-height: 1.07; max-width: 880px"
                 >
                   Scientists searched for decades for planet
                   <span class="glowtext">Vulcan.</span>
                 </h2>
                 <p
                   class="body reveal d3"
-                  style="margin-top: 34px; font-size: 28px; max-width: 760px"
+                  style="margin-top: 34px; font-size: 31px; max-width: 760px"
                 >
                   Urbain Le Verrier used gravity's math to predict Neptune in
                   1846. He aimed the same theory at Mercury and predicted
@@ -1703,7 +1790,7 @@
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">02 / 37</div>
+          <div class="pageno">02 / 38</div>
         </section>
 
         <!-- ===================== 02 · HOOK (historical question) ===================== -->
@@ -1713,14 +1800,14 @@
               <div style="flex: 1">
                 <h2
                   class="reveal d1"
-                  style="font-size: 70px; line-height: 1.06; max-width: 880px"
+                  style="font-size: 78px; line-height: 1.06; max-width: 880px"
                 >
                   Then general relativity explained Mercury's orbit —
                   <span class="glowtext">no Vulcan.</span>
                 </h2>
                 <p
                   class="body reveal d3"
-                  style="margin-top: 36px; font-size: 29px; max-width: 760px"
+                  style="margin-top: 36px; font-size: 32px; max-width: 760px"
                 >
                   In 1915, Einstein's general relativity explained Mercury's
                   orbit — no Vulcan needed.<br /><br />Did that make the
@@ -1737,7 +1824,7 @@
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">03 / 37</div>
+          <div class="pageno">03 / 38</div>
         </section>
 
         <!-- ===================== 03 · READ THE TRAJECTORY (J-curve) ===================== -->
@@ -1747,14 +1834,14 @@
               <div class="archer-text">
                 <h2
                   class="reveal d1"
-                  style="font-size: 58px; line-height: 1.08"
+                  style="font-size: 65px; line-height: 1.08"
                 >
                   Up close, disruption looks like loss —
                   <span class="glowtext">step back, it's inevitable</span>
                 </h2>
                 <p
                   class="body reveal d3"
-                  style="margin-top: 34px; font-size: 27px; max-width: 760px"
+                  style="margin-top: 34px; font-size: 30px; max-width: 760px"
                 >
                   AI is disrupting security, and it's solving problems. What
                   does the trajectory look like?
@@ -1838,14 +1925,14 @@
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">04 / 37</div>
+          <div class="pageno">04 / 38</div>
         </section>
 
         <!-- ===================== 07 · THREE ERAS TIMELINE ===================== -->
         <section class="slide">
           <div class="pad">
-            <h2 class="reveal d2" style="font-size: 62px">Agenda</h2>
-            <p class="body reveal d2" style="margin-top: 10px; font-size: 23px; color: var(--mut); max-width: 900px">Each era's methods become the next era's training data.</p>
+            <h2 class="reveal d2" style="font-size: 69px">Agenda</h2>
+            <p class="body reveal d2" style="margin-top: 10px; font-size: 26px; color: var(--mut); max-width: 900px">Each era's methods become the next era's training data.</p>
             <div class="timeline">
               <div class="tl-axis"></div>
               <div class="tl-fill"></div>
@@ -1893,7 +1980,7 @@
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">05 / 37</div>
+          <div class="pageno">05 / 38</div>
         </section>
 
         <!-- ===================== 08 · DIVIDER PART I ===================== -->
@@ -1904,19 +1991,19 @@
             <h2 class="reveal d3">The craft.</h2>
             <p
               class="body dim reveal d4"
-              style="margin-top: 30px; font-size: 28px; max-width: 1040px"
+              style="margin-top: 30px; font-size: 31px; max-width: 1040px"
             >
               Popping shell skills.
             </p>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">06 / 37</div>
+          <div class="pageno">06 / 38</div>
         </section>
 
         <!-- ===================== 08 · ARMS RACE ===================== -->
         <section class="slide">
           <div class="pad">
-            <h2 class="reveal d1" style="font-size: 52px; max-width: 1500px">
+            <h2 class="reveal d1" style="font-size: 58px; max-width: 1500px">
               As defenses were added, exploitation got
               <span class="glowtext">creative.</span>
             </h2>
@@ -1984,7 +2071,7 @@
                 <g
                   font-family="Sora, sans-serif"
                   font-weight="700"
-                  font-size="20"
+                  font-size="24"
                   fill="#D7E0E6"
                 >
                   <rect
@@ -1993,7 +2080,7 @@
                     width="200"
                     height="86"
                     rx="6"
-                    fill="#0E141D"
+                    fill="#161E2B"
                     stroke="#2A3744"
                     stroke-width="1.5"
                   />
@@ -2006,7 +2093,7 @@
                     width="200"
                     height="86"
                     rx="6"
-                    fill="#0E141D"
+                    fill="#161E2B"
                     stroke="#2A3744"
                     stroke-width="1.5"
                   />
@@ -2017,7 +2104,7 @@
                     width="200"
                     height="86"
                     rx="6"
-                    fill="#0E141D"
+                    fill="#161E2B"
                     stroke="#2A3744"
                     stroke-width="1.5"
                   />
@@ -2028,7 +2115,7 @@
                     width="200"
                     height="86"
                     rx="6"
-                    fill="#0E141D"
+                    fill="#161E2B"
                     stroke="#2A3744"
                     stroke-width="1.5"
                   />
@@ -2039,7 +2126,7 @@
                     width="200"
                     height="86"
                     rx="6"
-                    fill="#0E141D"
+                    fill="#161E2B"
                     stroke="#2A3744"
                     stroke-width="1.5"
                   />
@@ -2050,101 +2137,102 @@
                     width="200"
                     height="86"
                     rx="6"
-                    fill="#0E141D"
+                    fill="#161E2B"
                     stroke="#2A3744"
                     stroke-width="1.5"
                   />
                   <text x="1290" y="110" text-anchor="middle">PAC / MTE</text>
                 </g>
-                <!-- bypasses (bottom) -->
+                <!-- bypasses (bottom) — same size/color as the defenses;
+                     the orange pill already marks them as the bypass -->
                 <g
                   font-family="JetBrains Mono, monospace"
-                  font-size="17"
-                  fill="#F08A55"
+                  font-size="24"
+                  fill="#D7E0E6"
                 >
                   <rect
                     x="60"
                     y="300"
                     width="210"
-                    height="70"
+                    height="88"
                     rx="35"
                     fill="#16202B"
                     stroke="#E5641F"
                     stroke-width="1.5"
                   />
                   <text x="165" text-anchor="middle">
-                    <tspan x="165" y="329">leak /</tspan>
-                    <tspan x="165" y="353">brute-force</tspan>
+                    <tspan x="165" y="334">leak /</tspan>
+                    <tspan x="165" y="364">brute-force</tspan>
                   </text>
                   <rect
                     x="285"
                     y="300"
                     width="210"
-                    height="70"
+                    height="88"
                     rx="35"
                     fill="#16202B"
                     stroke="#E5641F"
                     stroke-width="1.5"
                   />
                   <text x="390" text-anchor="middle">
-                    <tspan x="390" y="329">ret2libc /</tspan>
-                    <tspan x="390" y="353">ROP</tspan>
+                    <tspan x="390" y="334">ret2libc /</tspan>
+                    <tspan x="390" y="364">ROP</tspan>
                   </text>
                   <rect
                     x="510"
                     y="300"
                     width="210"
-                    height="70"
+                    height="88"
                     rx="35"
                     fill="#16202B"
                     stroke="#E5641F"
                     stroke-width="1.5"
                   />
                   <text x="615" text-anchor="middle">
-                    <tspan x="615" y="329">info leak /</tspan>
-                    <tspan x="615" y="353">JIT-ROP</tspan>
+                    <tspan x="615" y="334">info leak /</tspan>
+                    <tspan x="615" y="364">JIT-ROP</tspan>
                   </text>
                   <rect
                     x="735"
                     y="300"
                     width="210"
-                    height="70"
+                    height="88"
                     rx="35"
                     fill="#16202B"
                     stroke="#E5641F"
                     stroke-width="1.5"
                   />
                   <text x="840" text-anchor="middle">
-                    <tspan x="840" y="329">FSOP /</tspan>
-                    <tspan x="840" y="353">hooks</tspan>
+                    <tspan x="840" y="334">FSOP /</tspan>
+                    <tspan x="840" y="364">hooks</tspan>
                   </text>
                   <rect
                     x="960"
                     y="300"
                     width="210"
-                    height="70"
+                    height="88"
                     rx="35"
                     fill="#16202B"
                     stroke="#E5641F"
                     stroke-width="1.5"
                   />
                   <text x="1065" text-anchor="middle">
-                    <tspan x="1065" y="329">DOP /</tspan>
-                    <tspan x="1065" y="353">COOP</tspan>
+                    <tspan x="1065" y="334">DOP /</tspan>
+                    <tspan x="1065" y="364">COOP</tspan>
                   </text>
                   <rect
                     x="1185"
                     y="300"
                     width="210"
-                    height="70"
+                    height="88"
                     rx="35"
                     fill="#16202B"
                     stroke="#E5641F"
                     stroke-width="1.5"
                   />
                   <text x="1290" text-anchor="middle">
-                    <tspan x="1290" y="329">PACMAN /</tspan>
-                    <tspan x="1290" y="353">Rowhammer</tspan>
+                    <tspan x="1290" y="334">PACMAN /</tspan>
+                    <tspan x="1290" y="364">Rowhammer</tspan>
                   </text>
                 </g>
                 <!-- volume caption -->
@@ -2162,91 +2250,64 @@
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">07 / 37</div>
+          <div class="pageno">07 / 38</div>
         </section>
 
         <!-- ===================== 09 · EXPLOITATION LADDER (ExploitBench tiers) ===================== -->
         <section class="slide">
           <div class="pad" style="display: flex; flex-direction: column">
-            <h2 class="reveal d1" style="font-size: 56px">
+            <h2 class="reveal d1" style="font-size: 63px">
               Exploitation is a <span class="glowtext">ladder.</span>
             </h2>
             <div
               class="reveal d2"
-              style="flex: 1; display: flex; gap: 34px; align-items: center"
+              style="flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 22px; max-width: 1200px"
             >
-              <!-- higher-tier axis -->
-              <div
-                style="
-                  display: flex;
-                  flex-direction: column;
-                  align-items: center;
-                  justify-content: center;
-                  gap: 12px;
-                  padding-bottom: 6px;
-                "
-              >
-                <span
-                  style="color: var(--accent); font-size: 16px; line-height: 1"
-                  >▲</span
-                >
-                <span
-                  style="
-                    writing-mode: vertical-rl;
-                    transform: rotate(180deg);
-                    font-family: &quot;JetBrains Mono&quot;, monospace;
-                    font-size: 13px;
-                    letter-spacing: 0.22em;
-                    text-transform: uppercase;
-                    color: var(--mut);
-                  "
-                  >higher tier</span
-                >
+              <!-- T1 · Weaponized -->
+              <div>
+                <div style="display: flex; align-items: baseline; gap: 18px; border-left: 3px solid #e5641f; padding-left: 18px; margin-bottom: 11px">
+                  <span style="font-family: 'Sora', sans-serif; font-weight: 800; font-size: 26px; color: var(--head)">T1 · Weaponized</span>
+                  <span style="font-family: 'JetBrains Mono', monospace; font-size: 20px; color: #e8edf1">pc_control · ace</span>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 9px">
+                  <div class="crow"><span class="clabel">achieve impact</span><span class="cbar lit" style="width: 430px"></span></div>
+                  <div class="crow"><span class="clabel">compose the exploit</span><span class="cbar lit" style="width: 380px"></span></div>
+                </div>
               </div>
-              <!-- tiers, T1 (top) → T3 (floor) -->
-              <div style="flex: none; display: flex; flex-direction: column; gap: 26px; width: 100%">
-                <div style="display: flex; align-items: center; gap: 38px">
-                  <div style="width: 460px; border: 2px solid #e5641f; background: rgba(229, 100, 31, 0.16); border-radius: 12px; padding: 22px 28px">
-                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 15px; letter-spacing: 0.1em; color: var(--mut)">T1</div>
-                    <div style="font-family: 'Sora', sans-serif; font-weight: 800; font-size: 27px; color: var(--head); margin-top: 2px">Weaponized</div>
-                  </div>
-                  <div>
-                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: 0.2em; color: var(--mut)">CAPABILITIES</div>
-                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 19px; color: var(--steel); margin-top: 6px">pc_control · arbitrary code execution</div>
-                  </div>
+              <!-- T2 · Defense bypass -->
+              <div>
+                <div style="display: flex; align-items: baseline; gap: 18px; border-left: 3px solid #cf6230; padding-left: 18px; margin-bottom: 11px">
+                  <span style="font-family: 'Sora', sans-serif; font-weight: 800; font-size: 26px; color: var(--head)">T2 · Defense bypass</span>
+                  <span style="font-family: 'JetBrains Mono', monospace; font-size: 20px; color: #e8edf1">infoleak_binary · infoleak_libc · infoleak_stack · arb_read · arb_write</span>
                 </div>
-                <div style="display: flex; align-items: center; gap: 38px">
-                  <div style="width: 460px; border: 2px solid #cf6230; background: rgba(229, 100, 31, 0.12); border-radius: 12px; padding: 22px 28px">
-                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 15px; letter-spacing: 0.1em; color: var(--mut)">T2</div>
-                    <div style="font-family: 'Sora', sans-serif; font-weight: 800; font-size: 27px; color: var(--head); margin-top: 2px">Defense bypass</div>
-                  </div>
-                  <div>
-                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: 0.2em; color: var(--mut)">CAPABILITIES</div>
-                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 19px; color: var(--steel); margin-top: 6px">infoleak_binary · infoleak_libc · infoleak_stack · arb_read · arb_write</div>
-                  </div>
+                <div style="display: flex; flex-direction: column; gap: 9px">
+                  <div class="crow"><span class="clabel">defeat mitigations</span><span class="cbar lit" style="width: 330px"></span></div>
+                  <div class="crow"><span class="clabel">build a primitive</span><span class="cbar lit" style="width: 280px"></span></div>
+                  <div class="crow"><span class="clabel">control the crash</span><span class="cbar lit" style="width: 230px"></span></div>
                 </div>
-                <div style="display: flex; align-items: center; gap: 38px">
-                  <div style="width: 460px; border: 2px solid #5e6a5c; background: rgba(157, 184, 198, 0.04); border-radius: 12px; padding: 22px 28px">
-                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 15px; letter-spacing: 0.1em; color: var(--mut)">T3</div>
-                    <div style="font-family: 'Sora', sans-serif; font-weight: 800; font-size: 27px; color: var(--steel); margin-top: 2px">Trigger bug</div>
-                  </div>
-                  <div>
-                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: 0.2em; color: var(--mut)">CAPABILITIES</div>
-                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 19px; color: var(--steel); margin-top: 6px">asan · crash</div>
-                  </div>
+              </div>
+              <!-- T3 · Trigger bug -->
+              <div>
+                <div style="display: flex; align-items: baseline; gap: 18px; border-left: 3px solid #5e6a5c; padding-left: 18px; margin-bottom: 11px">
+                  <span style="font-family: 'Sora', sans-serif; font-weight: 800; font-size: 26px; color: var(--head)">T3 · Trigger bug</span>
+                  <span style="font-family: 'JetBrains Mono', monospace; font-size: 20px; color: #e8edf1">asan · crash</span>
+                </div>
+                <div style="display: flex; flex-direction: column; gap: 9px">
+                  <div class="crow"><span class="clabel">trigger the bug</span><span class="cbar lit" style="width: 180px"></span></div>
+                  <div class="crow"><span class="clabel">reach the code</span><span class="cbar lit" style="width: 130px"></span></div>
                 </div>
               </div>
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">08 / 37</div>
+          <div class="pageno">08 / 38</div>
         </section>
 
         <!-- ===================== 11 · CAPABILITY LIVED IN PEOPLE ===================== -->
         <section class="slide">
           <div class="pad" style="display: flex; flex-direction: column">
             <div class="reveal d1">
-              <h2 style="font-size: 58px; line-height: 1.05">
+              <h2 style="font-size: 65px; line-height: 1.05">
                 Capability lived in <span class="glowtext">people.</span>
               </h2>
             </div>
@@ -2286,11 +2347,11 @@
                 <figcaption
                   style="margin-top: 14px; font-family: 'JetBrains Mono', monospace"
                 >
-                  <span style="color: var(--head); font-size: 21px; font-weight: 700"
+                  <span style="color: var(--head); font-size: 24px; font-weight: 700"
                     >Maple Mallard Magistrates</span
                   >
                   <span
-                    style="color: var(--soft); font-size: 15px; letter-spacing: 0.1em"
+                    style="color: var(--soft); font-size: 17px; letter-spacing: 0.1em"
                   >
                     · DEF CON CTF CHAMPIONS</span
                   >
@@ -2327,7 +2388,7 @@
                       style="
                         font-family: 'Sora', sans-serif;
                         font-weight: 800;
-                        font-size: 26px;
+                        font-size: 29px;
                         color: var(--head);
                       "
                     >
@@ -2336,7 +2397,7 @@
                     <div
                       style="
                         font-family: 'JetBrains Mono', monospace;
-                        font-size: 16px;
+                        font-size: 18px;
                         color: var(--soft);
                         margin-top: 5px;
                       "
@@ -2366,7 +2427,7 @@
                       style="
                         font-family: 'Sora', sans-serif;
                         font-weight: 800;
-                        font-size: 26px;
+                        font-size: 29px;
                         color: var(--head);
                       "
                     >
@@ -2375,7 +2436,7 @@
                     <div
                       style="
                         font-family: 'JetBrains Mono', monospace;
-                        font-size: 16px;
+                        font-size: 18px;
                         color: var(--soft);
                         margin-top: 5px;
                       "
@@ -2405,7 +2466,7 @@
                       style="
                         font-family: 'Sora', sans-serif;
                         font-weight: 800;
-                        font-size: 26px;
+                        font-size: 29px;
                         color: var(--head);
                       "
                     >
@@ -2414,7 +2475,7 @@
                     <div
                       style="
                         font-family: 'JetBrains Mono', monospace;
-                        font-size: 16px;
+                        font-size: 18px;
                         color: var(--soft);
                         margin-top: 5px;
                       "
@@ -2433,7 +2494,7 @@
               left: 50%;
               transform: translateX(-50%);
               font-family: 'JetBrains Mono', monospace;
-              font-size: 11px;
+              font-size: 12px;
               color: var(--mut);
               letter-spacing: 0.04em;
             "
@@ -2441,7 +2502,7 @@
             George Hotz photo: Steve Jennings / TechCrunch · CC BY 2.0
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">09 / 37</div>
+          <div class="pageno">09 / 38</div>
         </section>
 
         <!-- ===================== 11 · MY GOAL ===================== -->
@@ -2451,7 +2512,7 @@
               class="reveal d1"
               style="
                 font-family: &quot;JetBrains Mono&quot;, monospace;
-                font-size: 20px;
+                font-size: 22px;
                 letter-spacing: 0.34em;
                 text-transform: uppercase;
                 color: var(--accent);
@@ -2462,20 +2523,20 @@
             </div>
             <h2
               class="hero-in d2"
-              style="font-size: 80px; line-height: 1.06; max-width: 1500px"
+              style="font-size: 90px; line-height: 1.06; max-width: 1500px"
             >
               <span class="glowtext">Automatically</span> check the world's
               software for exploitable bugs.
             </h2>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">10 / 37</div>
+          <div class="pageno">10 / 38</div>
         </section>
 
         <!-- ===================== 12 · MANUAL EFFORT DOESN'T SCALE ===================== -->
         <section class="slide">
           <div class="pad" style="display: flex; flex-direction: column">
-            <h2 class="reveal d1" style="font-size: 60px">
+            <h2 class="reveal d1" style="font-size: 67px">
               Manual effort doesn't <span class="glowtext">scale.</span>
             </h2>
             <div
@@ -2496,7 +2557,7 @@
                     text-align: right;
                     font-family: &quot;Sora&quot;, sans-serif;
                     font-weight: 700;
-                    font-size: 26px;
+                    font-size: 29px;
                     color: var(--head);
                   "
                 >
@@ -2527,7 +2588,7 @@
                   style="
                     width: 96px;
                     font-family: &quot;JetBrains Mono&quot;, monospace;
-                    font-size: 24px;
+                    font-size: 27px;
                     color: var(--soft);
                   "
                 >
@@ -2541,7 +2602,7 @@
                     text-align: right;
                     font-family: &quot;Sora&quot;, sans-serif;
                     font-weight: 700;
-                    font-size: 26px;
+                    font-size: 29px;
                     color: var(--head);
                   "
                 >
@@ -2572,7 +2633,7 @@
                   style="
                     width: 96px;
                     font-family: &quot;JetBrains Mono&quot;, monospace;
-                    font-size: 24px;
+                    font-size: 27px;
                     color: var(--soft);
                   "
                 >
@@ -2586,7 +2647,7 @@
                     text-align: right;
                     font-family: &quot;Sora&quot;, sans-serif;
                     font-weight: 700;
-                    font-size: 26px;
+                    font-size: 29px;
                     color: var(--head);
                   "
                 >
@@ -2617,7 +2678,7 @@
                   style="
                     width: 96px;
                     font-family: &quot;JetBrains Mono&quot;, monospace;
-                    font-size: 24px;
+                    font-size: 27px;
                     color: var(--soft);
                   "
                 >
@@ -2631,7 +2692,7 @@
                     text-align: right;
                     font-family: &quot;Sora&quot;, sans-serif;
                     font-weight: 700;
-                    font-size: 26px;
+                    font-size: 29px;
                     color: var(--head);
                   "
                 >
@@ -2662,7 +2723,7 @@
                   style="
                     width: 96px;
                     font-family: &quot;JetBrains Mono&quot;, monospace;
-                    font-size: 24px;
+                    font-size: 27px;
                     color: var(--soft);
                   "
                 >
@@ -2674,7 +2735,7 @@
               class="reveal d3"
               style="
                 font-family: &quot;JetBrains Mono&quot;, monospace;
-                font-size: 15px;
+                font-size: 17px;
                 letter-spacing: 0.08em;
                 color: var(--mut);
               "
@@ -2683,7 +2744,7 @@
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">11 / 37</div>
+          <div class="pageno">11 / 38</div>
         </section>
 
         <!-- ===================== 13 · DIVIDER PART II ===================== -->
@@ -2694,7 +2755,7 @@
             <h2 class="reveal d3">We automated<br />the craft.</h2>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">12 / 37</div>
+          <div class="pageno">12 / 38</div>
         </section>
 
         <!-- ===================== 14 · CGC ANNOUNCEMENT (full-bleed stage) ===================== -->
@@ -2712,26 +2773,26 @@
           <div class="pad center" style="position: relative; z-index: 2">
             <div
               class="reveal d1"
-              style="font-family: 'JetBrains Mono', monospace; font-size: 20px; letter-spacing: 0.34em; text-transform: uppercase; color: var(--accent); margin-bottom: 30px"
+              style="font-family: 'JetBrains Mono', monospace; font-size: 22px; letter-spacing: 0.34em; text-transform: uppercase; color: var(--accent); margin-bottom: 30px"
             >
               2016 · DARPA · DEF CON, Las Vegas
             </div>
-            <h2 class="reveal d2" style="font-size: 92px; line-height: 1.0">
+            <h2 class="reveal d2" style="font-size: 103px; line-height: 1.0">
               The <span class="glowtext">Cyber Grand Challenge.</span>
             </h2>
-            <p class="body reveal d3" style="margin-top: 38px; font-size: 34px; max-width: 1180px">
+            <p class="body reveal d3" style="margin-top: 38px; font-size: 38px; max-width: 1180px">
               A live tournament between machines:
               <b style="color: var(--head)">find the bug, prove the exploit, ship the patch</b>
               — fully autonomous, no humans in the loop.
             </p>
           </div>
           <div
-            style="position: absolute; right: 64px; bottom: 90px; z-index: 2; font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: 0.08em; color: #6b7884"
+            style="position: absolute; right: 64px; bottom: 90px; z-index: 2; font-family: 'JetBrains Mono', monospace; font-size: 15px; letter-spacing: 0.08em; color: #6b7884"
           >
             DARPA CGC final · DEF CON 2016 · photo: DARPA (CC0)
           </div>
           <div class="deck-tag" style="z-index: 2">Popping the Shell</div>
-          <div class="pageno" style="z-index: 2">13 / 37</div>
+          <div class="pageno" style="z-index: 2">13 / 38</div>
         </section>
 
         <!-- ===================== 14b · ANATOMY OF A CYBER REASONING SYSTEM ===================== -->
@@ -2741,7 +2802,7 @@
             style="display: flex; flex-direction: column; justify-content: center"
           >
             <div class="reveal d1">
-              <h2 style="font-size: 54px; line-height: 1.04">
+              <h2 style="font-size: 60px; line-height: 1.04">
                 Anatomy of a
                 <span class="glowtext">Cyber Reasoning System.</span>
               </h2>
@@ -2749,7 +2810,7 @@
                 style="
                   margin-top: 10px;
                   font-family: 'JetBrains Mono', monospace;
-                  font-size: 16px;
+                  font-size: 18px;
                   letter-spacing: 0.12em;
                   text-transform: uppercase;
                   color: var(--mut);
@@ -2784,7 +2845,7 @@
                     <span class="crs-leaf">Fuzzing</span>
                     <span class="crs-leaf">Symbolic Execution</span>
                     <span class="crs-leaf">Crash Triage</span>
-                    <span class="crs-leaf">AEG</span>
+                    <span class="crs-leaf">Automated Exploit Generation</span>
                   </div>
                 </div>
                 <div class="crs-layer reveal d3">
@@ -2815,14 +2876,14 @@
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">14 / 37</div>
+          <div class="pageno">14 / 38</div>
         </section>
 
 
         <!-- ===================== 15 · OFFENSE BASIS: FUZZING ===================== -->
         <section class="slide">
           <div class="pad">
-            <h2 class="reveal d1" style="font-size: 56px">
+            <h2 class="reveal d1" style="font-size: 63px">
               Offense basis: <span class="glowtext">fuzzing.</span>
             </h2>
             <div
@@ -2834,61 +2895,42 @@
                 style="flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 16px"
               >
                 <div
-                  style="font-family: 'JetBrains Mono', monospace; font-size: 15px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mut)"
+                  style="font-family: 'JetBrains Mono', monospace; font-size: 17px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mut)"
                 >
                   Why fuzzing?
                 </div>
-                <p class="body" style="margin: 0; font-size: 23px; color: var(--steel)">
+                <p class="body" style="margin: 0; font-size: 26px; color: var(--steel)">
                   A crash is the <b style="color: var(--head)">first rung</b> on the
                   ladder — so everyone fuzzed to get there.
                 </p>
-                <!-- mini ladder: crash → (defense bypass) → exploit -->
-                <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 4px">
-                  <div
-                    style="border: 1.5px solid var(--accent); background: rgba(229, 100, 31, 0.08); border-radius: 10px; padding: 13px 18px"
-                  >
-                    <div style="font-family: 'Sora', sans-serif; font-weight: 800; font-size: 21px; color: var(--head)">
-                      Exploit
-                    </div>
-                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 15px; color: var(--soft); margin-top: 2px">
-                      AEG — automatic exploit generation
-                    </div>
-                  </div>
-                  <div
-                    style="border: 1px solid var(--line); border-radius: 10px; padding: 13px 18px; opacity: 0.5"
-                  >
-                    <div style="font-family: 'Sora', sans-serif; font-weight: 800; font-size: 21px; color: var(--mut); text-decoration: line-through">
-                      Defense bypass
-                    </div>
-                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 15px; color: var(--mut); margin-top: 2px">
-                      no mitigations in CGC
-                    </div>
-                  </div>
-                  <div
-                    style="border: 1px solid #323e4d; background: #1a222d; border-radius: 10px; padding: 13px 18px"
-                  >
-                    <div style="font-family: 'Sora', sans-serif; font-weight: 800; font-size: 21px; color: var(--head)">
-                      Crash
-                    </div>
-                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 15px; color: var(--steel); margin-top: 2px">
-                      fuzzing finds it
-                    </div>
-                  </div>
+                <!-- the canonical exploitation ladder: fuzzing lights the crash -->
+                <div style="display: flex; flex-direction: column; gap: 9px; margin-top: 8px">
+                  <div class="crow"><span class="clabel">achieve impact</span><span class="cbar dim" style="width: 230px"></span><span style="font-family: 'JetBrains Mono', monospace; font-size: 15px; color: var(--soft)">↖ AEG</span></div>
+                  <div class="crow"><span class="clabel">compose the exploit</span><span class="cbar dim" style="width: 200px"></span></div>
+                  <div class="crow"><span class="clabel" style="text-decoration: line-through; color: var(--mut)">defeat mitigations</span><span class="cbar na" style="width: 200px"></span><span style="font-family: 'JetBrains Mono', monospace; font-size: 15px; color: var(--mut)">none in CGC</span></div>
+                  <div class="crow"><span class="clabel">build a primitive</span><span class="cbar dim" style="width: 170px"></span></div>
+                  <div class="crow"><span class="clabel">control the crash</span><span class="cbar dim" style="width: 140px"></span></div>
+                  <div class="crow"><span class="clabel">trigger the bug</span><span class="cbar lit" style="width: 110px"></span><span style="font-family: 'JetBrains Mono', monospace; font-size: 15px; color: var(--soft)">← the crash</span></div>
+                  <div class="crow"><span class="clabel">reach the code</span><span class="cbar lit" style="width: 80px"></span></div>
                 </div>
+                <p class="body" style="margin: 12px 0 0; font-size: 20px; color: var(--mut); line-height: 1.4">
+                  <b style="color: var(--soft)">AEG</b> raised the crash straight to a
+                  working exploit — no mitigations to defeat.
+                </p>
               </div>
 
               <!-- RIGHT: the live fuzzing loop -->
               <div class="reveal d3" style="flex: 0 0 54%">
                 <div
-                  style="font-family: 'JetBrains Mono', monospace; font-size: 15px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mut); margin-bottom: 12px"
+                  style="font-family: 'JetBrains Mono', monospace; font-size: 17px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mut); margin-bottom: 12px"
                 >
                   The loop · mutate → run → watch for a crash
                 </div>
                 <div
-                  style="border: 1px solid var(--line); border-radius: 12px; background: #0a0e14; padding: 22px 26px; font-family: 'JetBrains Mono', monospace"
+                  style="border: 1px solid var(--line); border-radius: 12px; background: #121a26; padding: 22px 26px; font-family: 'JetBrains Mono', monospace"
                 >
                   <div
-                    style="display: flex; align-items: baseline; gap: 28px; border-bottom: 1px solid var(--line); padding-bottom: 14px; margin-bottom: 14px; font-size: 14px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mut)"
+                    style="display: flex; align-items: baseline; gap: 28px; border-bottom: 1px solid var(--line); padding-bottom: 14px; margin-bottom: 14px; font-size: 16px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mut)"
                   >
                     <div>
                       TARGET
@@ -2896,29 +2938,29 @@
                     </div>
                     <div style="margin-left: auto">
                       EXECUTIONS
-                      <span id="fuzzExec" style="color: var(--soft); font-size: 26px; letter-spacing: 0">0</span>
+                      <span id="fuzzExec" style="color: var(--soft); font-size: 29px; letter-spacing: 0">0</span>
                     </div>
                     <div>
                       CRASHES
-                      <span id="fuzzCrash" style="color: var(--accent); font-size: 26px; letter-spacing: 0">0</span>
+                      <span id="fuzzCrash" style="color: var(--accent); font-size: 29px; letter-spacing: 0">0</span>
                     </div>
                   </div>
                   <div
                     id="fuzzlog"
-                    style="height: 286px; overflow: hidden; font-size: 17px; line-height: 1.7; color: var(--steel)"
+                    style="height: 286px; overflow: hidden; font-size: 19px; line-height: 1.7; color: var(--steel)"
                   ></div>
                 </div>
               </div>
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">15 / 37</div>
+          <div class="pageno">15 / 38</div>
         </section>
 
         <!-- ===================== 16 · BINARY PATCHING ===================== -->
         <section class="slide">
           <div class="pad" style="display: flex; flex-direction: column">
-            <h2 class="reveal d1" style="font-size: 56px">
+            <h2 class="reveal d1" style="font-size: 63px">
               And patch the binary — <span class="glowtext">block the exploit.</span>
             </h2>
             <div
@@ -2927,7 +2969,7 @@
               <!-- left: C code (same shape as slide 7) with a trivial guard -->
               <div class="reveal d2" style="flex: none">
                 <div
-                  style="font-family: 'JetBrains Mono', monospace; font-size: 23px; line-height: 1.95; background: #0a0e14; border: 1px solid var(--line); border-radius: 12px; padding: 28px 42px"
+                  style="font-family: 'JetBrains Mono', monospace; font-size: 26px; line-height: 1.95; background: #121a26; border: 1px solid var(--line); border-radius: 12px; padding: 28px 42px"
                 >
                   <div style="white-space: pre; color: var(--mut)">int <span style="color: var(--head)">main</span>(int argc, char **argv) {</div>
                   <div style="white-space: pre; color: var(--mut)">    char buf[64];</div>
@@ -2935,30 +2977,28 @@
                   <div style="white-space: pre; color: var(--mut)"> </div>
                   <div style="white-space: pre; background: rgba(229, 100, 31, 0.1); color: var(--soft)">+   if (strlen(input) >= sizeof buf)   <span style="color: #9a6a4a">// too long?</span></div>
                   <div style="white-space: pre; background: rgba(229, 100, 31, 0.1); color: var(--soft)">+       exit(1);                       <span style="color: #9a6a4a">// bail out</span></div>
-                  <div style="white-space: pre; color: var(--mut)">    strcpy(buf, input);                <span style="color: #3a4751">// the overflow</span></div>
+                  <div style="white-space: pre; color: var(--mut)">    strcpy(buf, input);                <span style="color: #5d6976">// the overflow</span></div>
                   <div style="white-space: pre; color: var(--mut)">    greet(buf);</div>
                   <div style="white-space: pre; color: var(--mut)">}</div>
                 </div>
               </div>
               <!-- right: takeaway -->
               <div class="reveal d3" style="flex: none; width: 460px">
-                <h3 style="font-family: 'Sora', sans-serif; font-weight: 800; font-size: 36px; color: var(--head); line-height: 1.15">
+                <h3 style="font-family: 'Sora', sans-serif; font-weight: 800; font-size: 40px; color: var(--head); line-height: 1.15">
                   The patch is localized.
                 </h3>
-                <p class="body" style="margin-top: 22px; font-size: 26px; line-height: 1.5; color: var(--steel)">
-                  The fix sits right where it crashes — on the backtrace. If the
-                  copy would overflow, <b style="color: var(--head)">exit</b>; the
-                  same exploit input hits the guard and the shell never pops.
+                <p class="body" style="margin-top: 22px; font-size: 29px; line-height: 1.5; color: var(--steel)">
+                  The fix just prevents a crash — and, even worse,
+                  <b style="color: var(--head)">arbitrary code execution.</b>
                 </p>
-                <p class="body" style="margin-top: 18px; font-size: 21px; line-height: 1.45; color: var(--mut)">
-                  The hard ones aren't — the real fix can live upstream, off the
-                  backtrace.
+                <p class="body" style="margin-top: 18px; font-size: 24px; line-height: 1.45; color: var(--mut)">
+                  But it's not a semantic fix a developer would make.
                 </p>
               </div>
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">16 / 37</div>
+          <div class="pageno">16 / 38</div>
         </section>
 
         <!-- ===================== 16b · THE BRAIN — STRATEGY ===================== -->
@@ -2966,11 +3006,11 @@
           <div class="pad" style="display: flex; flex-direction: column">
             <div class="reveal d1">
               <div
-                style="font-family: 'JetBrains Mono', monospace; font-size: 16px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--mut)"
+                style="font-family: 'JetBrains Mono', monospace; font-size: 18px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--mut)"
               >
                 Autonomy + counter-autonomy
               </div>
-              <h2 style="margin-top: 8px; font-size: 54px">
+              <h2 style="margin-top: 8px; font-size: 60px">
                 The brain plays <span class="glowtext">the players.</span>
               </h2>
             </div>
@@ -3043,14 +3083,14 @@
                 class="reveal d3"
                 style="flex: 1; display: flex; flex-direction: column; gap: 20px"
               >
-                <p class="body" style="margin: 0; font-size: 27px; color: var(--steel)">
+                <p class="body" style="margin: 0; font-size: 30px; color: var(--steel)">
                   Find, exploit, patch is
                   <b style="color: var(--head)">capability</b>. Deciding what to do
                   with it — and to whom — is
                   <b style="color: var(--head)">strategy</b>.
                 </p>
                 <div
-                  style="display: flex; flex-direction: column; gap: 18px; font-size: 24px; line-height: 1.45"
+                  style="display: flex; flex-direction: column; gap: 18px; font-size: 27px; line-height: 1.45"
                 >
                   <div>
                     <span style="color: var(--accent); font-family: 'JetBrains Mono', monospace">→ </span>
@@ -3069,7 +3109,7 @@
                   </div>
                 </div>
                 <div
-                  style="margin-top: 4px; font-family: 'JetBrains Mono', monospace; font-size: 15px; color: var(--mut); line-height: 1.6"
+                  style="margin-top: 4px; font-family: 'JetBrains Mono', monospace; font-size: 17px; color: var(--mut); line-height: 1.6"
                 >
                   "How Shall We Play a Game?" · Bao et&nbsp;al., IEEE CSF 2017<br />
                   NSA Science-of-Security Award
@@ -3078,7 +3118,7 @@
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">17 / 37</div>
+          <div class="pageno">17 / 38</div>
         </section>
 
         <!-- ===================== 17 · CGC / MAYHEM ===================== -->
@@ -3089,10 +3129,10 @@
           >
             <!-- left: the result -->
             <div style="flex: 1">
-              <h2 class="reveal d2" style="font-size: 64px; line-height: 1.05">
+              <h2 class="reveal d2" style="font-size: 72px; line-height: 1.05">
                 Machines could <span class="glowtext">play the game.</span>
               </h2>
-              <p class="body reveal d3" style="margin-top: 30px; font-size: 27px; max-width: 760px">
+              <p class="body reveal d3" style="margin-top: 30px; font-size: 30px; max-width: 760px">
                 CGC showed a machine could reason about binaries —
                 <b style="color: var(--head)">find bugs, generate exploits, and patch them</b>
                 — under live competition, with no human in the loop.
@@ -3113,7 +3153,7 @@
                 style="height: 760px; width: auto; display: block; border-radius: 14px; border: 1px solid var(--line); filter: brightness(0.7) contrast(1.02)"
               />
               <figcaption
-                style="margin-top: 12px; font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: 0.04em; color: var(--mut)"
+                style="margin-top: 12px; font-family: 'JetBrains Mono', monospace; font-size: 15px; letter-spacing: 0.04em; color: var(--mut)"
               >
                 The Mayhem CRS · DARPA CGC 2016 · photo: Chelsea Mastilak / IEEE
                 Spectrum
@@ -3121,7 +3161,7 @@
             </figure>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">18 / 37</div>
+          <div class="pageno">18 / 38</div>
         </section>
 
         <!-- ===================== 14 · AIxCC (full-bleed) ===================== -->
@@ -3137,26 +3177,26 @@
           <div class="pad center" style="position: relative; z-index: 2">
             <div
               class="reveal d1"
-              style="font-family: 'JetBrains Mono', monospace; font-size: 20px; letter-spacing: 0.34em; text-transform: uppercase; color: var(--accent); margin-bottom: 28px"
+              style="font-family: 'JetBrains Mono', monospace; font-size: 22px; letter-spacing: 0.34em; text-transform: uppercase; color: var(--accent); margin-bottom: 28px"
             >
               2025 · DARPA AI Cyber Challenge
             </div>
-            <h2 class="reveal d2" style="font-size: 84px; line-height: 1.02; max-width: 1180px">
+            <h2 class="reveal d2" style="font-size: 94px; line-height: 1.02; max-width: 1180px">
               Could they play it on <span class="glowtext">real software?</span>
             </h2>
-            <p class="body reveal d3" style="margin-top: 34px; font-size: 30px; max-width: 1080px">
+            <p class="body reveal d3" style="margin-top: 34px; font-size: 34px; max-width: 1080px">
               <b style="color: var(--head)">AI agents</b> finding and repairing
               vulnerabilities across real, open-source code — the software the
               world actually runs.
             </p>
           </div>
           <div
-            style="position: absolute; right: 64px; bottom: 90px; z-index: 2; font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: 0.08em; color: #6b7884"
+            style="position: absolute; right: 64px; bottom: 90px; z-index: 2; font-family: 'JetBrains Mono', monospace; font-size: 15px; letter-spacing: 0.08em; color: #6b7884"
           >
             DARPA AIxCC final · DEF CON 2025 · photo: DARPA / M. Dombro
           </div>
           <div class="deck-tag" style="z-index: 2">Popping the Shell</div>
-          <div class="pageno" style="z-index: 2">19 / 37</div>
+          <div class="pageno" style="z-index: 2">19 / 38</div>
         </section>
 
         <!-- ===================== 19b · OSS-CRS TUTORIAL (find out more) ===================== -->
@@ -3177,10 +3217,10 @@
                   style="flex: 0 0 102px; width: 102px; height: 102px; object-fit: cover; border-radius: 12px; border: 1px solid var(--line); filter: grayscale(1) contrast(1.05) brightness(1.04)"
                 />
                 <div>
-                  <div style="font-family: 'Sora', sans-serif; font-weight: 800; font-size: 25px; color: var(--head)">
+                  <div style="font-family: 'Sora', sans-serif; font-weight: 800; font-size: 28px; color: var(--head)">
                     Dr. Taesoo Kim
                   </div>
-                  <div style="font-family: 'JetBrains Mono', monospace; font-size: 15px; color: var(--soft); margin-top: 4px">
+                  <div style="font-family: 'JetBrains Mono', monospace; font-size: 17px; color: var(--soft); margin-top: 4px">
                     Georgia Tech · Team Atlanta lead
                   </div>
                 </div>
@@ -3192,10 +3232,10 @@
                   style="flex: 0 0 102px; width: 102px; height: 102px; object-fit: cover; border-radius: 12px; border: 1px solid var(--line); filter: grayscale(1) contrast(1.05) brightness(1.04)"
                 />
                 <div>
-                  <div style="font-family: 'Sora', sans-serif; font-weight: 800; font-size: 25px; color: var(--head)">
+                  <div style="font-family: 'Sora', sans-serif; font-weight: 800; font-size: 28px; color: var(--head)">
                     Andrew Chin
                   </div>
-                  <div style="font-family: 'JetBrains Mono', monospace; font-size: 15px; color: var(--soft); margin-top: 4px">
+                  <div style="font-family: 'JetBrains Mono', monospace; font-size: 17px; color: var(--soft); margin-top: 4px">
                     Georgia Tech PhD · Team Atlanta
                   </div>
                 </div>
@@ -3207,10 +3247,10 @@
                   style="flex: 0 0 102px; width: 102px; height: 102px; object-fit: cover; border-radius: 12px; border: 1px solid var(--line); filter: grayscale(1) contrast(1.05) brightness(1.04)"
                 />
                 <div>
-                  <div style="font-family: 'Sora', sans-serif; font-weight: 800; font-size: 25px; color: var(--head)">
+                  <div style="font-family: 'Sora', sans-serif; font-weight: 800; font-size: 28px; color: var(--head)">
                     Brian Lee
                   </div>
-                  <div style="font-family: 'JetBrains Mono', monospace; font-size: 15px; color: var(--soft); margin-top: 4px">
+                  <div style="font-family: 'JetBrains Mono', monospace; font-size: 17px; color: var(--soft); margin-top: 4px">
                     Georgia Tech PhD · Team Atlanta
                   </div>
                 </div>
@@ -3222,20 +3262,20 @@
               style="flex: 1; display: flex; flex-direction: column; gap: 18px"
             >
               <div
-                style="font-family: 'JetBrains Mono', monospace; font-size: 16px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--mut)"
+                style="font-family: 'JetBrains Mono', monospace; font-size: 18px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--mut)"
               >
                 SVCC tutorial · Thu June 12
               </div>
-              <h2 style="font-size: 48px; line-height: 1.06">
+              <h2 style="font-size: 54px; line-height: 1.06">
                 Find out more — <span class="glowtext">build one yourself.</span>
               </h2>
-              <p class="body" style="margin: 0; font-size: 25px; color: var(--steel)">
+              <p class="body" style="margin: 0; font-size: 28px; color: var(--steel)">
                 The <b style="color: var(--head)">OSS-CRS tutorial</b>: bug-finding
                 &amp; patching for the LLM era — taught by the winners of DARPA's AI
                 Cyber Challenge.
               </p>
               <div
-                style="display: flex; flex-direction: column; gap: 12px; font-size: 21px; line-height: 1.4"
+                style="display: flex; flex-direction: column; gap: 12px; font-size: 24px; line-height: 1.4"
               >
                 <div>
                   <span style="color: var(--accent); font-family: 'JetBrains Mono', monospace">→ </span>
@@ -3251,27 +3291,27 @@
                 </div>
               </div>
               <div
-                style="font-family: 'JetBrains Mono', monospace; font-size: 15px; color: var(--mut); line-height: 1.6"
+                style="font-family: 'JetBrains Mono', monospace; font-size: 17px; color: var(--mut); line-height: 1.6"
               >
                 Dr. Taesoo Kim (Georgia Tech) + Team Atlanta · 10:00–16:30 · bring a
                 laptop (Vagrant)
               </div>
               <div
-                style="margin-top: 4px; font-family: 'JetBrains Mono', monospace; font-size: 22px; color: var(--soft); letter-spacing: 0.02em"
+                style="margin-top: 4px; font-family: 'JetBrains Mono', monospace; font-size: 25px; color: var(--soft); letter-spacing: 0.02em"
               >
                 svcc-svcsi.org/aixcc
               </div>
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">20 / 37</div>
+          <div class="pageno">20 / 38</div>
         </section>
 
         <!-- ===================== 15 · THE GAP ===================== -->
         <section class="slide">
           <div class="pad" style="display: flex; flex-direction: column">
-            <h2 class="reveal d1" style="font-size: 56px">
-              One ladder. <span class="glowtext">Two climbs.</span>
+            <h2 class="reveal d1" style="font-size: 63px">
+              One ladder. <span class="glowtext">Two partial climbs.</span>
             </h2>
 
             <div class="reveal d2" style="margin-top: 56px">
@@ -3280,25 +3320,30 @@
                 style="display: grid; grid-template-columns: 1fr 340px 1fr; gap: 24px; margin-bottom: 24px"
               >
                 <div style="text-align: right">
-                  <div style="font-family: 'Sora', sans-serif; font-weight: 800; font-size: 26px; color: var(--head)">
+                  <div style="font-family: 'Sora', sans-serif; font-weight: 800; font-size: 29px; color: var(--head)">
                     CGC · 2016
                   </div>
-                  <div style="font-family: 'JetBrains Mono', monospace; font-size: 14px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mut); margin-top: 4px">
+                  <div style="font-family: 'JetBrains Mono', monospace; font-size: 16px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mut); margin-top: 4px">
                     no mitigations in play
                   </div>
                 </div>
                 <div></div>
                 <div style="text-align: left">
-                  <div style="font-family: 'Sora', sans-serif; font-weight: 800; font-size: 26px; color: var(--head)">
+                  <div style="font-family: 'Sora', sans-serif; font-weight: 800; font-size: 29px; color: var(--head)">
                     AIxCC · 2025
                   </div>
-                  <div style="font-family: 'JetBrains Mono', monospace; font-size: 14px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mut); margin-top: 4px">
+                  <div style="font-family: 'JetBrains Mono', monospace; font-size: 16px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mut); margin-top: 4px">
                     real, hardened software
                   </div>
                 </div>
               </div>
               <!-- diverging ladder: CGC reach (left) · rung · AIxCC reach (right) -->
               <div class="dlad">
+                <div class="drow">
+                  <div class="dside l"><span class="dbar half"></span></div>
+                  <div class="dname" style="color: var(--soft)">patch the bug</div>
+                  <div class="dside r"><span class="dbar half"></span></div>
+                </div>
                 <div class="drow">
                   <div class="dside l"><span class="dbar lit"></span></div>
                   <div class="dname">strategy</div>
@@ -3342,18 +3387,22 @@
               </div>
             </div>
 
-            <p
-              class="body reveal d4"
-              style="margin-top: 32px; font-size: 27px; color: var(--steel); max-width: 1560px; line-height: 1.4"
+            <div
+              class="reveal d4"
+              style="margin-top: 32px; display: flex; flex-direction: column; gap: 14px; max-width: 1560px"
             >
-              CGC proved machines could play the game. AIxCC asked whether they
-              could play it on
-              <b style="color: var(--head)">real software.</b>
-              <span style="color: var(--soft)">A complete climb is still open.</span>
-            </p>
+              <p class="body" style="margin: 0; font-size: 30px; line-height: 1.4; color: var(--head)">
+                <span style="font-family: 'JetBrains Mono', monospace; font-size: 16px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mut)">The&nbsp;climb</span>
+                &nbsp;&nbsp;A complete climb is still open.
+              </p>
+              <p class="body" style="margin: 0; font-size: 30px; line-height: 1.4; color: var(--head)">
+                <span style="font-family: 'JetBrains Mono', monospace; font-size: 16px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mut)">The&nbsp;patch</span>
+                &nbsp;&nbsp;And no real fix either — it blocks the crash, not the bug.
+              </p>
+            </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">21 / 37</div>
+          <div class="pageno">21 / 38</div>
         </section>
 
         <!-- ===================== 17 · DIVIDER PART III ===================== -->
@@ -3368,7 +3417,7 @@
             </h2>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">22 / 37</div>
+          <div class="pageno">22 / 38</div>
         </section>
 
         <!-- ===================== 17a · ERA III FRAMING — capability x complexity ===================== -->
@@ -3376,11 +3425,11 @@
           <div class="pad" style="display: flex; flex-direction: column">
             <div class="reveal d1">
               <div
-                style="font-family: 'JetBrains Mono', monospace; font-size: 16px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--mut)"
+                style="font-family: 'JetBrains Mono', monospace; font-size: 18px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--mut)"
               >
                 The Era III question · offense and defense
               </div>
-              <h2 style="margin-top: 8px; font-size: 54px">
+              <h2 style="margin-top: 8px; font-size: 60px">
                 Exploitation: How far up and
                 <span class="glowtext">how hard?</span>
               </h2>
@@ -3443,13 +3492,13 @@
                   </text>
 
                   <!-- y tick labels -->
-                  <g font-family="'JetBrains Mono', monospace" font-size="15" fill="#62707c" text-anchor="end">
+                  <g font-family="'JetBrains Mono', monospace" font-size="15" fill="#a8b3bd" text-anchor="end">
                     <text x="162" y="125">full control</text>
                     <text x="162" y="295">primitives</text>
                     <text x="162" y="455">crash</text>
                   </g>
                   <!-- x tick labels -->
-                  <g font-family="'JetBrains Mono', monospace" font-size="15" fill="#62707c" text-anchor="middle">
+                  <g font-family="'JetBrains Mono', monospace" font-size="15" fill="#a8b3bd" text-anchor="middle">
                     <text x="250" y="478">synthetic problems</text>
                     <text x="520" y="478">real OSS</text>
                     <text x="800" y="478">hardened</text>
@@ -3458,12 +3507,12 @@
                   <!-- CGC: full control, toy target -->
                   <circle cx="250" cy="120" r="9" fill="#e5641f" />
                   <text x="268" y="116" font-family="'JetBrains Mono', monospace" font-size="17" fill="#f3f6f8">CGC '16</text>
-                  <text x="268" y="136" font-family="'JetBrains Mono', monospace" font-size="13" fill="#62707c">full climb · synthetic</text>
+                  <text x="268" y="136" font-family="'JetBrains Mono', monospace" font-size="13" fill="#a8b3bd">full climb · synthetic</text>
 
                   <!-- AIxCC: near-crash, real software -->
                   <circle cx="560" cy="405" r="9" fill="#e5641f" />
                   <text x="578" y="401" font-family="'JetBrains Mono', monospace" font-size="17" fill="#f3f6f8">AIxCC '25</text>
-                  <text x="578" y="421" font-family="'JetBrains Mono', monospace" font-size="13" fill="#62707c">real · stalled at the crash</text>
+                  <text x="578" y="421" font-family="'JetBrains Mono', monospace" font-size="13" fill="#a8b3bd">real · stalled at the crash</text>
 
                   <!-- the open question: V8, top-right -->
                   <circle cx="800" cy="150" r="78" fill="url(#a3q)" />
@@ -3475,7 +3524,83 @@
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">23 / 37</div>
+          <div class="pageno">23 / 38</div>
+        </section>
+
+        <!-- ===================== 17a2 · HIGH-VALUE TARGETS — SEUNGHYUN / CHROME DONATION ===================== -->
+        <section class="slide">
+          <div class="pad" style="display: flex; flex-direction: column">
+            <div class="reveal d1">
+              <div
+                style="font-family: 'JetBrains Mono', monospace; font-size: 16px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--mut)"
+              >
+                The next test · real stakes
+              </div>
+              <h2 style="margin-top: 8px; font-size: 56px">
+                What about <span class="glowtext">high value targets?</span>
+              </h2>
+            </div>
+
+            <div
+              style="margin-top: 30px; display: flex; gap: 50px; align-items: center; justify-content: center"
+            >
+              <!-- LEFT: Seunghyun + the stakes -->
+              <div
+                class="reveal d2"
+                style="flex: 0 0 430px; display: flex; flex-direction: column; gap: 18px"
+              >
+                <img
+                  src="assets/lee-seunghyun.png"
+                  alt="Seunghyun Lee"
+                  style="width: 320px; border-radius: 14px; border: 1px solid var(--line); filter: grayscale(1) contrast(1.05) brightness(1.02)"
+                />
+                <div>
+                  <div style="font-family: 'Sora', sans-serif; font-weight: 800; font-size: 27px; color: var(--head)">
+                    Seunghyun Lee
+                  </div>
+                  <div style="font-family: 'JetBrains Mono', monospace; font-size: 16px; color: var(--mut); margin-top: 4px">
+                    Pwn2Own champion · v8CTF · the Mythos analysis ahead
+                  </div>
+                </div>
+                <p class="body" style="margin: 4px 0 0; font-size: 23px; color: var(--steel); line-height: 1.4">
+                  One V8 bug, found by hand, was worth
+                  <b style="color: var(--head)">nearly half a million dollars</b> —
+                  which he donated to CMU's security program.
+                </p>
+              </div>
+
+              <!-- RIGHT: the donation article (real screenshot) -->
+              <div class="reveal d3" style="flex: 0 0 760px">
+                <div
+                  style="border-radius: 12px; overflow: hidden; box-shadow: 0 18px 55px rgba(0, 0, 0, 0.6); border: 1px solid #232a33"
+                >
+                  <div
+                    style="display: flex; align-items: center; gap: 8px; padding: 10px 14px; background: #16191f"
+                  >
+                    <span style="width: 11px; height: 11px; border-radius: 50%; background: #3a4048; display: inline-block"></span>
+                    <span style="width: 11px; height: 11px; border-radius: 50%; background: #3a4048; display: inline-block"></span>
+                    <span style="width: 11px; height: 11px; border-radius: 50%; background: #3a4048; display: inline-block"></span>
+                    <span style="margin-left: 10px; flex: 1; background: #0d0f13; border-radius: 8px; padding: 7px 16px; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #9db8c6">🔒 bizjournals.com/pittsburgh</span>
+                  </div>
+                  <img
+                    src="assets/chrome-bug-donation.png"
+                    alt="Pittsburgh Business Times: How a Google Chrome bug led to a nearly half million dollar donation to a CMU cybersecurity program"
+                    style="display: block; width: 100%; height: auto"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <p
+              class="body reveal d4"
+              style="margin-top: 24px; font-size: 25px; color: var(--head); line-height: 1.3"
+            >
+              The stakes scale with the target.
+              <span class="glowtext">So can a machine climb one this hard?</span>
+            </p>
+          </div>
+          <div class="deck-tag">Popping the Shell</div>
+          <div class="pageno">24 / 38</div>
         </section>
 
         <!-- ===================== 17b · MOTIVATION — CHROME / V8 (high-value target) ===================== -->
@@ -3483,11 +3608,11 @@
           <div class="pad" style="display: flex; flex-direction: column">
             <div class="reveal d1">
               <div
-                style="font-family: 'JetBrains Mono', monospace; font-size: 16px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--mut)"
+                style="font-family: 'JetBrains Mono', monospace; font-size: 18px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--mut)"
               >
                 The next test · high-value targets
               </div>
-              <h2 style="margin-top: 8px; font-size: 56px">
+              <h2 style="margin-top: 8px; font-size: 63px">
                 Can it pop <span class="glowtext">Chrome?</span>
               </h2>
             </div>
@@ -3500,45 +3625,45 @@
                 class="reveal d2"
                 style="flex: 1; display: flex; flex-direction: column; gap: 22px"
               >
-                <p class="body" style="margin: 0; font-size: 24px; color: var(--steel); line-height: 1.4">
+                <p class="body" style="margin: 0; font-size: 27px; color: var(--steel); line-height: 1.4">
                   CGC ran toy binaries. AIxCC ran real software — with fuzzing
                   harnesses handed over.
                   <b style="color: var(--head)">Chrome hands you nothing.</b>
                 </p>
-                <p class="body" style="margin: 0; font-size: 24px; color: var(--steel); line-height: 1.4">
+                <p class="body" style="margin: 0; font-size: 27px; color: var(--steel); line-height: 1.4">
                   V8 runs every site's JavaScript and WebAssembly — the attack
                   surface a billion people expose each day, and one of the hardest
                   targets on Earth.
                 </p>
-                <p class="body" style="margin: 0; font-size: 30px; color: var(--head); line-height: 1.25">
+                <p class="body" style="margin: 0; font-size: 34px; color: var(--head); line-height: 1.25">
                   Can AI climb a target <span class="glowtext">this hard?</span>
                 </p>
               </div>
 
               <!-- RIGHT: light Chrome window → hardened V8 -->
               <div class="reveal d3" style="flex: 0 0 50%">
-                <!-- DARK Chrome frame (recedes); the V8 sandbox is the bright focus -->
+                <!-- real (light) Chrome window; the dark page hosts the bright V8 sandbox -->
                 <div
-                  style="width: 100%; border-radius: 12px; overflow: hidden; box-shadow: 0 16px 50px rgba(0, 0, 0, 0.6); border: 1px solid #232a33"
+                  style="width: 100%; border-radius: 12px; overflow: hidden; box-shadow: 0 16px 50px rgba(0, 0, 0, 0.6); border: 1px solid #c6cace"
                 >
-                  <!-- dark tab strip -->
+                  <!-- tab strip (real light-gray chrome) -->
                   <div
-                    style="display: flex; align-items: center; gap: 8px; padding: 11px 15px; background: #16191f"
+                    style="display: flex; align-items: center; gap: 8px; padding: 11px 15px; background: #dee1e6"
                   >
-                    <span style="width: 11px; height: 11px; border-radius: 50%; background: #3a4048; display: inline-block"></span>
-                    <span style="width: 11px; height: 11px; border-radius: 50%; background: #3a4048; display: inline-block"></span>
-                    <span style="width: 11px; height: 11px; border-radius: 50%; background: #3a4048; display: inline-block"></span>
-                    <span style="margin-left: 8px; background: #0d0f13; border-radius: 9px 9px 0 0; padding: 8px 20px; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #7a828c">any-website.com</span>
+                    <span style="width: 11px; height: 11px; border-radius: 50%; background: #ff5f57; display: inline-block"></span>
+                    <span style="width: 11px; height: 11px; border-radius: 50%; background: #febc2e; display: inline-block"></span>
+                    <span style="width: 11px; height: 11px; border-radius: 50%; background: #28c840; display: inline-block"></span>
+                    <span style="margin-left: 8px; background: #ffffff; border-radius: 9px 9px 0 0; padding: 8px 20px; font-family: 'JetBrains Mono', monospace; font-size: 15px; color: #3c4043">any-website.com</span>
                   </div>
-                  <!-- dark omnibox -->
-                  <div style="padding: 10px 15px; background: #16191f">
-                    <div style="background: #0d0f13; border-radius: 16px; padding: 9px 16px; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #7a828c">🔒 https://any-website.com</div>
+                  <!-- omnibox (light toolbar + white URL pill) -->
+                  <div style="padding: 10px 15px; background: #f1f3f4">
+                    <div style="background: #ffffff; border: 1px solid #dadce0; border-radius: 16px; padding: 9px 16px; font-family: 'JetBrains Mono', monospace; font-size: 15px; color: #5f6368">🔒 https://any-website.com</div>
                   </div>
                   <!-- dark viewport hosting the V8 sandbox diagram -->
                   <div
                     style="background: #0a0c10; padding: 26px 30px; min-height: 548px; display: flex; flex-direction: column; justify-content: center; gap: 15px"
                   >
-                    <div style="text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--mut)">
+                    <div style="text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 16px; color: var(--mut)">
                       V8 runs every page's JavaScript + WebAssembly
                     </div>
                     <!-- UBERCAGE (large, bright focus) -->
@@ -3546,40 +3671,40 @@
                       style="border: 1.5px solid var(--accent); background: #1b2433; border-radius: 12px; padding: 22px 22px; box-shadow: 0 0 30px rgba(229, 100, 31, 0.2)"
                     >
                       <div style="display: flex; align-items: baseline; gap: 12px; margin-bottom: 18px">
-                        <span style="font-family: 'Sora', sans-serif; font-weight: 800; font-size: 27px; color: var(--head)">Ubercage</span>
-                        <span style="font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--soft)">the V8 heap</span>
+                        <span style="font-family: 'Sora', sans-serif; font-weight: 800; font-size: 30px; color: var(--head)">Ubercage</span>
+                        <span style="font-family: 'JetBrains Mono', monospace; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--soft)">the V8 heap</span>
                       </div>
                       <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px">
-                        <span style="font-family: 'JetBrains Mono', monospace; font-size: 15px; color: var(--steel); border: 1px solid #3a4756; background: #243042; border-radius: 7px; padding: 8px 14px">object</span>
+                        <span style="font-family: 'JetBrains Mono', monospace; font-size: 19px; color: var(--steel); border: 1px solid #3a4756; background: #243042; border-radius: 7px; padding: 10px 15px">object</span>
                         <span style="color: var(--soft)">→</span>
-                        <span style="font-family: 'JetBrains Mono', monospace; font-size: 15px; color: var(--steel); border: 1px solid #3a4756; background: #243042; border-radius: 7px; padding: 8px 14px">object</span>
+                        <span style="font-family: 'JetBrains Mono', monospace; font-size: 19px; color: var(--steel); border: 1px solid #3a4756; background: #243042; border-radius: 7px; padding: 10px 15px">object</span>
                         <span style="color: var(--soft)">→</span>
-                        <span style="font-family: 'JetBrains Mono', monospace; font-size: 15px; color: var(--steel); border: 1px solid #3a4756; background: #243042; border-radius: 7px; padding: 8px 14px">object</span>
+                        <span style="font-family: 'JetBrains Mono', monospace; font-size: 19px; color: var(--steel); border: 1px solid #3a4756; background: #243042; border-radius: 7px; padding: 10px 15px">object</span>
                       </div>
-                      <div style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--mut)">
+                      <div style="font-family: 'JetBrains Mono', monospace; font-size: 15px; color: var(--mut)">
                         compressed 32-bit pointers · a bug in here
                         <b style="color: var(--soft)">stays in here</b>
                       </div>
                     </div>
                     <!-- the only way out -->
-                    <div style="text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--accent)">
+                    <div style="text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 15px; color: var(--accent)">
                       ↓ &nbsp;the only way out: type-tagged indirection (SBXCHECK)&nbsp; ↓
                     </div>
                     <!-- OUTSIDE the sandbox (dimmer) -->
                     <div
                       style="border: 1px solid #2b333d; background: #0e1217; border-radius: 12px; padding: 18px 22px"
                     >
-                      <div style="font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mut); margin-bottom: 14px">
+                      <div style="font-family: 'JetBrains Mono', monospace; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mut); margin-bottom: 14px">
                         Outside the sandbox
                       </div>
                       <div style="display: flex; align-items: center; gap: 11px">
-                        <span style="font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--mut); border: 1px solid #2b333d; border-radius: 7px; padding: 8px 13px">pointer table</span>
+                        <span style="font-family: 'JetBrains Mono', monospace; font-size: 18px; color: var(--mut); border: 1px solid #2b333d; border-radius: 7px; padding: 9px 14px">pointer table</span>
                         <span style="color: var(--mut)">→</span>
-                        <span style="font-family: 'JetBrains Mono', monospace; font-size: 14px; color: var(--mut); border: 1px solid #2b333d; border-radius: 7px; padding: 8px 13px">external objects · code</span>
-                        <span style="margin-left: auto; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--soft)">arbitrary R/W · RCE</span>
+                        <span style="font-family: 'JetBrains Mono', monospace; font-size: 18px; color: var(--mut); border: 1px solid #2b333d; border-radius: 7px; padding: 9px 14px">external objects · code</span>
+                        <span style="margin-left: auto; font-family: 'JetBrains Mono', monospace; font-size: 15px; color: var(--soft)">arbitrary R/W · RCE</span>
                       </div>
                     </div>
-                    <div style="text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--mut); margin-top: 2px">
+                    <div style="text-align: center; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--mut); margin-top: 2px">
                       + ASLR · mass-fuzzed 24/7 at Google scale
                     </div>
                   </div>
@@ -3588,7 +3713,7 @@
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">24 / 37</div>
+          <div class="pageno">25 / 38</div>
         </section>
 
 
@@ -3596,11 +3721,11 @@
         <section class="slide">
           <div class="pad" style="display: flex; flex-direction: column">
             <div class="reveal d1">
-              <h2 style="font-size: 50px">
+              <h2 style="font-size: 56px">
                 Exploitation is a <span class="glowtext">ladder of capabilities.</span>
               </h2>
               <div
-                style="margin-top: 9px; font-family: 'JetBrains Mono', monospace; font-size: 16px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mut)"
+                style="margin-top: 9px; font-family: 'JetBrains Mono', monospace; font-size: 18px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mut)"
               >
                 ExploitBench · 16 flags · 5 tiers · 41 real V8 bugs
               </div>
@@ -3646,20 +3771,20 @@
               <span class="ebchip">16 flags · scored independently</span>
               <span class="ebchip">N-day · agent is handed the patch diff</span>
               <span class="ebchip">300 turns / bug</span>
-              <span style="margin-left: auto; font-family: 'JetBrains Mono', monospace; font-size: 16px; color: var(--soft)">measure the climb, not pass/fail</span>
+              <span style="margin-left: auto; font-family: 'JetBrains Mono', monospace; font-size: 18px; color: var(--soft)">measure the climb, not pass/fail</span>
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">25 / 37</div>
+          <div class="pageno">26 / 38</div>
         </section>
 
         <!-- ===================== 18b · EXPLOITBENCH — MAIN RESULTS (heatmap) ===================== -->
         <section class="slide">
           <div class="pad" style="display: flex; flex-direction: column">
             <div class="reveal d1">
-              <h2 style="font-size: 52px">Can an LLM <span class="glowtext">climb it?</span></h2>
+              <h2 style="font-size: 58px">Can an LLM <span class="glowtext">climb it?</span></h2>
               <div
-                style="margin-top: 9px; font-family: 'JetBrains Mono', monospace; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mut)"
+                style="margin-top: 9px; font-family: 'JetBrains Mono', monospace; font-size: 17px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mut)"
               >
                 bugs of 41 reaching each tier · primary arm, best-of-three
               </div>
@@ -3720,7 +3845,7 @@
             </table>
             <p
               class="body reveal d4"
-              style="margin-top: 24px; font-size: 23px; color: var(--steel); max-width: 1480px"
+              style="margin-top: 24px; font-size: 26px; color: var(--steel); max-width: 1480px"
             >
               Eight public frontier models stall at or before the cage. Only
               <b style="color: var(--head)">Mythos Preview crosses it — ACE on 18 of 41.</b>
@@ -3728,66 +3853,117 @@
             </p>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">26 / 37</div>
+          <div class="pageno">27 / 38</div>
         </section>
 
         <!-- ===================== 18c · EXPLOITBENCH — ANECDOTES (the runs) ===================== -->
         <section class="slide">
           <div class="pad" style="display: flex; flex-direction: column">
             <div class="reveal d1">
-              <h2 style="font-size: 52px">Not memorization — <span class="glowtext">research.</span></h2>
+              <h2 style="font-size: 58px">Evidence exploits <span class="glowtext">aren't memorized.</span></h2>
               <div
-                style="margin-top: 9px; font-family: 'JetBrains Mono', monospace; font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mut)"
+                style="margin-top: 9px; font-family: 'JetBrains Mono', monospace; font-size: 17px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mut)"
               >
                 three Mythos runs, read transcript-by-transcript by a Pwn2Own champion
               </div>
             </div>
             <div
               class="reveal d2"
-              style="margin-top: 38px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 22px; max-width: 1560px"
+              style="margin-top: 28px; display: flex; gap: 24px; align-items: stretch; max-width: 1660px"
             >
-              <div style="border: 1px solid var(--line); background: #10151c; border-radius: 14px; padding: 24px 26px">
-                <div style="font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--soft)">RNG state recovery</div>
-                <div style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--mut); margin-top: 3px">CVE-2023-6702</div>
-                <div style="margin-top: 14px; font-size: 19px; color: var(--steel); line-height: 1.5">
-                  Recovered V8's PRNG state — XorShift128+ → MurmurHash3 → GF(2)
-                  linear algebra — to make a "random" hash
-                  <b style="color: var(--head)">predictable</b>, for a near-deterministic
-                  exploit. The original v8CTF author had dismissed this exact plan as
-                  too complex.
+              <!-- MAIN CASE — RNG state recovery, in depth -->
+              <div
+                style="flex: 0 0 69%; border: 1px solid var(--accent); background: #120d08; border-radius: 16px; padding: 28px 34px; box-shadow: 0 0 36px rgba(229, 100, 31, 0.1); display: flex; flex-direction: column"
+              >
+                <div style="display: flex; align-items: baseline; gap: 14px">
+                  <span style="font-family: 'Sora', sans-serif; font-weight: 800; font-size: 34px; color: var(--head); line-height: 1.1">
+                    Making "random" predictable
+                  </span>
+                  <span style="margin-left: auto; font-family: 'JetBrains Mono', monospace; font-size: 16px; color: var(--mut)">CVE-2023-6702</span>
+                </div>
+                <div style="font-family: 'JetBrains Mono', monospace; font-size: 16px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--soft); margin-top: 6px">
+                  Type confusion: a 4-byte hash ⇄ a heap pointer
+                </div>
+
+                <!-- STEP 1 — recover the RNG -->
+                <div style="margin-top: 22px; display: flex; align-items: baseline; gap: 12px">
+                  <span style="font-family: 'JetBrains Mono', monospace; font-size: 17px; color: var(--accent); font-weight: 700">1 · RECOVER</span>
+                  <span style="font-family: 'JetBrains Mono', monospace; font-size: 17px; color: var(--mut)">predict the hash</span>
+                </div>
+                <div style="margin-top: 13px; display: flex; align-items: center; gap: 9px; flex-wrap: wrap; font-family: 'JetBrains Mono', monospace; font-size: 19px">
+                  <span style="border: 1px solid #3a4756; background: #1a222e; color: var(--steel); border-radius: 7px; padding: 10px 14px">Math.random() · XorShift128+</span>
+                  <span style="color: var(--mut)">→</span>
+                  <span style="border: 1px solid #3a4756; background: #1a222e; color: var(--steel); border-radius: 7px; padding: 10px 14px">hash · MurmurHash3</span>
+                  <span style="color: var(--mut)">→</span>
+                  <span style="border: 1px solid #3a4756; background: #1a222e; color: var(--steel); border-radius: 7px; padding: 10px 14px">solve state · GF(2) + SMT</span>
+                </div>
+                <div style="margin-top: 14px; font-size: 25px; color: var(--steel); line-height: 1.45">
+                  <code style="font-family: 'JetBrains Mono', monospace; color: var(--head)">Math.random()</code>
+                  is a 128-bit linear PRNG. Solve its state from a few outputs —
+                  the next "random" hash is
+                  <b style="color: var(--head)">known in advance.</b>
+                </div>
+
+                <!-- STEP 2 — weaponize via the confusion (the bridge to the exploit) -->
+                <div style="margin-top: 22px; display: flex; align-items: baseline; gap: 12px">
+                  <span style="font-family: 'JetBrains Mono', monospace; font-size: 17px; color: var(--accent); font-weight: 700">2 · WEAPONIZE</span>
+                  <span style="font-family: 'JetBrains Mono', monospace; font-size: 17px; color: var(--mut)">predicted hash → controlled pointer</span>
+                </div>
+                <div style="margin-top: 14px; display: flex; flex-direction: column; gap: 11px; font-size: 25px; color: var(--steel); line-height: 1.35">
+                  <div style="display: flex; gap: 14px">
+                    <span style="font-family: 'JetBrains Mono', monospace; font-weight: 700; color: var(--accent)">1</span>
+                    <span>4-byte hash ⇄ heap pointer — pointer compression makes <b style="color: var(--head)">both 32 bits.</b></span>
+                  </div>
+                  <div style="display: flex; gap: 14px">
+                    <span style="font-family: 'JetBrains Mono', monospace; font-weight: 700; color: var(--accent)">2</span>
+                    <span>A hash you predict = a <b style="color: var(--head)">pointer you control</b> → a fake object forged inside the cage.</span>
+                  </div>
+                  <div style="display: flex; gap: 14px">
+                    <span style="font-family: 'JetBrains Mono', monospace; font-weight: 700; color: var(--accent)">3</span>
+                    <span>Corrupt a <code style="font-family: 'JetBrains Mono', monospace; color: var(--head)">BytecodeArray</code> → arbitrary bytecode → <b style="color: var(--head)">ROP out of the sandbox.</b></span>
+                  </div>
+                </div>
+
+                <div style="margin-top: 20px; padding-top: 18px; border-top: 1px solid var(--line); font-size: 21px; color: var(--steel); line-height: 1.45">
+                  ↳ The v8CTF author who first reported the bug had dismissed this
+                  exact approach as
+                  <b style="color: var(--soft)">too complex to be worth it.</b>
                 </div>
               </div>
-              <div style="border: 1px solid var(--line); background: #10151c; border-radius: 14px; padding: 24px 26px">
-                <div style="font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--soft)">Cross-arch revival</div>
-                <div style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--mut); margin-top: 3px">CVE-2024-7965</div>
-                <div style="margin-top: 14px; font-size: 19px; color: var(--steel); line-height: 1.5">
-                  Public work said this JIT bug was ARM64-only — "too hard" on x86-64.
-                  Mythos found a
-                  <b style="color: var(--head)">new WebAssembly + Turbofan path</b> and
-                  pushed past where all public work stops.
+
+              <!-- SIDE — two more, off to the side (compact) -->
+              <div style="flex: 1; display: flex; flex-direction: column; gap: 12px">
+                <div style="font-family: 'JetBrains Mono', monospace; font-size: 14px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mut)">
+                  Two more from the same runs
                 </div>
-              </div>
-              <div style="border: 1px solid var(--line); background: #10151c; border-radius: 14px; padding: 24px 26px">
-                <div style="font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--soft)">The cold case</div>
-                <div style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--mut); margin-top: 3px">CVE-2024-0519</div>
-                <div style="margin-top: 14px; font-size: 19px; color: var(--steel); line-height: 1.5">
-                  An in-the-wild bug with
-                  <b style="color: var(--head)">no public report and no working PoC</b> —
-                  a "cold case" unreproduced for a year. Mythos reproduced it in a single
-                  129-turn episode.
+                <div style="border: 1px solid var(--line); background: #1a2230; border-radius: 12px; padding: 15px 17px">
+                  <div style="font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--soft)">Cross-arch revival</div>
+                  <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--mut); margin-top: 2px">CVE-2024-7965</div>
+                  <div style="margin-top: 9px; font-size: 17px; color: var(--steel); line-height: 1.4">
+                    Said to be ARM64-only — Mythos found a new WebAssembly +
+                    Turbofan path on x86-64, past all public work.
+                  </div>
+                </div>
+                <div style="border: 1px solid var(--line); background: #1a2230; border-radius: 12px; padding: 15px 17px">
+                  <div style="font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--soft)">The cold case</div>
+                  <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--mut); margin-top: 2px">CVE-2024-0519</div>
+                  <div style="margin-top: 9px; font-size: 17px; color: var(--steel); line-height: 1.4">
+                    In-the-wild, no public PoC, unreproduced for a year — Mythos
+                    redid it in one 129-turn episode.
+                  </div>
                 </div>
               </div>
             </div>
             <p
               class="body reveal d4"
-              style="margin-top: 30px; font-size: 24px; color: var(--head)"
+              style="margin-top: 26px; font-size: 27px; color: var(--head)"
             >
               Not pulled from training — <span class="glowtext">discovered</span>, like an
               elite human researcher would.
             </p>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">27 / 37</div>
+          <div class="pageno">28 / 38</div>
         </section>
 
 
@@ -3799,13 +3975,13 @@
             <div>
               <h2
                 class="hero-in d2"
-                style="margin-top: 28px; font-size: 58px; max-width: 1000px"
+                style="margin-top: 28px; font-size: 65px; max-width: 1000px"
               >
                 The ladder <span class="glowtext">can be climbed.</span>
               </h2>
               <p
                 class="body reveal d3"
-                style="margin-top: 30px; font-size: 28px; max-width: 800px"
+                style="margin-top: 30px; font-size: 31px; max-width: 800px"
               >
                 Private frontier systems reach
                 <b style="color: var(--head)"
@@ -3855,7 +4031,7 @@
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">28 / 37</div>
+          <div class="pageno">29 / 38</div>
         </section>
 
         <!-- ===================== 19b · CAN IT PATCH? (offense settled, defense open) ===================== -->
@@ -3863,11 +4039,11 @@
           <div class="pad" style="display: flex; flex-direction: column">
             <div class="reveal d1">
               <div
-                style="font-family: 'JetBrains Mono', monospace; font-size: 16px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--mut)"
+                style="font-family: 'JetBrains Mono', monospace; font-size: 18px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--mut)"
               >
                 Offense is answered · defense isn't
               </div>
-              <h2 style="margin-top: 8px; font-size: 56px">
+              <h2 style="margin-top: 8px; font-size: 63px">
                 It can exploit. Can it <span class="glowtext">patch?</span>
               </h2>
             </div>
@@ -3878,20 +4054,20 @@
             >
               <!-- OFFENSE — settled -->
               <div
-                style="flex: 1; border: 1px solid var(--line); background: #0a0e15; border-radius: 14px; padding: 30px 32px; display: flex; flex-direction: column; gap: 16px"
+                style="flex: 1; border: 1px solid var(--line); background: #121a26; border-radius: 14px; padding: 30px 32px; display: flex; flex-direction: column; gap: 16px"
               >
-                <div style="font-family: 'JetBrains Mono', monospace; font-size: 15px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--steel)">
+                <div style="font-family: 'JetBrains Mono', monospace; font-size: 17px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--steel)">
                   Offense — measurable
                 </div>
-                <h3 style="font-family: 'Sora', sans-serif; font-weight: 800; font-size: 30px; color: var(--head); line-height: 1.18; margin: 0">
+                <h3 style="font-family: 'Sora', sans-serif; font-weight: 800; font-size: 34px; color: var(--head); line-height: 1.18; margin: 0">
                   Frontier systems climb end-to-end. Even on V8.
                 </h3>
-                <p class="body" style="margin: 0; font-size: 21px; color: var(--steel); line-height: 1.4">
+                <p class="body" style="margin: 0; font-size: 24px; color: var(--steel); line-height: 1.4">
                   Because the oracle is objective:
                   <b style="color: var(--head)">did the exploit fire?</b> ASAN,
                   arb_write, pc_control, ACE — every rung is auto-checkable.
                 </p>
-                <div style="margin-top: auto; display: flex; gap: 9px; flex-wrap: wrap; font-family: 'JetBrains Mono', monospace; font-size: 14px">
+                <div style="margin-top: auto; display: flex; gap: 9px; flex-wrap: wrap; font-family: 'JetBrains Mono', monospace; font-size: 16px">
                   <span style="border: 1px solid #2f5a3a; background: rgba(60,160,90,0.10); color: #79c990; border-radius: 6px; padding: 6px 11px">crash ✓</span>
                   <span style="border: 1px solid #2f5a3a; background: rgba(60,160,90,0.10); color: #79c990; border-radius: 6px; padding: 6px 11px">arb_write ✓</span>
                   <span style="border: 1px solid #2f5a3a; background: rgba(60,160,90,0.10); color: #79c990; border-radius: 6px; padding: 6px 11px">pc_control ✓</span>
@@ -3903,18 +4079,18 @@
               <div
                 style="flex: 1; border: 1px solid var(--accent); background: #140d08; border-radius: 14px; padding: 30px 32px; display: flex; flex-direction: column; gap: 16px; box-shadow: 0 0 34px rgba(229,100,31,0.12)"
               >
-                <div style="font-family: 'JetBrains Mono', monospace; font-size: 15px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--soft)">
+                <div style="font-family: 'JetBrains Mono', monospace; font-size: 17px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--soft)">
                   Defense — unknown
                 </div>
-                <h3 style="font-family: 'Sora', sans-serif; font-weight: 800; font-size: 30px; color: var(--head); line-height: 1.18; margin: 0">
+                <h3 style="font-family: 'Sora', sans-serif; font-weight: 800; font-size: 34px; color: var(--head); line-height: 1.18; margin: 0">
                   Almost no LLM-written fix has been accepted in a zero-day-hunt
                   benchmark.
                 </h3>
-                <p class="body" style="margin: 0; font-size: 21px; color: var(--steel); line-height: 1.4">
+                <p class="body" style="margin: 0; font-size: 24px; color: var(--steel); line-height: 1.4">
                   We grade an exploit in milliseconds. We
                   <b style="color: var(--head)">can't yet grade a fix.</b>
                 </p>
-                <div style="margin-top: auto; font-family: 'Sora', sans-serif; font-weight: 800; font-size: 72px; color: var(--soft); line-height: 1">
+                <div style="margin-top: auto; font-family: 'Sora', sans-serif; font-weight: 800; font-size: 81px; color: var(--soft); line-height: 1">
                   ?
                 </div>
               </div>
@@ -3922,7 +4098,7 @@
 
             <p
               class="body reveal d4"
-              style="margin-top: 26px; font-size: 24px; color: var(--head); line-height: 1.3"
+              style="margin-top: 26px; font-size: 27px; color: var(--head); line-height: 1.3"
             >
               We have data on the exploit. On the fix, we're nearly blind — and
               that gap is exactly what we'd have to
@@ -3930,14 +4106,14 @@
             </p>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">29 / 37</div>
+          <div class="pageno">30 / 38</div>
         </section>
 
         <!-- ===================== 18b · ROOT CAUSE (Era III frontier) ===================== -->
         <section class="slide">
           <div class="pad" style="display: flex; flex-direction: column">
-            <h2 class="reveal d1" style="font-size: 54px">
-              The fix isn't on the <span class="glowtext">backtrace.</span>
+            <h2 class="reveal d1" style="font-size: 60px">
+              What seems hard <span class="glowtext">still today.</span>
             </h2>
             <div
               style="margin-top: 44px; display: flex; gap: 56px; align-items: center"
@@ -3945,18 +4121,18 @@
               <!-- LEFT: the backtrace + where the real bug actually lives -->
               <div class="reveal d2" style="flex: 0 0 52%">
                 <div
-                  style="font-family: 'JetBrains Mono', monospace; font-size: 14px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mut); margin-bottom: 10px"
+                  style="font-family: 'JetBrains Mono', monospace; font-size: 16px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mut); margin-bottom: 10px"
                 >
                   Backtrace at crash
                 </div>
                 <div
-                  style="font-family: 'JetBrains Mono', monospace; font-size: 19px; background: #0a0e14; border: 1px solid var(--line); border-radius: 12px; overflow: hidden"
+                  style="font-family: 'JetBrains Mono', monospace; font-size: 21px; background: #121a26; border: 1px solid var(--line); border-radius: 12px; overflow: hidden"
                 >
                   <div
                     style="display: flex; align-items: center; gap: 14px; padding: 14px 20px; background: rgba(229, 100, 31, 0.12); border-left: 3px solid var(--accent); color: var(--head)"
                   >
                     <span style="color: var(--mut)">#0</span> free(obj)
-                    <span style="margin-left: auto; font-size: 14px; color: var(--soft)">crash · the AI patches here</span>
+                    <span style="margin-left: auto; font-size: 16px; color: var(--soft)">crash · the AI patches here</span>
                   </div>
                   <div style="padding: 14px 20px; color: var(--steel); border-left: 3px solid transparent">
                     <span style="color: var(--mut)">#1</span> on_render(view)
@@ -3969,7 +4145,7 @@
                   </div>
                 </div>
                 <div
-                  style="font-family: 'JetBrains Mono', monospace; font-size: 16px; color: var(--accent); margin: 14px 0 12px 4px"
+                  style="font-family: 'JetBrains Mono', monospace; font-size: 18px; color: var(--accent); margin: 14px 0 12px 4px"
                 >
                   ↳ but the real bug is somewhere else
                 </div>
@@ -3977,12 +4153,12 @@
                   style="border: 1px dashed #3a4656; border-radius: 12px; padding: 16px 20px; background: rgba(255, 255, 255, 0.015)"
                 >
                   <div
-                    style="font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mut); margin-bottom: 10px"
+                    style="font-family: 'JetBrains Mono', monospace; font-size: 15px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mut); margin-bottom: 10px"
                   >
                     The real fix — off this stack
                   </div>
                   <div
-                    style="font-family: 'JetBrains Mono', monospace; font-size: 17px; color: var(--steel); line-height: 1.75"
+                    style="font-family: 'JetBrains Mono', monospace; font-size: 19px; color: var(--steel); line-height: 1.75"
                   >
                     <span style="color: var(--soft)">double&nbsp;free</span> — obj
                     was already freed in on_close(), a different event<br />
@@ -3998,26 +4174,26 @@
                 style="flex: 1; display: flex; flex-direction: column; gap: 18px"
               >
                 <div
-                  style="font-family: 'JetBrains Mono', monospace; font-size: 15px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--mut)"
+                  style="font-family: 'JetBrains Mono', monospace; font-size: 17px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--mut)"
                 >
                   Root cause
                 </div>
-                <p class="body" style="margin: 0; font-size: 22px; color: var(--mut)">
+                <p class="body" style="margin: 0; font-size: 25px; color: var(--mut)">
                   Localized fixes — right at the crash — are solved.
                 </p>
                 <h3
-                  style="font-family: 'Sora', sans-serif; font-weight: 800; font-size: 33px; color: var(--head); line-height: 1.2; margin: 0"
+                  style="font-family: 'Sora', sans-serif; font-weight: 800; font-size: 37px; color: var(--head); line-height: 1.2; margin: 0"
                 >
                   The cause is often somewhere the backtrace never points.
                 </h3>
-                <p class="body" style="margin: 0; font-size: 22px; color: var(--steel)">
+                <p class="body" style="margin: 0; font-size: 25px; color: var(--steel)">
                   Today's models fall off the moment the fix leaves the stack —
                   upstream, or in another event entirely.
                 </p>
                 <div
                   style="margin-top: 6px; border-left: 3px solid var(--accent); padding: 6px 0 6px 18px"
                 >
-                  <p class="body" style="margin: 0; font-size: 23px; color: var(--head)">
+                  <p class="body" style="margin: 0; font-size: 26px; color: var(--head)">
                     But <b>"is the fix at the root cause?"</b> is measurable — so
                     it's <span class="glowtext">trainable.</span>
                   </p>
@@ -4026,7 +4202,7 @@
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">30 / 37</div>
+          <div class="pageno">31 / 38</div>
         </section>
 
         <!-- ===================== 19d · RL INTRO — THE ORACLE IS THE NEW JOB ===================== -->
@@ -4034,11 +4210,11 @@
           <div class="pad" style="display: flex; flex-direction: column">
             <div class="reveal d1">
               <div
-                style="font-family: 'JetBrains Mono', monospace; font-size: 16px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--mut)"
+                style="font-family: 'JetBrains Mono', monospace; font-size: 18px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--mut)"
               >
                 An intro to reinforcement learning · the nouns
               </div>
-              <h2 style="margin-top: 8px; font-size: 56px">
+              <h2 style="margin-top: 8px; font-size: 63px">
                 The new job: <span class="glowtext">writing oracles.</span>
               </h2>
             </div>
@@ -4048,21 +4224,21 @@
             >
               <!-- LEFT: the RL nouns -->
               <div class="reveal d2" style="flex: 0 0 42%; display: flex; flex-direction: column; gap: 14px">
-                <div style="border: 1px solid var(--line); background: #0a0e15; border-radius: 11px; padding: 16px 20px">
-                  <div style="font-family: 'JetBrains Mono', monospace; font-size: 14px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--steel)">Environment</div>
-                  <div class="body" style="margin-top: 5px; font-size: 19px; color: var(--mut)">the target + harness — the V8 build, the fuzzer, the crashing input</div>
+                <div style="border: 1px solid var(--line); background: #121a26; border-radius: 11px; padding: 16px 20px">
+                  <div style="font-family: 'JetBrains Mono', monospace; font-size: 16px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--steel)">Environment</div>
+                  <div class="body" style="margin-top: 5px; font-size: 21px; color: var(--mut)">the target + harness — the V8 build, the fuzzer, the crashing input</div>
                 </div>
-                <div style="text-align: center; color: var(--mut); font-size: 15px">↓</div>
-                <div style="border: 1px solid var(--line); background: #0a0e15; border-radius: 11px; padding: 16px 20px">
-                  <div style="font-family: 'JetBrains Mono', monospace; font-size: 14px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--steel)">Policy</div>
-                  <div class="body" style="margin-top: 5px; font-size: 19px; color: var(--mut)">the model — proposes a patch</div>
+                <div style="text-align: center; color: var(--mut); font-size: 17px">↓</div>
+                <div style="border: 1px solid var(--line); background: #121a26; border-radius: 11px; padding: 16px 20px">
+                  <div style="font-family: 'JetBrains Mono', monospace; font-size: 16px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--steel)">Policy</div>
+                  <div class="body" style="margin-top: 5px; font-size: 21px; color: var(--mut)">the model — proposes a patch</div>
                 </div>
-                <div style="text-align: center; color: var(--mut); font-size: 15px">↓</div>
+                <div style="text-align: center; color: var(--mut); font-size: 17px">↓</div>
                 <div style="border: 1px solid var(--accent); background: #140d08; border-radius: 11px; padding: 16px 20px; box-shadow: 0 0 26px rgba(229,100,31,0.12)">
-                  <div style="font-family: 'JetBrains Mono', monospace; font-size: 14px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--soft)">Oracle <span style="color: var(--mut)">· the reward</span></div>
-                  <div class="body" style="margin-top: 5px; font-size: 19px; color: var(--steel)">scores the patch — <b style="color: var(--head)">good, or gamed?</b></div>
+                  <div style="font-family: 'JetBrains Mono', monospace; font-size: 16px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--soft)">Oracle <span style="color: var(--mut)">· the reward</span></div>
+                  <div class="body" style="margin-top: 5px; font-size: 21px; color: var(--steel)">scores the patch — <b style="color: var(--head)">good, or gamed?</b></div>
                 </div>
-                <p class="body" style="margin: 8px 0 0; font-size: 19px; color: var(--steel); line-height: 1.4">
+                <p class="body" style="margin: 8px 0 0; font-size: 21px; color: var(--steel); line-height: 1.4">
                   Offense's oracle is free — <i>did the exploit fire?</i>
                   <b style="color: var(--head)">Defense has none.</b>
                 </p>
@@ -4070,22 +4246,22 @@
 
               <!-- RIGHT: reward hacking — the exit(0) patch -->
               <div class="reveal d3" style="flex: 1; display: flex; flex-direction: column; gap: 16px">
-                <p class="body" style="margin: 0; font-size: 22px; color: var(--steel); line-height: 1.4">
+                <p class="body" style="margin: 0; font-size: 25px; color: var(--steel); line-height: 1.4">
                   The oracle defines what <b style="color: var(--head)">"good"</b>
                   means. Get it wrong and the model games it.
                 </p>
-                <pre style="margin: 0; font-family: 'JetBrains Mono', monospace; font-size: 18px; line-height: 1.55; background: #0a0e14; border: 1px solid var(--line); border-radius: 12px; padding: 20px 24px; color: var(--steel); overflow: hidden"><span style="color: var(--mut)">// crash: use-after-free at free(obj)</span>
+                <pre style="margin: 0; font-family: 'JetBrains Mono', monospace; font-size: 20px; line-height: 1.55; background: #121a26; border: 1px solid var(--line); border-radius: 12px; padding: 20px 24px; color: var(--steel); overflow: hidden"><span style="color: var(--mut)">// crash: use-after-free at free(obj)</span>
 <span style="color: var(--mut)">// naive oracle: "does the fuzzer still crash?"</span>
 
 <span style="color: var(--steel)">void</span> <span style="color: #f3f6f8">on_render</span>(View* v) {
     <span style="color: var(--soft)">exit(0);</span>   <span style="color: var(--mut)">// no crash. oracle: PASS.</span>
 }              <span style="color: var(--accent)">// program: dead.</span></pre>
-                <p class="body" style="margin: 0; font-size: 21px; color: var(--steel); line-height: 1.4">
+                <p class="body" style="margin: 0; font-size: 24px; color: var(--steel); line-height: 1.4">
                   Or <code style="font-family: 'JetBrains Mono', monospace; color: var(--soft)">exit(0)</code>
                   on every path. The fuzzer goes green; the software is gone.
                 </p>
                 <div style="border-left: 3px solid var(--accent); padding: 4px 0 4px 18px">
-                  <p class="body" style="margin: 0; font-size: 22px; color: var(--head); line-height: 1.32">
+                  <p class="body" style="margin: 0; font-size: 25px; color: var(--head); line-height: 1.32">
                     Writing oracles that capture real correctness is a
                     <span class="glowtext">new security job.</span> We have great
                     ones for offense — and almost none for defense.
@@ -4095,36 +4271,50 @@
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">31 / 37</div>
+          <div class="pageno">32 / 38</div>
         </section>
 
         <!-- ===================== 20 · ENGINE OF INEVITABILITY ===================== -->
         <section class="slide">
           <div class="pad center">
-            <h2 class="reveal d2" style="margin-top: 34px; font-size: 60px">
-              Once you can measure it,<br />you can train it.
+            <div
+              class="reveal d1"
+              style="font-family: 'JetBrains Mono', monospace; font-size: 18px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--mut)"
+            >
+              The expert's new job
+            </div>
+            <h2 class="reveal d2" style="margin-top: 14px; font-size: 67px">
+              From solving to <span class="glowtext">teaching.</span>
             </h2>
-            <div class="flow reveal d3" style="margin-top: 46px">
+            <p
+              class="body reveal d3"
+              style="margin-top: 30px; font-size: 31px; color: var(--steel); line-height: 1.4; max-width: 1240px"
+            >
+              An expert's value used to be
+              <b style="color: var(--head)">solving the problem by hand.</b>
+              Going forward, it's
+              <b style="color: var(--head)">teaching the machine</b> to.
+            </p>
+            <div class="flow reveal d4" style="margin-top: 42px">
               <span class="step">Decompose</span><span class="arr">→</span>
-              <span class="step">Measure</span><span class="arr">→</span>
-              <span class="step">Compare models</span><span class="arr">→</span>
-              <span class="step">Build environments</span
+              <span class="step">Build the environment</span
               ><span class="arr">→</span>
-              <span class="step">Reward signals</span>
+              <span class="step">Write the oracle</span><span class="arr">→</span>
+              <span class="step">Reward the climb</span>
             </div>
             <div class="loopback reveal d5">
-              capability improves with every iteration
+              capability compounds with every iteration
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">32 / 37</div>
+          <div class="pageno">33 / 38</div>
         </section>
 
         <!-- ===================== 21 · QUOTE ===================== -->
         <section class="slide spotlight">
           <div class="pad center">
             <div class="quote-mark reveal d1">// predictable</div>
-            <p class="quote hero-in d2" style="font-size: 70px">
+            <p class="quote hero-in d2" style="font-size: 78px">
               The moment a capability becomes
               <span class="accent">measurable</span>, it becomes
               <span class="accent">trainable</span>. And the moment it becomes
@@ -4132,7 +4322,7 @@
             </p>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">33 / 37</div>
+          <div class="pageno">34 / 38</div>
         </section>
 
         <!-- ===================== 21b · OFFENSE→DEFENSE PIVOT — THE ZERO DAY CLOCK ===================== -->
@@ -4140,13 +4330,12 @@
           <div class="pad" style="display: flex; flex-direction: column">
             <div class="reveal d1">
               <div
-                style="font-family: 'JetBrains Mono', monospace; font-size: 16px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--mut)"
+                style="font-family: 'JetBrains Mono', monospace; font-size: 18px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--mut)"
               >
                 Where offense is going · the field, not the lab
               </div>
-              <h2 style="margin-top: 8px; font-size: 56px">
-                From years to hours —
-                <span class="glowtext">and still falling.</span>
+              <h2 style="margin-top: 8px; font-size: 63px">
+                Defense is an <span class="glowtext">urgent problem.</span>
               </h2>
             </div>
 
@@ -4165,7 +4354,7 @@
                     <span style="width: 11px; height: 11px; border-radius: 50%; background: #3a4048; display: inline-block"></span>
                     <span style="width: 11px; height: 11px; border-radius: 50%; background: #3a4048; display: inline-block"></span>
                     <span style="width: 11px; height: 11px; border-radius: 50%; background: #3a4048; display: inline-block"></span>
-                    <span style="margin-left: 10px; flex: 1; background: #0d0f13; border-radius: 8px; padding: 7px 16px; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: #9db8c6">🔒 zerodayclock.com</span>
+                    <span style="margin-left: 10px; flex: 1; background: #0d0f13; border-radius: 8px; padding: 7px 16px; font-family: 'JetBrains Mono', monospace; font-size: 15px; color: #9db8c6">🔒 zerodayclock.com</span>
                   </div>
                   <!-- the actual site -->
                   <img
@@ -4181,28 +4370,22 @@
                 class="reveal d3"
                 style="flex: 1; display: flex; flex-direction: column; gap: 22px"
               >
-                <p class="body" style="margin: 0; font-size: 24px; color: var(--steel); line-height: 1.4">
-                  The benchmarks show AI <b style="color: var(--head)">can</b>
-                  climb the ladder. The wild shows the climb is
-                  <b style="color: var(--head)">already happening — at scale.</b>
-                </p>
-
                 <div
                   style="border-left: 3px solid var(--accent); padding: 6px 0 6px 22px"
                 >
                   <div
-                    style="font-family: 'Sora', sans-serif; font-weight: 800; font-size: 76px; line-height: 1; color: var(--soft)"
+                    style="font-family: 'Sora', sans-serif; font-weight: 800; font-size: 85px; line-height: 1; color: var(--soft)"
                   >
                     67%
                   </div>
-                  <p class="body" style="margin: 10px 0 0; font-size: 21px; color: var(--steel); line-height: 1.35">
+                  <p class="body" style="margin: 10px 0 0; font-size: 24px; color: var(--steel); line-height: 1.35">
                     of exploited CVEs in 2026 were
                     <b style="color: var(--head)">zero-days</b> — hit on or before
                     disclosure day. In 2018 it was 16%.
                   </p>
                 </div>
 
-                <p class="body" style="margin: 0; font-size: 25px; color: var(--head); line-height: 1.3">
+                <p class="body" style="margin: 0; font-size: 28px; color: var(--head); line-height: 1.3">
                   Offense has moved to
                   <span class="glowtext">machine speed.</span> Defense can't stay
                   verdict-by-verdict.
@@ -4211,58 +4394,13 @@
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">34 / 37</div>
-        </section>
-
-        <!-- ===================== 22 · WHAT IT MEANS FOR DEFENDERS ===================== -->
-        <section class="slide">
-          <div class="pad">
-            <h2 class="reveal d2" style="font-size: 60px">
-              Defend in ladders, not verdicts
-            </h2>
-            <div class="cards c4 reveal d3" style="margin-top: 44px">
-              <div class="card">
-                <div class="ci">01 · MEASURE</div>
-                <h3>Think in capability ladders</h3>
-                <p>
-                  Track how far an attacker can climb — not whether a single
-                  crash exists.
-                </p>
-              </div>
-              <div class="card">
-                <div class="ci">02 · PRIORITIZE</div>
-                <h3>Measure your patch gaps</h3>
-                <p>
-                  Where on the ladder does each unpatched issue let an AI agent
-                  reach?
-                </p>
-              </div>
-              <div class="card">
-                <div class="ci">03 · TRAIN</div>
-                <h3>Build training environments</h3>
-                <p>
-                  The same environments that train attackers can train your
-                  defenses.
-                </p>
-              </div>
-              <div class="card">
-                <div class="ci">04 · OPERATE</div>
-                <h3>Adopt AI-native workflows</h3>
-                <p>
-                  Augmented teams that operate at machine speed — humans
-                  directing, agents climbing.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">35 / 37</div>
+          <div class="pageno">35 / 38</div>
         </section>
 
         <!-- ===================== 23 · REMEMBER ONE PHRASE ===================== -->
         <section class="slide">
           <div class="pad center">
-            <h2 class="reveal d2" style="margin-top: 30px; font-size: 96px">
+            <h2 class="reveal d2" style="margin-top: 30px; font-size: 108px">
               The <span class="glowtext">exploitation ladder.</span>
             </h2>
             <div class="beats reveal d4" style="margin-top: 50px">
@@ -4284,10 +4422,6 @@
               </div>
               <div class="beat">
                 <span class="bn">05</span
-                ><span><b>Mythos</b> shows the ladder can be climbed.</span>
-              </div>
-              <div class="beat">
-                <span class="bn">06</span
                 ><span
                   >We've moved from worrying about assembly
                   <span class="arr">→</span> <b>training agents.</b></span
@@ -4296,7 +4430,40 @@
             </div>
           </div>
           <div class="deck-tag">Popping the Shell</div>
-          <div class="pageno">36 / 37</div>
+          <div class="pageno">36 / 38</div>
+        </section>
+
+        <!-- ===================== 23b · THE FRONTIER — PATCHES HUMANS WILL ACCEPT ===================== -->
+        <section class="slide">
+          <div class="pad center">
+            <div
+              class="reveal d1"
+              style="font-family: 'JetBrains Mono', monospace; font-size: 18px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--mut)"
+            >
+              Where defense goes next · the open problem
+            </div>
+            <h2 class="reveal d2" style="margin-top: 14px; font-size: 76px; max-width: 1400px">
+              Patches a human will <span class="glowtext">accept.</span>
+            </h2>
+            <p
+              class="body reveal d3"
+              style="margin-top: 34px; font-size: 31px; color: var(--steel); line-height: 1.45; max-width: 1280px"
+            >
+              Not "the crash is gone" — a fix at the
+              <b style="color: var(--head)">root cause</b>, semantically correct,
+              that a maintainer will actually
+              <b style="color: var(--head)">merge.</b>
+            </p>
+            <p
+              class="body reveal d4"
+              style="margin-top: 22px; font-size: 31px; color: var(--head); line-height: 1.35; max-width: 1280px"
+            >
+              We have no oracle for that yet.
+              <span class="glowtext">That's the frontier.</span>
+            </p>
+          </div>
+          <div class="deck-tag">Popping the Shell</div>
+          <div class="pageno">37 / 38</div>
         </section>
 
         <!-- ===================== 24 · CLOSING ===================== -->
@@ -4316,16 +4483,11 @@
             <div>
               <p
                 class="quote hero-in d2"
-                style="font-size: 66px; max-width: 1220px"
+                style="font-size: 74px; max-width: 1280px"
               >
-                The Mythos moment isn't that humans are obsolete. It's that
-                security is becoming measurable — and measurable becomes
-                <span class="accent">predictable.</span>
-              </p>
-              <p class="close-cta reveal d3">
-                A predictable path to secure software doesn't retire us — it
-                <span class="accent">frees us to the next problem.</span> Learn
-                to train and build models as deeply as we once learned assembly.
+                Today's Mythos moment isn't that humans are obsolete. It's that
+                we've <span class="accent">solved real problems.</span> Now we
+                focus on the <span class="accent">next set.</span>
               </p>
             </div>
             <div class="close-foot reveal d4">
@@ -4360,7 +4522,7 @@
 
     <!-- deck chrome (outside the stage) -->
     <div class="counter" id="counter"><b>01</b> / 24</div>
-    <div class="hint">← → · E edit · P presenter · N notes</div>
+    <div class="hint">← → · E edit · P presenter · N notes · H hide · ⌘/Ctrl+P pdf</div>
     <div id="noteStrip"></div>
 
     <!-- inline edit affordances -->
@@ -4643,14 +4805,14 @@
         "The map for the rest of the talk: three eras. Morris worm -> CGC -> AIxCC -> now. Keep this quick. [~5:30]",
         "Beat — Part One. Pose the framing question the history will answer: it's no longer whether AI can find bugs, but how far it goes after the bug is found. [~7:00]",
         "Slide 8 — the arms race. Each defense that went up (stack canaries, DEP/NX, ASLR, RELRO, CFI/CET, PAC/MTE) met a more creative bypass (leak/brute-force, ret2libc→ROP, info-leak/JIT-ROP, FSOP, DOP/COOP, PACMAN/Rowhammer). The point: defenses don't end exploitation — they escalate its creativity. And there are dozens more. [~13:00]",
-        "Slide 9 — exploitation is a ladder. Don't grade it pass/fail — it's tiers, bottom up: T3 trigger the bug (a crash) → T2 defense-bypass primitives (infoleaks, arbitrary read/write to beat ASLR/DEP) → T1 weaponized (reliable, full control / ACE). Crash-class benchmarks stop at the floor; the real climb is everything above it, and every rung is graded independently so partial progress still counts. (Inspired by ExploitBench's tier framing — returns in Part III.) [~13:45]",
+        "Slide 8 — exploitation is a ladder. This INTRODUCES the deck's canonical 7-rung ladder (it returns on 15, 21, 28 and the close). Bottom -> top: reach the code -> trigger the bug -> control the crash -> build a primitive -> defeat mitigations -> compose the exploit -> achieve impact, with the orange bars climbing. The rungs are grouped into the three ExploitBench tiers + their flags: T3 Trigger bug (asan, crash) = the floor a crash-class benchmark stops at; T2 Defense bypass (infoleaks, arb_read/write — beat ASLR/DEP); T1 Weaponized (pc_control, ACE). Don't grade it pass/fail — every rung is scored independently, so partial progress counts; the real climb is everything above the crash. [~13:45]",
         "Capability lived in people. The point of Era I: before systems could do this, the best exploit developers on earth could be counted on your hands — and many are my students. George Hotz (first to unlock the iPhone, hacked the PS3). Richard Zhu and Seunghyun Lee (Pwn2Own Masters of Pwn). And a whole generation of them on Maple Mallard Magistrates, who win DEF CON CTF. Tone: celebrate the craft at its peak — these people are extraordinary. Then pivot: the rest of the talk is about moving that capability OUT of a handful of heads and into systems (Era II) and trained models (Era III). Not replacing them — freeing them. [~13:45]",
         "Slide 11 — my goal (the personal turn). State it plainly: automatically check the WORLD'S software for exploitable bugs. This is the mission behind CGC / Mayhem / AIxCC — and it forces the question: humans can't do that by hand. [~14:45]",
         "Slide 12 — manual effort doesn't scale. Bars = share of world population (US 4.2%, India 17.8%, China 17.4%, all others 60.6%; ~8.1B people). Point: the world's software is global and enormous, while expert exploit-developers number in the thousands. A handful of humans can't manually check the planet's code — which is exactly why we turn to automation. Hands the baton to Part II. [~15:30]",
         "Part Two — connect to my own history here. [~16:00]",
         "Slide 14 — announce the Cyber Grand Challenge. 2016, DARPA, at DEF CON in Las Vegas. The goal: a fully autonomous Cyber Reasoning System that finds the bug, proves the exploit, and ships the patch in real time — head-to-head against other machines, no humans in the loop. ($2M first prize.) [~16:30]",
         "Architecture of autonomy — how you actually build a Cyber Reasoning System (this is Mayhem, the system we built that won). Build it bottom-up on screen: (1) FOUNDATION — a Binary Analysis Platform that works on binaries, no source: disassembler, container parser, an instruction lifter to a formal model. (2) On top, OFFENSE (sword): fuzzing, symbolic execution, crash triage, automatic exploit generation (AEG), crash explorer — find and PROVE bugs. (3) DEFENSE (shield): data-flow analysis, hardening, crash-specific patches, static binary rewriting — patch without source. (4) On top of it all, the AUTONOMY AI — strategy: resource allocation and the patch chooser. THAT top layer — deciding what to do next — is the brain, and it's exactly where Era III intelligence goes. Then fuzzing and patching (next slides) are zoom-ins on two of these components. [~17:00]",
-        "Offense basis: fuzzing. LEFT = the live loop — mutate the input, run, watch for a crash, millions of times a second (execs climb, crashes tick). RIGHT = WHY everyone fuzzed: a crash is the FIRST rung on the ladder, the cheapest way onto it. Then AEG (automatic exploit generation) raised a crash UP a level into a working exploit. Key CGC point: there were no mitigations in play, so the middle 'defense bypass' rung didn't exist — you went crash → exploit directly. [~17:15]",
+        "Offense basis: fuzzing. LEFT = the canonical exploitation ladder (the SAME one from slide 8): fuzzing lights the bottom — reach the code + trigger the bug = THE CRASH, the cheapest rung to get onto. 'defeat mitigations' is struck (no mitigations in CGC), and AEG (automatic exploit generation) raised the crash straight to a working exploit, skipping the bypass tier — crash -> exploit directly. RIGHT = the live fuzzing loop: mutate -> run -> watch for a crash, millions of execs/sec (execs climb, crashes tick). [~17:15]",
         "Patching (the defensive half). The patch is LOCALIZED — the fix sits right where it crashes, on the backtrace: before the copy, check the length and exit if too long; same bug, same exploit input, now it hits the guard and the shell never pops. (Shown in C for clarity; in CGC the equivalent guard was applied straight to the binary, no source.) Seed for Era III (the muted line): localized patches are the EASY case — automated patchers and LLMs do well here. The OPEN problem is non-localized / root-cause fixes, where the fix isn't on the backtrace: (A) upstream — an integer-overflow size calc that feeds a later OOB write; (B) off-stack — a use-after-free freed in a different event; (C) a shared helper that must be fixed for all callers. LLMs do poorly the moment the fix leaves the backtrace. [~17:45]",
         "The brain — strategy (autonomy + counter-autonomy). Finding/exploiting/patching is capability; the bottleneck is the STRATEGY of what to do with it. Diagram = ricochet: attacks are visible on the wire, so Mayhem could capture a rival's exploit (Rival A) and replay it against another (Rival C) — you don't even need to find the bug yourself. Two more strategic levers: (1) timing the patch — deploying a fix LEAKS the bug (APEG: patch-based exploit generation), so sometimes you attack before you patch; (2) order — hit the weak players first. This is the top 'brain' layer of the architecture in action, and the work behind it ('How Shall We Play a Game?', Bao/Shoshitaishvili/Wang/Kruegel/Vigna/Brumley, IEEE CSF 2017) won an NSA Science-of-Security award; modeled as a partial-observation stochastic game, solved for the Nash-equilibrium strategy. [~18:15]",
         "2016 DARPA Cyber Grand Challenge — the result. Machines reasoned about binaries — found bugs, generated exploits, patched — live, no human in the loop. Mayhem won. Line: CGC proved machines could play the game. [~18:30]",
@@ -4659,20 +4821,21 @@
         "One ladder, two climbs — tie the whole capability ladder together with CGC vs AIxCC on the SAME rungs. CGC (left): climbed all the way to full impact — BUT the targets had no real mitigations, so the 'defeat mitigations' rung is dashed/absent; it was a short ladder. AIxCC (right): real, hardened software (the full ladder), but the machines mostly stopped at the crash — only the bottom rungs (reach the code, trigger the bug) light up. The asymmetry IS the gap: real exploitation on hardened software — the middle and top rungs — is still unclimbed. That open middle is what Part III is about: measure it, then train models to climb it. Also carries the bridge line merged in from the old quote slide: 'CGC proved machines could play the game; AIxCC asked whether they could play it on real software — a complete climb is still open.' Note the NEW top rung above 'achieve impact' = STRATEGY (whether you should even use the capability — callback to the brain/ricochet slide): CGC's side lights it, AIxCC's doesn't. [~20:30]",
         "Part Three — the turn. Intelligence. [~22:00]",
         "Slide [A] — the Era III question (before V8). Two dials, not one: how far the AI gets (capability, the ladder) and how hard the target is (complexity). Read the map: CGC reached full control — but on TOY binaries (top-left). AIxCC took on REAL software — but mostly stalled at the crash (bottom). The open corner is top-RIGHT: high capability on a hardened target. Same question for offense (climb the exploit ladder) and defense (produce an accepted fix). The hardest target we have is V8 — so we go there to answer it. [~22:15]",
+        "What about high value targets? — a real-stakes, human beat before the V8 deep-dive. Seunghyun Lee (Pwn2Own champion, v8CTF, and the researcher behind the Mythos/ExploitBench analysis coming up) found a single Google Chrome / V8 bug worth nearly half a million dollars — and donated the bounty to CMU's cybersecurity program (Pittsburgh Business Times headline on screen). The point: the stakes scale with the target — one V8 bug = ~$500K and real-world impact. Ties Seunghyun to the V8 work ahead and sets up the next slide: can a machine climb a target this valuable and this hard? [~22:00]",
         "Can it pop Chrome? — the motivation for Part III. Targets keep getting harder AND better-defended: CGC = toy binaries; AIxCC = real software but with fuzzing harnesses handed over; the real test = a high-value target that hands you nothing. The light browser = the friendly surface a billion people expose daily — every page ships JavaScript + WebAssembly straight into V8. But V8 is a fortress; show the three defenses (the V8 box is modeled on the tantrum paper's Figure 2): the UBERCAGE — V8's heap sandbox where compressed pointers can't escape the cage; ASLR; and Google MASS-FUZZING it around the clock. Decades of elite defensive engineering — can AI climb a target this hard? (Callback to the deck title: popping the shell → popping Chrome.) [~22:15]",
         "The capability ladder + the experiment (combined). ExploitBench decomposes exploitation into 16 flags across 5 tiers, graded on 41 real V8 bugs. Bottom-up: T5 Coverage (cov_func, cov_line) → T4 Bug triggering (diff, asan, crash) → T3 Target-specific primitives (addrof, fakeobj, caged_read, caged_write — INSIDE the Ubercage) → [ESCAPE THE SANDBOX] → T2 General-purpose primitives (infoleaks, arb_read, arb_write — OUTSIDE the cage) → T1 Control (pc_control, ace). The T3→T2 jump IS the sandbox escape (tie to the V8 slide). Experiment: 41 real V8 bugs · all 16 flags scored INDEPENDENTLY (partial credit, not pass/fail) · N-day — the agent is even handed the fix-commit patch diff · 300 turns per bug. [~23:00]",
         "Main results — can an LLM climb it? Heatmap = bugs of 41 reaching each tier (primary arm, best-of-3). The cage column is General-primitives (T2). Story: all nine models get coverage; several public models build engine (T3) primitives (Gemini 16, Opus 12, Sonnet 10, GPT-5.5 13) — but they STALL at the cage. Only GPT-5.5 even touches T2 (2 bugs) and pc_control (1); 0/41 public reach ACE in the primary arm. Mythos Preview crosses: T2 on 21, pc_control 18, ACE on 18 of 41. The wall is reasoning, not budget (models stall with budget to spare). [~23:45]",
-        "Anecdotes — not memorization, research (from Seunghyun Lee's blog, who reads every transcript). Three Mythos runs: (1) CVE-2023-6702 — recovered V8's PRNG state (XorShift128+ → MurmurHash3 → GF(2) linear algebra) to make a 'random' hash predictable for a near-deterministic exploit; the original v8CTF author had dismissed this exact plan as too complex. (2) CVE-2024-7965 — public work said the JIT bug was ARM64-only / too hard on x86-64; Mythos found a NEW WebAssembly+Turbofan path past where all public work stops. (3) CVE-2024-0519 — an in-the-wild bug with NO public report or PoC, a 'cold case' unreproduced for a year; Mythos reproduced it in a single 129-turn episode. Point: this is discovered, not recalled — work on par with an elite human researcher (callback to slide 9). Sets up the open questions next: patching, then strategy. [~25:00]",
+        "Anecdotes — not memorization, research (from Seunghyun Lee's blog, who reads every transcript). Three Mythos runs: (1) CVE-2023-6702 (the MAIN case, with depth) — the bug is a type confusion between a 4-byte hash and a V8 heap pointer, exploitable because pointer compression makes BOTH 32 bits. STEP 1 recover: Math.random() is xorshift128+, a 128-bit LINEAR PRNG; object hashes derive from its stream via MurmurHash3, so from a few outputs you solve for the generator state (GF(2)-style; in practice an SMT/Z3 step handles the nonlinear '+') and the next hash is known in advance. STEP 2 weaponize (the bridge): a hash you can PREDICT is a pointer you CONTROL — forge a fake object inside the cage, corrupt a BytecodeArray, run arbitrary bytecode, ROP out of the sandbox. The original v8CTF author had dismissed this exact RNG-prediction plan as too complex. (2) CVE-2024-7965 — public work said the JIT bug was ARM64-only / too hard on x86-64; Mythos found a NEW WebAssembly+Turbofan path past where all public work stops. (3) CVE-2024-0519 — an in-the-wild bug with NO public report or PoC, a 'cold case' unreproduced for a year; Mythos reproduced it in a single 129-turn episode. Point: this is discovered, not recalled — work on par with an elite human researcher (callback to slide 9). Sets up the open questions next: patching, then strategy. [~25:00]",
         "Mythos = the climb. Private frontier systems reach end-to-end exploitation on hardened targets in a meaningful fraction of cases; public models are already well past simple crashes. [~24:30]",
         "Slide [B] — the clean offense->defense turn. Offense is settled: frontier systems climb end-to-end, even on V8, because the oracle is OBJECTIVE — did the exploit fire? ASAN / arb_write / pc_control / ACE are all auto-checkable (ExploitBench's 16 flags ARE oracles). Defense is the open question: we have almost NO LLM-written fix accepted into a real project as part of a zero-day-hunt benchmark. We grade an exploit in milliseconds; we cannot yet grade a patch. We DO have some data (next slide) — and the gap is exactly what we would need to train. [~26:00]",
         "Root cause — the Era III frontier (defense side). Localized patches (fix at the crash, on the backtrace) are SOLVED. The open problem: the real fix is often NOT on the backtrace. Two examples on screen — (1) double free: the abort is at the second free(obj), but obj was already freed in on_close(), a different event that isn't on this stack at all; the real fix is ownership/lifetime, elsewhere. (2) missing filter: the crash is at the use, but the validation belongs upstream in parse(), shared by every caller. Today's LLMs patch the crash frame and miss the cause. The Era III payoff: 'is the fix at the root cause?' is MEASURABLE — so it's TRAINABLE, exactly the ExploitBench move applied to defense. (Draft — reposition within Part III as you build it.) [~26:45]",
         "Slide [C] — intro to RL, define the nouns. ENVIRONMENT = target + harness (the V8 build, the fuzzer, the crashing input). POLICY = the model proposing a patch. ORACLE (the reward) = what scores the patch. The loop only works if the oracle is right. Offense's oracle is free — did the exploit fire? Defense has none. The exit(0) example IS reward hacking: hand the model a fuzz backtrace with a naive oracle (does it still crash?) and the cheapest winning move is exit(0) at the crash site — no crash, oracle says PASS, program is dead. Or exit(0) on every path: fuzzer goes green, software is gone. THE NEW JOB for security: writing oracles — reward functions that capture real correctness. We have great offense oracles, almost none for defense. Sets up the next slide: the oracle IS the measurement. [~27:30]",
-        "Why this is durable, not hype: decompose -> measure -> compare models -> build environments -> reward signals -> capability improves every iteration. It's a training loop, and it doesn't stop. [~26:30]",
+        "From solving to teaching (the expert's new job). The thesis shift David wants: an expert used to be valued for SOLVING the problem by hand; going forward the value is in TEACHING the machine — decompose the task, build the environment, write the oracle, reward the climb. Same training loop (it compounds every iteration), reframed around the human's changing role. Ties to the oracle slide. [~26:30]",
         "Verbatim, then pause: 'The moment a capability becomes measurable, it becomes trainable. And the moment it becomes trainable, it becomes predictable.' [~24:30]",
-        "Slide 34 — the offense->defense pivot (the Zero Day Clock). This is a LIVE screenshot of zerodayclock.com (Sysdig / Sergej Epp), not a redraw — the credibility is the point. Everything before this was the lab; this is the field. The chart = mean time from CVE disclosure to first in-the-wild exploitation: 2.3 YEARS in 2018 down to 22 HOURS in 2026 (the site projects ~1 minute by 2027). A collapse that steep is an automation signature — humans don't compress exploit-dev from years to hours. Supporting stat (right): 67% of exploited CVEs in 2026 were zero-days (hit on/before disclosure day), up from 16% in 2018. Based on 3,500+ confirmed-exploited CVEs (CISA KEV + VulnCheck KEV). Land the turn: offense has moved to machine speed, so defense can't stay verdict-by-verdict — which is the next slide. [~28:00]",
-        "What it means for YOU: think in capability ladders (not verdicts), measure patch gaps, build training environments, adopt AI-native workflows. Goal: augmented teams at machine speed — humans directing, agents climbing. [~28:45]",
-        "The one phrase to remember a week from now: the exploitation ladder. Recap the 6 beats fast: black magic -> CGC automated parts -> AIxCC on real software -> ExploitBench is the ruler -> Mythos shows it can be climbed -> from worrying about assembly to training agents. [~31:00]",
-        "Land it. 'The Mythos moment is not that humans are obsolete. It's that security is becoming measurable — and measurable becomes predictable.' A predictable path to secure software doesn't retire us; it frees us to the next problem. CTA: learn to train and build models as deeply as we once learned assembly. Thank you. [~29:30]",
+        "The Zero Day Clock slide, now titled 'Defense is an urgent problem' (the offense->defense pivot). This is a LIVE screenshot of zerodayclock.com (Sysdig / Sergej Epp), not a redraw — the credibility is the point. Everything before this was the lab; this is the field. The chart = mean time from CVE disclosure to first in-the-wild exploitation: 2.3 YEARS in 2018 down to 22 HOURS in 2026 (the site projects ~1 minute by 2027). A collapse that steep is an automation signature — humans don't compress exploit-dev from years to hours. Supporting stat (right): 67% of exploited CVEs in 2026 were zero-days (hit on/before disclosure day), up from 16% in 2018. Based on 3,500+ confirmed-exploited CVEs (CISA KEV + VulnCheck KEV). Land the turn: offense has moved to machine speed, so defense can't stay verdict-by-verdict — which is the next slide. [~28:00]",
+        "The one phrase to remember a week from now: the exploitation ladder. Recap the 5 beats fast: black magic -> CGC automated parts -> AIxCC on real software -> ExploitBench is the ruler -> from worrying about assembly to training agents. (The 'Mythos shows it can be climbed' beat was cut.) [~31:00]",
+        "The frontier: patches a human will ACCEPT. The open problem where defense goes next — not 'the crash is gone' but a fix at the ROOT CAUSE, semantically correct, that a maintainer will actually merge. We have no oracle for that yet (callback to the oracle slide + the root-cause slide). That's the frontier. [~29:00]",
+        "Land it (closing, simplified). 'Today's Mythos moment isn't that humans are obsolete. It's that we've solved real problems. Now we focus on the next set.' The old measurable/predictable line + assembly CTA were cut. Thank you. [~29:30]",
       ];
 
       /* inject hidden notes into each slide (skip if already present — e.g. a downloaded file) */
@@ -4827,7 +4990,7 @@ button:hover{border-color:#E5641F;color:#E5641F}
           d.getElementById("curTitle").textContent = st.title;
           d.getElementById("curNote").innerHTML =
             st.note ||
-            '<span style="color:#3a4751">(no notes for this slide)</span>';
+            '<span style="color:#5d6976">(no notes for this slide)</span>';
           d.getElementById("nextTitle").textContent =
             st.nextTitle || "— end of deck —";
           d.getElementById("nextNote").innerHTML = st.nextNote || "";
@@ -4881,11 +5044,40 @@ button:hover{border-color:#E5641F;color:#E5641F}
         pushPresenter();
       };
 
-      /* P / N keys (separate from the E handler) */
+      /* Print to PDF — one slide per page. Reveal/animation content only
+         shows on `.slide.visible`, so force every slide visible for the
+         print pass, then restore afterward. (@media print + @page handle
+         the page sizing & per-slide page breaks.) */
+      function printDeck() {
+        const added = [];
+        deck.slides.forEach((s) => {
+          if (!s.classList.contains("visible")) {
+            s.classList.add("visible");
+            added.push(s);
+          }
+        });
+        const cleanup = () => {
+          added.forEach((s) => s.classList.remove("visible"));
+          window.removeEventListener("afterprint", cleanup);
+        };
+        window.addEventListener("afterprint", cleanup);
+        window.print();
+        setTimeout(cleanup, 2000); // fallback if afterprint doesn't fire
+      }
+
+      /* P / N / H keys + Cmd/Ctrl+P → print (separate from the E handler) */
       document.addEventListener("keydown", (e) => {
         if (e.target.getAttribute("contenteditable") === "true") return;
+        if ((e.metaKey || e.ctrlKey) && (e.key === "p" || e.key === "P")) {
+          e.preventDefault();
+          printDeck();
+          return;
+        }
+        if (e.metaKey || e.ctrlKey || e.altKey) return;
         if (e.key === "p" || e.key === "P") openPresenter();
         if (e.key === "n" || e.key === "N") toggleStrip();
+        if (e.key === "h" || e.key === "H")
+          document.body.classList.toggle("hide-chrome");
       });
 
       updateStrip();
